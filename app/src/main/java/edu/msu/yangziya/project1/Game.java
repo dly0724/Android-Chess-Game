@@ -24,13 +24,19 @@ public class Game {
 
 
     public Game(Context context) {
+
         // Create paint for filling the area the game will
         // be solved in.
         fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         fillPaint.setColor(0xffcccccc);
+
+        outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outlinePaint.setColor(0xff000000);
+
     }
 
     public void draw(Canvas canvas) {
+
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
 
@@ -44,9 +50,16 @@ public class Game {
         int marginY = (hit - gameSize) / 2;
 
         //
+        // Draw the border of the game area
+        //
+        canvas.drawRect(marginX - 4, marginY - 4,
+                marginX + gameSize + 4, marginY + gameSize + 4, outlinePaint);
+
+        //
         // Draw the outline of the game area
         //
-        canvas.drawRect(marginX, marginY,
-                marginX + gameSize, marginY + gameSize, fillPaint);
+        canvas.drawRect(marginX, marginY, marginX + gameSize,
+                marginY + gameSize, fillPaint);
+        
     }
 }
