@@ -23,6 +23,9 @@ public class Game {
     private Paint outlinePaint;
 
 
+    private Paint paint1;
+
+
     public Game(Context context) {
 
         // Create paint for filling the area the game will
@@ -32,6 +35,9 @@ public class Game {
 
         outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         outlinePaint.setColor(0xff000000);
+
+        paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint1.setColor(0xff00ff00);
 
     }
 
@@ -54,6 +60,12 @@ public class Game {
         //
         canvas.drawRect(marginX - 4, marginY - 4,
                 marginX + gameSize + 4, marginY + gameSize + 4, outlinePaint);
+
+        //
+        // Draw the game checkerboard
+        //
+        //canvas.drawRect(marginX / 8, marginY / 8, (marginX + gameSize) / 8,
+                //(marginY + gameSize) / 8, paint1);
 
         //
         // Draw the outline of the game area
