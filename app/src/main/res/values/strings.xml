@@ -78,5 +78,8 @@
         both players still have a knight there is a highly unlikely yet theoretical possibility
         of checkmate, so this rule does not apply. Draw on time: In games with a time control,
         the game is drawn if a player is out of time and the opponent has no theoretical possibility to checkmate the player.</string>
+    <string name="playVSInfo">Player 1 V.S. Player 2</string>
+    <string name="restart">Restart Game</string>
+    <string name="ResignButton">Resign</string>
 
 </resources>

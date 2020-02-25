@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="GameView">
+        <attr name="example3String" format="string" />
+        <attr name="example3Dimension" format="dimension" />
+        <attr name="example3Color" format="color" />
+        <attr name="example3Drawable" format="color|reference" />
+    </declare-styleable>
+</resources>
