@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/CoverPic"
+        android:layout_width="match_parent"
+        android:layout_height="285dp"
+        android:contentDescription="@string/CoverPic"
+        app:srcCompat="@drawable/chess_bdt45" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onStartGame"
+        android:text="@string/start_game" />
+
+    <Button
+        android:id="@+id/rule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onShowRules"
+        android:text="@string/Rule_button" />
+
+</LinearLayout>

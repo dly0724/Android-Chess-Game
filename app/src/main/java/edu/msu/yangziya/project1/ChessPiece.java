@@ -59,13 +59,13 @@ public class ChessPiece {
         canvas.save();
 
         // Convert x,y to pixels and add the margin, then draw
-        canvas.translate(marginX + x * boardSize, marginY + y * boardSize);
+        canvas.translate(marginX + x/8 * boardSize, marginY + y/8* boardSize);
 
         // Scale it to the right size
         canvas.scale(scaleFactor, scaleFactor);
 
         // This magic code makes the center of the piece at 0, 0
-        canvas.translate(-piece.getWidth() / 2f, -piece.getHeight() / 2f);
+        canvas.translate(-piece.getWidth()*0.9f , -piece.getHeight()*0.9f );
 
         // Draw the bitmap
         canvas.drawBitmap(piece, 0, 0, null);

@@ -12,6 +12,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 
 
@@ -27,6 +29,8 @@ public class Game {
      * Paint for filling the area the game is in
      */
     private Paint fillPaint;
+    private Paint Dark;
+    private Paint Light;
 
     /**
      * Paint for outlining the area the game is in
@@ -38,7 +42,7 @@ public class Game {
      */
     private Bitmap gameComplete;
 
-    private float scaleFactor = 0.6f;
+    private float scaleFactor = 0.8f;
 
     private Paint paint1;
 
@@ -69,6 +73,14 @@ public class Game {
         paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint1.setColor(0xff00ff00);
 
+        Dark = new Paint(Paint.ANTI_ALIAS_FLAG);
+        int color_D = ContextCompat.getColor(context, R.color.colorPrimaryDark);
+        Dark.setColor(color_D);
+
+        Light = new Paint(Paint.ANTI_ALIAS_FLAG);
+        int color_L = ContextCompat.getColor(context, R.color.colorPrimary);
+        Light.setColor(color_L);
+
         // Load the solved puzzle image
         gameComplete = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_background);
 //        Drawable drawable = ContextCompat(context, R.drawable.ic_launcher_background);
@@ -85,28 +97,28 @@ public class Game {
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, 0.059f, 0.055f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, 0.939f, 0.055f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45,1 ,1 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45,8,1 ));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 0.179f, 0.055f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 0.819f, 0.055f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45,2 ,1 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 7,1 ));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 0.319f, 0.055f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 0.689f, 0.055f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 3, 1));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 6, 1));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45, 0.439f, 0.055f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45,4,1 ));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45, 0.569f, 0.055f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45,5 , 1));
 
         // Pawns
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.059f, 0.19f));  // Leftmost
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.179f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.319f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.439f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.569f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.689f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.819f, 0.19f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.939f, 0.19f)); // Rightmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,1 ,2 ));  // Leftmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,2 ,2 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 3,2 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 4,2 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,5 , 2));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 6,2 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,7 ,2 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,8 ,2 )); // Rightmost
 
 
         //
@@ -114,28 +126,28 @@ public class Game {
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 0.059f, 0.935f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 0.939f, 0.935f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 1, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 8, 8));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 0.179f, 0.935f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 0.819f, 0.935f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 2, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 7, 8));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 0.319f, 0.935f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 0.689f, 0.935f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 3, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 6, 8));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, 0.439f, 0.935f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, 4, 8));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, 0.569f, 0.935f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, 5, 8));
 
         // Pawns
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.059f, 0.81f)); // Leftmost
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.179f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.319f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.439f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.569f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.689f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.819f, 0.81f));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.939f, 0.81f));  // Rightmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 1, 7)); // Leftmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 2, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 3, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 4, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 5, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 6, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 7, 7));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 8, 7));  // Rightmost
     }
 
     public void draw(Canvas canvas) {
@@ -167,14 +179,22 @@ public class Game {
 
         // Draw the outline of the game area
 
-        canvas.drawRect(marginX, marginY, marginX + gameSize,
-                marginY + gameSize, fillPaint);
+        canvas.drawRect(marginX, marginY, marginX + gameSize,marginY + gameSize, fillPaint);
 
-        /////////////////////////////////////////////
-        //New CODE! --Laura
-        canvas.drawBitmap(basebitmap, null, new RectF(marginX, marginY, marginX + gameSize, marginY + gameSize), null);
-        /////////////////////////////////////////////
-
+        float legnthPerBlck = gameSize/8;
+        for (int i =0; i<8;i++){
+            for (int j=0; j<8; j++){
+                if ((i+j)%2 ==1){
+                    canvas.drawRect(marginX+legnthPerBlck*j, marginY+legnthPerBlck*i,
+                    marginX + legnthPerBlck*(j+1), marginY+legnthPerBlck*(i+1), Dark);
+                }
+                else{
+                    canvas.drawRect(marginX+legnthPerBlck*i, marginY+legnthPerBlck*j,
+                    marginX + legnthPerBlck*(i+1), marginY+legnthPerBlck*(j+1), Light);
+                }
+            }
+        }
+        canvas.save();
         // Draw the board image
 //        canvas.drawBitmap(boardImage, 0, 0, fillPaint);
         for(ChessPiece piece : pieces) {

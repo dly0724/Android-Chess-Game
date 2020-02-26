@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GamePlay">
+
+    <TextView
+        android:id="@+id/PlayVSInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/playVSInfo" />
+
+    <Button
+        android:id="@+id/Restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/gameView"
+        android:layout_centerHorizontal="true"
+        android:onClick="onRestart"
+        android:text="@string/restart" />
+
+    <Button
+        android:id="@+id/ReviewRules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/gameView"
+        android:onClick="onShowRules"
+        android:text="@string/Rule_button" />
+
+    <view
+        android:id="@+id/gameView"
+        class="edu.msu.yangziya.project1.GameView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PlayVSInfo"
+        android:gravity="center"/>
+
+</RelativeLayout>
