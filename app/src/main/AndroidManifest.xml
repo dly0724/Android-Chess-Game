@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".GamePlay"></activity>
         <activity android:name=".Rules" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".GameOver">
+        <activity android:name=".GameOver"/>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
