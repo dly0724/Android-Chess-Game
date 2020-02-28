@@ -81,5 +81,8 @@
     <string name="playVSInfo">Player 1 V.S. Player 2</string>
     <string name="restart">Restart Game</string>
     <string name="ResignButton">Resign</string>
+    <string name="GameOver">Game Over</string>
+    <string name="StartOver">Start Over</string>
+    <string name="Quit">Quit</string>
 
 </resources>

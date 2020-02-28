@@ -23,4 +23,9 @@ public class GamePlay extends AppCompatActivity {
         Intent intent = new Intent(this, Rules.class);
         startActivity(intent);
     }
+
+    public void onQuit(View view){
+        Intent intent = new Intent(this, GameOver.class);
+        startActivity(intent);
+    }
 }
