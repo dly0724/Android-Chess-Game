@@ -91,7 +91,7 @@ public class Game {
         boardImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_background);
 //        board_image = BitmapFactory.decodeResource(res, R.drawable.ic_launcher_background);
 
-        basebitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.chessboard);
+        //basebitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.chessboard);
         //
         // Load the Black pieces
         //
