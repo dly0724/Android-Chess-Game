@@ -15,6 +15,7 @@
         android:id="@+id/startOverButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onRestart"
         android:text="@string/StartOver"
         android:textSize="18sp" />
 
