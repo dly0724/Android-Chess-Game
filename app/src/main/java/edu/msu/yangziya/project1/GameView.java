@@ -5,16 +5,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.io.Serializable;
+
 public class GameView extends View {
-
-
     /**
      * The actual game
      */
     private Game game;
+    private Parameters params = new Parameters();
 
     /**
      * Paint object we will use to draw a line
@@ -50,4 +52,58 @@ public class GameView extends View {
 
         game.draw(canvas);
     }
+
+    /**
+     * Get the view state from a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to load from
+     */
+    public void getFromBundle(String key, Bundle bundle) {
+        params = (Parameters)bundle.getSerializable(key);
+
+        setRow(params.row);
+        setCol(params.col);
+        setRowPos(params.rowPos);
+        setX(params.X);
+        setY(params.Y);
+    }
+
+    public void saveInstanceState(Bundle bundle) {
+        game.saveInstanceState(bundle);
+    }
+
+    public void loadInstanceState(Bundle bundle) {
+        game.loadInstanceState(bundle);
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    private static class Parameters implements Serializable {
+        public int[][] board = new int[8][8];
+        public int[] rowPos = new int[]{4, 4, 4, 4};
+        public int row = -1;
+        public int col = -1;
+        public float X = 0;
+        public float Y = 0;
+    }
+
+    public void setBoa(int[][] boa) {
+        params.board = boa;
+    }
+
+
+    public void setRowPos(int[] rowPos) {
+        params.rowPos = rowPos;
+    }
+
+    public void setRow(int row) {
+        params.row = row;
+    }
+
+    public void setCol(int col) {
+        params.col = col;
+    }
+
 }

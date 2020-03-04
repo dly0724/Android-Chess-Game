@@ -84,5 +84,9 @@
     <string name="GameOver">Game Over</string>
     <string name="StartOver">Start Over</string>
     <string name="Quit">Quit</string>
+    <string name="name1">player 1\'s name</string>
+    <string name="name2">player 2\'s name</string>
+    <string name="welcome">Welcome to the Chess Game</string>
+    <string name="done">Done</string>
 
 </resources>

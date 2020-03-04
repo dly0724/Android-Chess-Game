@@ -1,5 +1,6 @@
 package edu.msu.yangziya.project1;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -10,15 +11,19 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class Game {
-    private Bitmap basebitmap = null;
     /**
      * Percentage of the display width or height that
      * is occupied by the game.
@@ -37,29 +42,39 @@ public class Game {
      */
     private Paint outlinePaint;
 
-    /**
-     * Completed game bitmap
-     */
-    private Bitmap gameComplete;
-
     private float scaleFactor = 0.8f;
-
-    private Paint paint1;
-
-    /**
-     * The game board image
-     */
-    private Bitmap boardImage;
-
-    /**
-     * How much we scale the puzzle pieces
-     */
-    //private float scaleFactor;
 
     /**
      * Collection of chess pieces
      */
     private ArrayList<ChessPiece> pieces = new ArrayList<>();
+
+    private int marginX;
+    private int marginY;
+    private int gameSize;
+
+    /**
+     * This variable is set to a piece we are dragging. If
+     * we are not dragging, the variable is null.
+     */
+    private ChessPiece dragging = null;
+
+    /**
+     * Most recent relative X touch when dragging
+     */
+    private float lastRelX;
+
+    /**
+     * Most recent relative Y touch when dragging
+     */
+    private float lastRelY;
+
+    /**
+     * The name of the bundle keys to save the puzzle
+     */
+    private final static String LOCATIONS = "Chess.locations";
+    private final static String IDS = "Chess.ids";
+
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -70,9 +85,6 @@ public class Game {
         outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         outlinePaint.setColor(0xff000000);
 
-        paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint1.setColor(0xff00ff00);
-
         Dark = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color_D = ContextCompat.getColor(context, R.color.colorPrimaryDark);
         Dark.setColor(color_D);
@@ -81,17 +93,6 @@ public class Game {
         int color_L = ContextCompat.getColor(context, R.color.colorPrimary);
         Light.setColor(color_L);
 
-        // Load the solved puzzle image
-        gameComplete = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_background);
-//        Drawable drawable = ContextCompat(context, R.drawable.ic_launcher_background);
-//        gameComplete = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-//                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-
-        Resources res = context.getResources();
-        boardImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_background);
-//        board_image = BitmapFactory.decodeResource(res, R.drawable.ic_launcher_background);
-
-        //basebitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.chessboard);
         //
         // Load the Black pieces
         //
@@ -157,11 +158,11 @@ public class Game {
         // Determine the minimum of the two dimensions
         int minDim = wid < hit ? wid : hit;
 
-        int gameSize = (int)(minDim * SCALE_IN_VIEW);
+        gameSize = (int)(minDim * SCALE_IN_VIEW);
 
         // Compute the margins so we center the game
-        int marginX = (wid - gameSize) / 2;
-        int marginY = (hit - gameSize) / 2;
+        marginX = (wid - gameSize) / 2;
+        marginY = (hit - gameSize) / 2;
 
 
         // Draw the border of the game area
@@ -196,10 +197,158 @@ public class Game {
         }
         canvas.save();
         // Draw the board image
-//        canvas.drawBitmap(boardImage, 0, 0, fillPaint);
+        //canvas.drawBitmap(boardImage, 0, 0, fillPaint);
         for(ChessPiece piece : pieces) {
             piece.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
+        canvas.save();
+        canvas.translate(marginX, marginY);
+        canvas.scale(scaleFactor, scaleFactor);
+        //canvas.drawBitmap(puzzleComplete, 0, 0, null);
+        canvas.restore();
 
+    }
+
+    /**
+     * Handle a touch event from the view.
+     * @param view The view that is the source of the touch
+     * @param event The motion event describing the touch
+     * @return true if the touch is handled.
+     */
+    public boolean onTouchEvent(View view, MotionEvent event) {
+        //
+        // Convert an x,y location to a relative location in the
+        // puzzle.
+        //
+
+        float relX = (event.getX() - marginX) / gameSize;
+        float relY = (event.getY() - marginY) / gameSize;
+
+        switch (event.getActionMasked()) {
+
+            case MotionEvent.ACTION_DOWN:
+                return onTouched(relX, relY);
+//                Log.i("onTouchEvent", "ACTION_DOWN");
+//                break;
+//                return true;
+
+            //treat cancel as if we received an "up" message
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                return onReleased(view, relX, relY);
+//                Log.i("onTouchEvent", "ACTION_UP");
+//                break;
+
+            case MotionEvent.ACTION_MOVE:
+                //Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
+                //If we are dragging, move the piece and force a redraw
+                if(dragging != null) {
+                    dragging.move(relX - lastRelX, relY - lastRelY);
+                    lastRelX = relX;
+                    lastRelY = relY;
+                    view.invalidate();//redrawn
+                    return true;
+                }
+                break;
+        }
+
+
+        return false;
+    }
+
+    /**
+     * Handle a touch message. This is when we get an initial touch
+     * @param x x location for the touch, relative to the puzzle - 0 to 1 over the puzzle
+     * @param y y location for the touch, relative to the puzzle - 0 to 1 over the puzzle
+     * @return true if the touch is handled
+     */
+    private boolean onTouched(float x, float y) {
+
+        // Check each piece to see if it has been hit
+        // We do this in reverse order so we find the pieces in front
+        for(int p=pieces.size()-1; p>=0;  p--) {
+            if(pieces.get(p).hit(x, y, gameSize, scaleFactor)) {
+                // We hit a piece!
+
+                dragging = pieces.get(p);
+                lastRelX = x;
+                lastRelY = y;
+                pieces.remove(dragging);
+                pieces.add(dragging);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Handle a release of a touch message.
+     * @param x x location for the touch release, relative to the puzzle - 0 to 1 over the puzzle
+     * @param y y location for the touch release, relative to the puzzle - 0 to 1 over the puzzle
+     * @return true if the touch is handled
+     */
+    @SuppressWarnings("unused")
+    private boolean onReleased(View view, float x, float y) {
+
+        if(dragging != null) {
+            dragging = null;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Save the puzzle to a bundle
+     * @param bundle The bundle we save to
+     */
+    public void saveInstanceState(Bundle bundle) {
+        float [] locations = new float[pieces.size() * 2];
+        int [] ids = new int[pieces.size()];
+
+        for(int i=0;  i<pieces.size(); i++) {
+            ChessPiece piece = pieces.get(i);
+            locations[i*2] = piece.getX();
+            locations[i*2+1] = piece.getY();
+            ids[i] = piece.getId();
+        }
+        bundle.putFloatArray(LOCATIONS, locations);
+        bundle.putIntArray(IDS,  ids);
+
+    }
+
+    /**
+     * Read the puzzle from a bundle
+     * @param bundle The bundle we save to
+     */
+    public void loadInstanceState(Bundle bundle) {
+        float [] locations = bundle.getFloatArray(LOCATIONS);
+        int [] ids = bundle.getIntArray(IDS);
+
+
+        assert ids != null;
+        for(int i = 0; i<ids.length-1; i++) {
+
+            // Find the corresponding piece
+            // We don't have to test if the piece is at i already,
+            // since the loop below will fall out without it moving anything
+            for(int j=i+1;  j<ids.length;  j++) {
+                if(ids[i] == pieces.get(j).getId()) {
+                    // We found it
+                    // Yah...
+                    // Swap the pieces
+                    ChessPiece t = pieces.get(i);
+                    pieces.set(i, pieces.get(j));
+                    pieces.set(j, t);
+                }
+            }
+        }
+        for(int i=0;  i<pieces.size(); i++) {
+            ChessPiece piece = pieces.get(i);
+            assert locations != null;
+            piece.setX(locations[i*2]);
+            piece.setY(locations[i*2+1]);
+        }
     }
 }
