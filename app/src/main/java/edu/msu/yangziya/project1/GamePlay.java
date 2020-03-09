@@ -42,16 +42,16 @@ public class GamePlay extends AppCompatActivity {
         if(savedInstanceState != null) {
 
             gameView.getFromBundle(PARAMETERS, savedInstanceState);
-            switch( gameView.getTurn()) {
-                case 1:
-                    getPlayerText().setText("Black's Turn: " + namePlayer1 );
-                    break;
-                case 2:
-                    getPlayerText().setText("White's Turn: " + namePlayer2 );
-                    break;
-                default:
-                    break;
-            }
+            //switch( gameView.getTurn()) {
+                //case 1:
+                    //getPlayerText().setText("Black's Turn: " + namePlayer1 );
+                    //break;
+                //case 2:
+                    //getPlayerText().setText("White's Turn: " + namePlayer2 );
+                    //break;
+                //default:
+                    //break;
+            //}
         } else {
             getPlayerText().setText( "Black's Turn: " + namePlayer1 );
         }
