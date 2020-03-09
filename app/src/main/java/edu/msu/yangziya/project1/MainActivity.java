@@ -8,10 +8,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChoiceDialogFragment.SingleChoiceListener {
+//implements ChoiceDialogFragment.SingleChoiceListener
 
     private Boolean hName1 = Boolean.FALSE;
     private Boolean hName2 = Boolean.FALSE;
@@ -21,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
     private String namePlayer1_1 = "";
     private String namePlayer2_2 = "";
 
+    private TextView tvDisplayChoice;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tvDisplayChoice = findViewById(R.id.tvDisplayChoice);
 
         getplayer1EditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,5 +117,15 @@ public class MainActivity extends AppCompatActivity {
     public void onShowRules(View view){
         Intent intent = new Intent(this, Rules.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPositiveButtonClicked(String[] list, int position) {
+        tvDisplayChoice.setText("Selected Item = " + list[position]);
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
     }
 }

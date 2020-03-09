@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="choice_items">array</string-array>
+    <item name="tvDisplayChoice" type="id" />
+    <string name="Queen">Queen</string>
+    <string name="Rook">Rook</string>
+    <string name="Knight">Knight</string>
+    <string name="Bishop">Bishop</string>
+</resources>
