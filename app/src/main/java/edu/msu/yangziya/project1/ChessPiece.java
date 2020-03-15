@@ -33,6 +33,17 @@ public class ChessPiece {
      */
     private int id;
 
+    private float testingX_1;
+    private float testingX_2;
+
+    private float testingY_1;
+    private float testingY_2;
+
+     /* We consider a piece to be in the right location if within
+     * this distance.
+     */
+    final static float SNAP_DISTANCE = 0.2f;
+
 //    /**
 //     * We consider a piece to be in the right location if within
 //     * this distance.
@@ -43,6 +54,10 @@ public class ChessPiece {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.testingX_1 = 0.059f;
+        this.testingX_2 = 0.9f;
+        this.testingY_1 = 0.812f;
+        this.testingY_2 = 0.9f;
 
         piece = BitmapFactory.decodeResource(context.getResources(), id);
     }
@@ -110,6 +125,38 @@ public class ChessPiece {
         y += dy;
     }
 
+    /**
+     * If we are within SNAP_DISTANCE of the correct
+     * answer, snap to the correct answer exactly.
+     * @return TRUE OF false
+     */
+    public boolean maybeSnap() {
+        if(Math.abs(x - testingX_1) < SNAP_DISTANCE &&
+                Math.abs(y - testingY_1) < SNAP_DISTANCE) {
+
+            x = testingX_1;
+            y = testingY_1;
+            return true;
+        }
+        else if(Math.abs(x - testingX_2) < SNAP_DISTANCE &&
+                Math.abs(y - testingY_2) < SNAP_DISTANCE) {
+
+            x = testingX_2;
+            y = testingY_2;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if this piece is snapped in place
+     * @return true if snapped into place
+     */
+    public boolean isSnapped() {
+        return (x == testingX_1 && y == testingY_1) ||(x == testingX_2 && y == testingY_2) ;
+    }
+
 
     public void setX(float x) {
         this.x = x;
@@ -129,5 +176,37 @@ public class ChessPiece {
 
     public int getId() {
         return id;
+    }
+
+    public float getTestingX_1() {
+        return testingX_1;
+    }
+
+    public float getTestingX_2(){
+        return testingX_2;
+    }
+
+    public float getTestingY_1() {
+        return testingY_1;
+    }
+
+    public float getTestingY_2() {
+        return testingY_2;
+    }
+
+    public void setTestingX_1(float testingX_1) {
+        this.testingX_1 = testingX_1;
+    }
+
+    public void setTestingX_2(float testingX_2) {
+        this.testingX_2 = testingX_2;
+    }
+
+    public void setTestingY_1(float testingY_1) {
+        this.testingY_1 = testingY_1;
+    }
+
+    public void setTestingY_2(float testingY_2) {
+        this.testingY_2 = testingY_2;
     }
 }
