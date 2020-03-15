@@ -2,7 +2,7 @@
     <string name="app_name">project1</string>
     <string name="start_game">Start Game</string>
     <string name="Rule_button">Rules</string>
-    <string name="board_background">Board Background</string>
+    <string name="boardBackground">Board Background</string>
     <string name="CoverPic">A cover picture</string>
     <string name="rules_text">The king moves one square in any direction. The king also has a
         special move called castling that involves also moving a rook. A rook can move any number

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onStartGame(View view){
-        Intent intent = new Intent(this, GamePlay.class);
+        Intent intent = new Intent(this, GameActivity.class);
 
         String[] myArrayOfStrings = {namePlayer1, namePlayer2};
         namePlayer1_1 = myArrayOfStrings[new Random().nextInt(myArrayOfStrings.length)];

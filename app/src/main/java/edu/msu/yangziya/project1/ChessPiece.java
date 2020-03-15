@@ -59,13 +59,13 @@ public class ChessPiece {
         canvas.save();
 
         // Convert x,y to pixels and add the margin, then draw
-        canvas.translate(marginX + x/8 * boardSize, marginY + y/8* boardSize);
+        canvas.translate(marginX + x * boardSize, marginY + y * boardSize);
 
         // Scale it to the right size
         canvas.scale(scaleFactor, scaleFactor);
 
         // This magic code makes the center of the piece at 0, 0
-        canvas.translate(-piece.getWidth()*0.9f , -piece.getHeight()*0.9f );
+        canvas.translate(-piece.getWidth() / 2f , -piece.getHeight() / 2f );
 
         // Draw the bitmap
         canvas.drawBitmap(piece, 0, 0, null);
@@ -73,26 +73,27 @@ public class ChessPiece {
     }
 
     /**
-     * Test to see if we have touched a puzzle piece
+     * Test to see if we have touched a chess piece
      * @param testX X location as a normalized coordinate (0 to 1)
      * @param testY Y location as a normalized coordinate (0 to 1)
-     * @param puzzleSize the size of the puzzle in pixels
+     * @param gameSize the size of the game in pixels
      * @param scaleFactor the amount to scale a piece by
      * @return true if we hit the piece
      */
     public boolean hit(float testX, float testY,
-                       int puzzleSize, float scaleFactor) {
+                       int gameSize, float scaleFactor) {
 
         // Make relative to the location and size to the piece size
-        int pX = (int)((testX - x) * puzzleSize / scaleFactor) +
+        int pX = (int)((testX - x) * gameSize / scaleFactor) +
                 piece.getWidth() / 2;
-        int pY = (int)((testY - y) * puzzleSize / scaleFactor) +
+        int pY = (int)((testY - y) * gameSize / scaleFactor) +
                 piece.getHeight() / 2;
 
         if(pX < 0 || pX >= piece.getWidth() ||
                 pY < 0 || pY >= piece.getHeight()) {
             return false;
         }
+
 
         // We are within the rectangle of the piece.
         // Are we touching actual picture?

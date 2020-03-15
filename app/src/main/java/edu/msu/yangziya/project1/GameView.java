@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.io.Serializable;
@@ -22,6 +23,11 @@ public class GameView extends View {
      * Paint object we will use to draw a line
      */
     private Paint linePaint;
+
+    /**
+     * The board bitmap.
+     */
+    private Bitmap boardBitmap = null;
 
     public GameView(Context context) {
         super(context);
@@ -41,6 +47,8 @@ public class GameView extends View {
     private void init(AttributeSet attrs, int defStyle) {
         game = new Game(getContext());
 
+        boardBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background);
+
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setColor(0xff008000);
         linePaint.setStrokeWidth(3);
@@ -51,6 +59,11 @@ public class GameView extends View {
         super.onDraw(canvas);
 
         game.draw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return game.onTouchEvent(this, event);
     }
 
     /**

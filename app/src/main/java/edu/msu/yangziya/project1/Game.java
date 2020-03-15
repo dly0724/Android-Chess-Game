@@ -11,16 +11,19 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class Game {
@@ -43,6 +46,11 @@ public class Game {
     private Paint outlinePaint;
 
     private float scaleFactor = 0.8f;
+
+    /**
+     * The image for the game board.
+     */
+    private Bitmap gameBoard;
 
     /**
      * Collection of chess pieces
@@ -70,7 +78,7 @@ public class Game {
     private float lastRelY;
 
     /**
-     * The name of the bundle keys to save the puzzle
+     * The name of the bundle keys to save the game
      */
     private final static String LOCATIONS = "Chess.locations";
     private final static String IDS = "Chess.ids";
@@ -93,33 +101,37 @@ public class Game {
         int color_L = ContextCompat.getColor(context, R.color.colorPrimary);
         Light.setColor(color_L);
 
+        Drawable boardDrawable = AppCompatResources.getDrawable(context, R.drawable.ic_launcher_background);
+        gameBoard = Bitmap.createBitmap(boardDrawable.getIntrinsicWidth(),
+                boardDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
         //
         // Load the Black pieces
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45,1 ,1 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45,8,1 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, 0.059f, 0.06f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, 0.939f, 0.06f));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45,2 ,1 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 7,1 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 0.189f, 0.06f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, 0.819f, 0.06f));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 3, 1));
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 6, 1));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 0.319f, 0.06f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, 0.689f, 0.06f));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45,4,1 ));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45, 0.439f, 0.06f));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45,5 , 1));
+        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45, 0.569f, 0.06f));
 
         // Pawns
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,1 ,2 ));  // Leftmost
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,2 ,2 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 3,2 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 4,2 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,5 , 2));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 6,2 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,7 ,2 ));
-        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45,8 ,2 )); // Rightmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.059f, 0.185f)); // Leftmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.189f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.319f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.439f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.569f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.689f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.819f, 0.185f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, 0.939f, 0.185f)); // Rightmost
 
 
         //
@@ -127,28 +139,28 @@ public class Game {
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 1, 8));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 8, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 0.059f, 0.94f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, 0.949f, 0.94f));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 2, 8));
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 7, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 0.179f, 0.94f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, 0.819f, 0.94f));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 3, 8));
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 6, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 0.319f, 0.94f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, 0.689f, 0.94f));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, 4, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, 0.439f, 0.94f));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, 5, 8));
+        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, 0.569f, 0.94f));
 
         // Pawns
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 1, 7)); // Leftmost
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 2, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 3, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 4, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 5, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 6, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 7, 7));
-        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 8, 7));  // Rightmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.059f, 0.812f)); // Leftmost
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.189f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.319f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.439f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.569f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.689f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.819f, 0.812f));
+        pieces.add(new ChessPiece(context, R.drawable.chess_plt45, 0.939f, 0.812f));  // Rightmost
     }
 
     public void draw(Canvas canvas) {
@@ -164,14 +176,41 @@ public class Game {
         marginX = (wid - gameSize) / 2;
         marginY = (hit - gameSize) / 2;
 
-
         // Draw the border of the game area
         canvas.drawRect(marginX - 4, marginY - 4,
                 marginX + gameSize + 4, marginY + gameSize + 4, outlinePaint);
+//        canvas.drawRect(marginX, marginY, marginX + gameSize,marginY + gameSize, fillPaint);
+
+
+
+//        boardDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+//        boardDrawable.draw(canvas);
+//        scaleFactor = (float)gameSize / (float)gameBoard.getWidth();
+        scaleFactor = (float)gameSize / (float)3824;
+
+//        canvas.save();
+
+        // Convert x,y to pixels and add the margin, then draw
+//        canvas.translate(marginX + x/8 * boardSize, marginY + y/8* boardSize);
+
+        // Scale it to the right size
+//        canvas.scale(scaleFactor, scaleFactor);
+
+        // This magic code makes the center of the piece at 0, 0
+//        canvas.translate(-gameBoard.getWidth()*0.9f , -gameBoard.getHeight()*0.9f );
+
+        // Draw the bitmap
+//        canvas.drawBitmap(piece, 0, 0, null);
+//        canvas.drawBitmap(gameBoard, 0, 0, null);
+//        canvas.drawBitmap(gameBoard, marginX, marginY, null);
+//        canvas.restore();
+
+        canvas.drawRect(marginX, marginY,marginX + gameSize, marginY + gameSize, outlinePaint);
 
 
 //        scaleFactor = (float)gameSize / (float)gameComplete.getWidth();
-        scaleFactor = (float)gameSize / (float)3824;
+
+//        scaleFactor = (float)gameSize / (float)gameComplete.getWidth();
 //        // Draw the game checkerboard
 //
 //        canvas.drawRect(marginX / 8, marginY / 8, (marginX + gameSize) / 8,
@@ -180,31 +219,38 @@ public class Game {
 
         // Draw the outline of the game area
 
-        canvas.drawRect(marginX, marginY, marginX + gameSize,marginY + gameSize, fillPaint);
 
-        float legnthPerBlck = gameSize/8;
+
+        float lengthPerBlock = gameSize/8;
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if ((i+j)%2 ==1){
-                    canvas.drawRect(marginX+legnthPerBlck*j, marginY+legnthPerBlck*i,
-                    marginX + legnthPerBlck*(j+1), marginY+legnthPerBlck*(i+1), Dark);
+                    canvas.drawRect(marginX+lengthPerBlock*j, marginY+lengthPerBlock*i,
+                    marginX + lengthPerBlock*(j+1), marginY+lengthPerBlock*(i+1), Dark);
                 }
                 else{
-                    canvas.drawRect(marginX+legnthPerBlck*i, marginY+legnthPerBlck*j,
-                    marginX + legnthPerBlck*(i+1), marginY+legnthPerBlck*(j+1), Light);
+                    canvas.drawRect(marginX+lengthPerBlock*i, marginY+lengthPerBlock*j,
+                    marginX + lengthPerBlock*(i+1), marginY+lengthPerBlock*(j+1), Light);
                 }
             }
         }
-        canvas.save();
         // Draw the board image
-        //canvas.drawBitmap(boardImage, 0, 0, fillPaint);
+
+        canvas.save();
+//        canvas.translate(marginX, marginY);
+//        canvas.scale(scaleFactor, scaleFactor);
+//        canvas.restore();
+
+
+
         for(ChessPiece piece : pieces) {
             piece.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
+
         canvas.save();
         canvas.translate(marginX, marginY);
         canvas.scale(scaleFactor, scaleFactor);
-        //canvas.drawBitmap(puzzleComplete, 0, 0, null);
+        //canvas.drawBitmap(gameComplete, 0, 0, null);
         canvas.restore();
 
     }
@@ -218,7 +264,7 @@ public class Game {
     public boolean onTouchEvent(View view, MotionEvent event) {
         //
         // Convert an x,y location to a relative location in the
-        // puzzle.
+        // game.
         //
 
         float relX = (event.getX() - marginX) / gameSize;
@@ -240,7 +286,7 @@ public class Game {
 //                break;
 
             case MotionEvent.ACTION_MOVE:
-                //Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
+                Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
                 //If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
                     dragging.move(relX - lastRelX, relY - lastRelY);
@@ -258,8 +304,8 @@ public class Game {
 
     /**
      * Handle a touch message. This is when we get an initial touch
-     * @param x x location for the touch, relative to the puzzle - 0 to 1 over the puzzle
-     * @param y y location for the touch, relative to the puzzle - 0 to 1 over the puzzle
+     * @param x x location for the touch, relative to the game - 0 to 1 over the game
+     * @param y y location for the touch, relative to the game - 0 to 1 over the game
      * @return true if the touch is handled
      */
     private boolean onTouched(float x, float y) {
@@ -284,8 +330,8 @@ public class Game {
 
     /**
      * Handle a release of a touch message.
-     * @param x x location for the touch release, relative to the puzzle - 0 to 1 over the puzzle
-     * @param y y location for the touch release, relative to the puzzle - 0 to 1 over the puzzle
+     * @param x x location for the touch release, relative to the game - 0 to 1 over the game
+     * @param y y location for the touch release, relative to the game - 0 to 1 over the game
      * @return true if the touch is handled
      */
     @SuppressWarnings("unused")
@@ -300,7 +346,7 @@ public class Game {
     }
 
     /**
-     * Save the puzzle to a bundle
+     * Save the game to a bundle
      * @param bundle The bundle we save to
      */
     public void saveInstanceState(Bundle bundle) {
@@ -319,7 +365,7 @@ public class Game {
     }
 
     /**
-     * Read the puzzle from a bundle
+     * Read the game from a bundle
      * @param bundle The bundle we save to
      */
     public void loadInstanceState(Bundle bundle) {
@@ -351,4 +397,11 @@ public class Game {
             piece.setY(locations[i*2+1]);
         }
     }
+
+//    /**
+//     * The game view object
+//     */
+//    private GameView getGameView() {
+//        return (GameView)  findViewById(R.id.gameView);
+//    }
 }
