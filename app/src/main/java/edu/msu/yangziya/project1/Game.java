@@ -115,44 +115,47 @@ public class Game {
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[0], yPosition[0]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[7], yPosition[0]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[0], yPosition[0],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[7], yPosition[0],xPosition,yPosition));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[1], yPosition[0]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[6], yPosition[0]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[1], yPosition[0],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[6], yPosition[0],xPosition,yPosition));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[2], yPosition[0]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[5], yPosition[0]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[2], yPosition[0],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[5], yPosition[0],xPosition,yPosition));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45, xPosition[3], yPosition[0]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45, xPosition[3], yPosition[0],xPosition,yPosition));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45, xPosition[4], yPosition[0]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45, xPosition[4], yPosition[0],xPosition,yPosition));
 
         for (int i =0; i<8;i++){
-            pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, xPosition[i], yPosition[1])); // Leftmost
+            pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, xPosition[i], yPosition[1],xPosition,yPosition)); // Leftmost
         }
 
         //
         // Load the White pieces
         //
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[0], yPosition[7]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[7], yPosition[7]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[0], yPosition[7],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[7], yPosition[7],xPosition,yPosition));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[1], yPosition[7]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[6], yPosition[7]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[1], yPosition[7],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[6], yPosition[7],xPosition,yPosition));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[2], yPosition[7]));
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[5], yPosition[7]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[2], yPosition[7],xPosition,yPosition));
+        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[5], yPosition[7],xPosition,yPosition));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, xPosition[3], yPosition[7]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, xPosition[3], yPosition[7],xPosition,yPosition));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, xPosition[4], yPosition[7]));
+        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, xPosition[4], yPosition[7],xPosition,yPosition));
 
         for (int i =0; i<8;i++){
-            pieces.add(new ChessPiece(context, R.drawable.chess_plt45, xPosition[i], yPosition[6])); // Leftmost
+            pieces.add(new ChessPiece(context, R.drawable.chess_plt45, xPosition[i], yPosition[6],xPosition,yPosition)); // Leftmost
         }
+
     }
+
+
 
     public void draw(Canvas canvas) {
         int wid = canvas.getWidth();
@@ -404,10 +407,5 @@ public class Game {
         }
     }
 
-//    /**
-//     * The game view object
-//     */
-//    private GameView getGameView() {
-//        return (GameView)  findViewById(R.id.gameView);
-//    }
+
 }
