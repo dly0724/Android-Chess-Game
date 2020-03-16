@@ -91,6 +91,9 @@ public class Game {
     public float[] xPosition = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
     public float[] yPosition = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
 
+
+    //1x: Black --- 11:BRooks 12:BKnights 13:BBishops 14:BQueen 15:BKing 16:BPawn
+    //2x: White --- 21:WRooks 22:WKnights 23:BBishops 24:WQueen 25:WKing 26:WPawn
     private Integer[] iniMapLine1 = {11,12,13,14,15,13,12,11};
     private Integer[] iniMapLine2 = {16,16,16,16,16,16,16,16};
     private Integer[] iniMapEmptyLine = {0,0,0,0,0,0,0,0};
