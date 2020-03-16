@@ -79,6 +79,9 @@ public class Game {
      */
     private float lastRelY;
 
+    private float lastRelXind;
+    private float lastRelYind;
+
     /**
      * The name of the bundle keys to save the game
      */
@@ -88,6 +91,16 @@ public class Game {
     public float[] xPosition = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
     public float[] yPosition = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
 
+    private Integer[] iniMapLine1 = {11,12,13,14,15,13,12,11};
+    private Integer[] iniMapLine2 = {16,16,16,16,16,16,16,16};
+    private Integer[] iniMapEmptyLine = {0,0,0,0,0,0,0,0};
+    private Integer[] iniMapLine7 = {21,22,23,24,25,23,22,21};
+    private Integer[] iniMapLine8 = {26,26,26,26,26,26,26,26};
+    private Integer[][] initialMap = {iniMapLine1,iniMapLine2,iniMapEmptyLine,iniMapEmptyLine,
+            iniMapEmptyLine,iniMapEmptyLine,iniMapLine7,iniMapLine8};
+
+    private List<List<Integer>> privousMap;
+    private List<List<Integer>> currentMap;
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -115,46 +128,59 @@ public class Game {
         //
 
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[0], yPosition[0],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rdt45, xPosition[7], yPosition[0],xPosition,yPosition));
+        pieces.add(new Rook(context, R.drawable.chess_rdt45, xPosition[0], yPosition[0]));
+        pieces.add(new Rook(context, R.drawable.chess_rdt45, xPosition[7], yPosition[0]));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[1], yPosition[0],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_ndt45, xPosition[6], yPosition[0],xPosition,yPosition));
+        pieces.add(new Knight(context, R.drawable.chess_ndt45, xPosition[1], yPosition[0]));
+        pieces.add(new Knight(context, R.drawable.chess_ndt45, xPosition[6], yPosition[0]));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[2], yPosition[0],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_bdt45, xPosition[5], yPosition[0],xPosition,yPosition));
+        pieces.add(new Bishop(context, R.drawable.chess_bdt45, xPosition[2], yPosition[0]));
+        pieces.add(new Bishop(context, R.drawable.chess_bdt45, xPosition[5], yPosition[0]));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qdt45, xPosition[3], yPosition[0],xPosition,yPosition));
+        pieces.add(new Queen(context, R.drawable.chess_qdt45, xPosition[3], yPosition[0]));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_kdt45, xPosition[4], yPosition[0],xPosition,yPosition));
-
+        pieces.add(new King(context, R.drawable.chess_kdt45, xPosition[4], yPosition[0]));
+        //Pawn
         for (int i =0; i<8;i++){
-            pieces.add(new ChessPiece(context, R.drawable.chess_pdt45, xPosition[i], yPosition[1],xPosition,yPosition)); // Leftmost
+            pieces.add(new Pawn(context, R.drawable.chess_pdt45, xPosition[i], yPosition[1]));
         }
 
         //
         // Load the White pieces
         //
         // Rooks
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[0], yPosition[7],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_rlt45, xPosition[7], yPosition[7],xPosition,yPosition));
+        pieces.add(new Rook(context, R.drawable.chess_rlt45, xPosition[0], yPosition[7]));
+        pieces.add(new Rook(context, R.drawable.chess_rlt45, xPosition[7], yPosition[7]));
         // Knights
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[1], yPosition[7],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_nlt45, xPosition[6], yPosition[7],xPosition,yPosition));
+        pieces.add(new Knight(context, R.drawable.chess_nlt45, xPosition[1], yPosition[7]));
+        pieces.add(new Knight(context, R.drawable.chess_nlt45, xPosition[6], yPosition[7]));
         // Bishops
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[2], yPosition[7],xPosition,yPosition));
-        pieces.add(new ChessPiece(context, R.drawable.chess_blt45, xPosition[5], yPosition[7],xPosition,yPosition));
+        pieces.add(new Bishop(context, R.drawable.chess_blt45, xPosition[2], yPosition[7]));
+        pieces.add(new Bishop(context, R.drawable.chess_blt45, xPosition[5], yPosition[7]));
         // Queen
-        pieces.add(new ChessPiece(context, R.drawable.chess_qlt45, xPosition[3], yPosition[7],xPosition,yPosition));
+        pieces.add(new Queen(context, R.drawable.chess_qlt45, xPosition[3], yPosition[7]));
         // King
-        pieces.add(new ChessPiece(context, R.drawable.chess_klt45, xPosition[4], yPosition[7],xPosition,yPosition));
-
+        pieces.add(new King(context, R.drawable.chess_klt45, xPosition[4], yPosition[7]));
+        //Pawns
         for (int i =0; i<8;i++){
-            pieces.add(new ChessPiece(context, R.drawable.chess_plt45, xPosition[i], yPosition[6],xPosition,yPosition)); // Leftmost
+            pieces.add(new Pawn(context, R.drawable.chess_plt45, xPosition[i], yPosition[6]));
         }
+
+        List<List<Integer>> temp = new ArrayList<List<Integer>>();
+        for (int i=0; i<8;i++){
+            List<Integer> temp2 = new ArrayList<Integer>();
+            for (int j=0; j<8;j++){
+                temp2.add(initialMap[i][j]);
+            }
+            temp.add(temp2);
+        }
+        setCurrentMap(temp);
 
     }
 
+    public Game() {
+
+    }
 
 
     public void draw(Canvas canvas) {
@@ -173,47 +199,10 @@ public class Game {
         // Draw the border of the game area
         canvas.drawRect(marginX - 4, marginY - 4,
                 marginX + gameSize + 4, marginY + gameSize + 4, outlinePaint);
-//        canvas.drawRect(marginX, marginY, marginX + gameSize,marginY + gameSize, fillPaint);
 
-
-
-//        boardDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-//        boardDrawable.draw(canvas);
-//        scaleFactor = (float)gameSize / (float)gameBoard.getWidth();
         scaleFactor = (float)gameSize / (float)3824;
 
-//        canvas.save();
-
-        // Convert x,y to pixels and add the margin, then draw
-//        canvas.translate(marginX + x/8 * boardSize, marginY + y/8* boardSize);
-
-        // Scale it to the right size
-//        canvas.scale(scaleFactor, scaleFactor);
-
-        // This magic code makes the center of the piece at 0, 0
-//        canvas.translate(-gameBoard.getWidth()*0.9f , -gameBoard.getHeight()*0.9f );
-
-        // Draw the bitmap
-//        canvas.drawBitmap(piece, 0, 0, null);
-//        canvas.drawBitmap(gameBoard, 0, 0, null);
-//        canvas.drawBitmap(gameBoard, marginX, marginY, null);
-//        canvas.restore();
-
         canvas.drawRect(marginX, marginY,marginX + gameSize, marginY + gameSize, outlinePaint);
-
-
-//        scaleFactor = (float)gameSize / (float)gameComplete.getWidth();
-
-//        scaleFactor = (float)gameSize / (float)gameComplete.getWidth();
-//        // Draw the game checkerboard
-//
-//        canvas.drawRect(marginX / 8, marginY / 8, (marginX + gameSize) / 8,
-//                (marginY + gameSize) / 8, paint1);
-
-
-        // Draw the outline of the game area
-
-
 
         float lengthPerBlock = gameSize/8;
         for (int i =0; i<8;i++){
@@ -231,10 +220,6 @@ public class Game {
         // Draw the board image
 
         canvas.save();
-//        canvas.translate(marginX, marginY);
-//        canvas.scale(scaleFactor, scaleFactor);
-//        canvas.restore();
-
 
 
         for(ChessPiece piece : pieces) {
@@ -244,7 +229,6 @@ public class Game {
         canvas.save();
         canvas.translate(marginX, marginY);
         canvas.scale(scaleFactor, scaleFactor);
-        //canvas.drawBitmap(gameComplete, 0, 0, null);
         canvas.restore();
 
     }
@@ -313,6 +297,10 @@ public class Game {
                 dragging = pieces.get(p);
                 lastRelX = x;
                 lastRelY = y;
+
+                lastRelXind = dragging.x;
+                lastRelYind = dragging.y;
+
                 pieces.remove(dragging);
                 pieces.add(dragging);
                 return true;
@@ -332,7 +320,7 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap()) {
+            if(dragging.maybeSnap(lastRelXind,lastRelYind)) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
@@ -407,5 +395,19 @@ public class Game {
         }
     }
 
+    public List<List<Integer>> getCurrentMap() {
+        return currentMap;
+    }
 
+    public void setCurrentMap(List<List<Integer>> CurrentMap) {
+        this.currentMap = CurrentMap;
+    }
+
+    public List<List<Integer>> getPrivousMap() {
+        return privousMap;
+    }
+
+    public void setPurrentMap(List<List<Integer>> privousMap) {
+        this.privousMap = privousMap;
+    }
 }

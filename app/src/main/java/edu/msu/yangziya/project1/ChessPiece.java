@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,39 +22,39 @@ public class ChessPiece {
      * We use relative x locations in the range 0-1 for the center
      * of the chess piece.
      */
-    private float x;
+    protected float x;
 
     /**
      * y location
      */
-    private float y;
+    protected float y;
 
     /**
      * The chess piece ID
      */
     private int id;
 
-    private float[] Xs;
-    private float[] Ys;
+    protected Game game = new Game();
+    /*
+     * map positions
+     */
+    protected float[] Xs = game.xPosition;
+    protected float[] Ys = game.yPosition;
+    protected  List<List<Integer>> CurrentBoa = game.getCurrentMap();
 
      /* We consider a piece to be in the right location if within
      * this distance.
      */
     final static float SNAP_DISTANCE = 0.07f;
 
-//    /**
-//     * We consider a piece to be in the right location if within
-//     * this distance.
-//     */
-//    final static float SNAP_DISTANCE = 0.05f;
 
-    public ChessPiece(Context context, int id, float x, float y,float[]Xs, float[]Ys) {
+
+
+    public ChessPiece(Context context, int id, float x, float y) {
         this.x = x;
         this.y = y;
         this.id = id;
 
-        this.Xs = Xs;
-        this.Ys = Ys;
         piece = BitmapFactory.decodeResource(context.getResources(), id);
     }
 
@@ -125,12 +126,11 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap() {
+    public boolean maybeSnap(float backupX,float backupY) {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if(Math.abs(x - Xs[i]) < SNAP_DISTANCE &&
                         Math.abs(y - Ys[j]) < SNAP_DISTANCE) {
-
                     x = Xs[i];
                     y = Ys[j];
                     return true;
@@ -177,4 +177,6 @@ public class ChessPiece {
     public void setYs(float[] ys) {
         Ys = ys;
     }
+
+
 }
