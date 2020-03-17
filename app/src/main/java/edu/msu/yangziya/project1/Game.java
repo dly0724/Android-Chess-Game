@@ -212,11 +212,11 @@ public class Game {
             for (int j=0; j<8; j++){
                 if ((i+j)%2 ==1){
                     canvas.drawRect(marginX+lengthPerBlock*j, marginY+lengthPerBlock*i,
-                    marginX + lengthPerBlock*(j+1), marginY+lengthPerBlock*(i+1), Dark);
+                            marginX + lengthPerBlock*(j+1), marginY+lengthPerBlock*(i+1), Dark);
                 }
                 else{
                     canvas.drawRect(marginX+lengthPerBlock*i, marginY+lengthPerBlock*j,
-                    marginX + lengthPerBlock*(i+1), marginY+lengthPerBlock*(j+1), Light);
+                            marginX + lengthPerBlock*(i+1), marginY+lengthPerBlock*(j+1), Light);
                 }
             }
         }
@@ -323,7 +323,7 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap(lastRelXind,lastRelYind)) {
+            if(dragging.maybeSnap(lastRelXind,lastRelYind,currentMap)) {
                 // We have snapped into place
                 view.invalidate();//redraw
 

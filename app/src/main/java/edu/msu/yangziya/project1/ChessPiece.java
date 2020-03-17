@@ -42,7 +42,7 @@ public class ChessPiece {
     protected float[] Ys = game.yPosition;
     protected  List<List<Integer>> CurrentBoa = game.getCurrentMap();
 
-     /* We consider a piece to be in the right location if within
+    /* We consider a piece to be in the right location if within
      * this distance.
      */
     final static float SNAP_DISTANCE = 0.07f;
@@ -126,7 +126,7 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap(float backupX,float backupY) {
+    public boolean maybeSnap(float backupX,float backupY,List<List<Integer>> currentBoard) {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if(Math.abs(x - Xs[i]) < SNAP_DISTANCE &&
