@@ -150,7 +150,7 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap(float backupX, float backupY, List<List<ChessPiece>> currentBoard) {
+    public List<Boolean> maybeSnap(float backupX, float backupY, List<List<ChessPiece>> currentBoard) {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&
@@ -160,7 +160,8 @@ public class ChessPiece {
                         this.movingToColumnIndex = i;
                         x = xPositions[i];
                         y = yPositions[j];
-                        return true;
+                        List<Boolean> Return = Arrays.asList(true,true);
+                        return Return;
                     }
                     else{
                         int xIndex = Arrays.binarySearch(xPositions, backupX);
@@ -169,12 +170,14 @@ public class ChessPiece {
                         this.movingToColumnIndex = yIndex;
                         x=backupX;
                         y=backupY;
-                        return true;
+                        List<Boolean> Return = Arrays.asList(true,false);
+                        return Return;
                     }
                 }
             }
         }
-        return false;
+        List<Boolean> Return = Arrays.asList(false,true);
+        return Return;
     }
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
