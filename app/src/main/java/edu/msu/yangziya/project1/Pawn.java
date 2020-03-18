@@ -27,7 +27,12 @@ public class Pawn extends ChessPiece {
             if(TpY < rowIndex){  // Wrong direction
                 return false;
             }
-            if(isFirstMove && TpY-rowIndex > 2){  // Can move two spaces on first move
+            if (isFirstMove && TpY-rowIndex == 2){
+                if(currentBoard.get(rowIndex+1).get(columnIndex)!=null){
+                    return  false;
+                }
+            }
+            else if(isFirstMove && TpY-rowIndex > 2){  // Can move two spaces on first move
                 return false;
             }
             else if(!isFirstMove && TpY-rowIndex > 1) {  // Moved more than 1 space
@@ -38,7 +43,12 @@ public class Pawn extends ChessPiece {
             if(TpY > rowIndex){
                 return false;
             }
-            if(isFirstMove && rowIndex-TpY > 2){
+            if (isFirstMove && rowIndex-TpY == 2){
+                if(currentBoard.get(TpY+1).get(columnIndex)!=null){
+                    return  false;
+                }
+            }
+            else if(isFirstMove && rowIndex-TpY > 2){
                 return false;
             }
             else if(!isFirstMove && rowIndex-TpY > 1) {
