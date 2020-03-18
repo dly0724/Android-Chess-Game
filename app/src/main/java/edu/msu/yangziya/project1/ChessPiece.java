@@ -32,7 +32,7 @@ public class ChessPiece {
     /**
      * The chess piece ID
      */
-    private int id;
+    protected int id;
 
     protected Game game = new Game();
     /*
