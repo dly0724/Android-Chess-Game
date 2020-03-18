@@ -38,9 +38,8 @@ public class ChessPiece {
     /*
      * map positions
      */
-    protected float[] Xs = game.xPosition;
-    protected float[] Ys = game.yPosition;
-    protected  List<List<Integer>> CurrentBoa = game.getCurrentMap();
+    protected float[] xPositions = game.xPositions;
+    protected float[] yPositions = game.yPositions;
 
     /* We consider a piece to be in the right location if within
      * this distance.
@@ -50,12 +49,12 @@ public class ChessPiece {
 
 
 
-    public ChessPiece(Context context, int id, float x, float y) {
+    public ChessPiece(Context context, int id, int drawableId, float x, float y) {
         this.x = x;
         this.y = y;
         this.id = id;
 
-        piece = BitmapFactory.decodeResource(context.getResources(), id);
+        piece = BitmapFactory.decodeResource(context.getResources(), drawableId);
     }
 
     /**
@@ -126,13 +125,13 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap(float backupX,float backupY,List<List<Integer>> currentBoard) {
+    public boolean maybeSnap(float backupX, float backupY, List<List<ChessPiece>> currentBoard) {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
-                if(Math.abs(x - Xs[i]) < SNAP_DISTANCE &&
-                        Math.abs(y - Ys[j]) < SNAP_DISTANCE) {
-                    x = Xs[i];
-                    y = Ys[j];
+                if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&
+                        Math.abs(y - yPositions[j]) < SNAP_DISTANCE) {
+                    x = xPositions[i];
+                    y = yPositions[j];
                     return true;
                 }
             }
@@ -162,20 +161,24 @@ public class ChessPiece {
         return id;
     }
 
-    public float[] getXs() {
-        return Xs;
+    public float[] getXPositions() {
+        return xPositions;
     }
 
-    public void setXs(float[] xs) {
-        Xs = xs;
+    public void setxPositions(float[] newXPositions) {
+        xPositions = newXPositions;
     }
 
-    public float[] getYs() {
-        return Ys;
+    public float[] getYPositions() {
+        return yPositions;
     }
 
-    public void setYs(float[] ys) {
-        Ys = ys;
+    public void setYPositions(float[] newYPositions) {
+        yPositions = newYPositions;
+    }
+
+    public List<List<ChessPiece>> getCurrentBoard() {
+        return game.getCurrentBoardArray();
     }
 
 

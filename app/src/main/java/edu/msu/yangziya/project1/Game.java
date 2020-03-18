@@ -24,8 +24,14 @@ import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
+
+import static java.lang.System.in;
 
 
 public class Game {
@@ -88,8 +94,90 @@ public class Game {
     private final static String LOCATIONS = "Chess.locations";
     private final static String IDS = "Chess.ids";
 
-    public float[] xPosition = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
-    public float[] yPosition = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
+    public float[] xPositions = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
+    public float[] yPositions = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
+    public Integer[] pieceIDs = {
+            R.drawable.chess_rdt45, R.drawable.chess_ndt45, R.drawable.chess_bdt45, // Rook, Knight, Bishop (Black)
+            R.drawable.chess_qdt45, R.drawable.chess_kdt45, R.drawable.chess_pdt45, // Queen, King, Pawn (Black)
+            R.drawable.chess_rlt45, R.drawable.chess_nlt45, R.drawable.chess_blt45, // Rook, Knight, Bishop (White)
+            R.drawable.chess_qlt45, R.drawable.chess_klt45, R.drawable.chess_plt45  // Queen, King, Pawn (White)
+    };
+
+    /**
+     * A Java Pair Class
+     * Source: https://stackoverflow.com/questions/521171/a-java-collection-of-value-pairs-tuples
+     * @param <L> Left Value
+     * @param <R> Right Value
+     */
+    public class Pair<L,R> {
+
+        private final L left;
+        private final R right;
+
+        public Pair(L left, R right) {
+            assert left != null;
+            assert right != null;
+
+            this.left = left;
+            this.right = right;
+        }
+
+        public L getLeft() { return left; }
+        public R getRight() { return right; }
+
+        @Override
+        public int hashCode() { return left.hashCode() ^ right.hashCode(); }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof Pair)) return false;
+            Pair pairo = (Pair) o;
+            return this.left.equals(pairo.getLeft()) &&
+                    this.right.equals(pairo.getRight());
+        }
+
+    }
+
+    Map<Integer, Pair<Integer, Pair<Float, Float>>> initialPieceMap =
+            new HashMap<Integer, Pair<Integer, Pair<Float, Float>>>() {
+                {
+                    // Black Pieces (Leftmost to Rightmost)
+                    put(0, new Pair(R.drawable.chess_rdt45, new Pair(0.059f, 0.06f)));  // Rook
+                    put(1, new Pair(R.drawable.chess_ndt45, new Pair(0.189f, 0.06f)));  // Knight
+                    put(2, new Pair(R.drawable.chess_bdt45, new Pair(0.319f, 0.06f)));  // Bishop
+                    put(3, new Pair(R.drawable.chess_qdt45, new Pair(0.439f, 0.06f)));  // Queen
+                    put(4, new Pair(R.drawable.chess_kdt45, new Pair(0.569f, 0.06f)));  // King
+                    put(5, new Pair(R.drawable.chess_bdt45, new Pair(0.689f, 0.06f)));  // Bishop
+                    put(6, new Pair(R.drawable.chess_ndt45, new Pair(0.819f, 0.06f)));  // Knight
+                    put(7, new Pair(R.drawable.chess_rdt45, new Pair(0.939f, 0.06f)));  // Rook
+                    put(8, new Pair(R.drawable.chess_pdt45, new Pair(0.059f, 0.185f))); // Pawns
+                    put(9, new Pair(R.drawable.chess_pdt45, new Pair(0.189f, 0.185f)));
+                    put(10, new Pair(R.drawable.chess_pdt45, new Pair(0.319f, 0.185f)));
+                    put(11, new Pair(R.drawable.chess_pdt45, new Pair(0.439f, 0.185f)));
+                    put(12, new Pair(R.drawable.chess_pdt45, new Pair(0.569f, 0.185f)));
+                    put(13, new Pair(R.drawable.chess_pdt45, new Pair(0.689f, 0.185f)));
+                    put(14, new Pair(R.drawable.chess_pdt45, new Pair(0.819f, 0.185f)));
+                    put(15, new Pair(R.drawable.chess_pdt45, new Pair(0.939f, 0.185f)));
+
+                    // White Pieces (Leftmost to Rightmost)
+                    put(16, new Pair(R.drawable.chess_rlt45, new Pair(0.059f, 0.94f)));  // Rook
+                    put(17, new Pair(R.drawable.chess_nlt45, new Pair(0.189f, 0.94f)));  // Knight
+                    put(18, new Pair(R.drawable.chess_blt45, new Pair(0.319f, 0.94f)));  // Bishop
+                    put(19, new Pair(R.drawable.chess_qlt45, new Pair(0.439f, 0.94f)));  // Queen
+                    put(20, new Pair(R.drawable.chess_klt45, new Pair(0.569f, 0.94f)));  // King
+                    put(21, new Pair(R.drawable.chess_blt45, new Pair(0.689f, 0.94f)));  // Bishop
+                    put(22, new Pair(R.drawable.chess_nlt45, new Pair(0.819f, 0.94f)));  // Knight
+                    put(23, new Pair(R.drawable.chess_rlt45, new Pair(0.939f, 0.94f)));  // Rook
+                    put(24, new Pair(R.drawable.chess_plt45, new Pair(0.059f, 0.812f))); // Pawns
+                    put(25, new Pair(R.drawable.chess_plt45, new Pair(0.189f, 0.812f)));
+                    put(26, new Pair(R.drawable.chess_plt45, new Pair(0.319f, 0.812f)));
+                    put(27, new Pair(R.drawable.chess_plt45, new Pair(0.439f, 0.812f)));
+                    put(28, new Pair(R.drawable.chess_plt45, new Pair(0.569f, 0.812f)));
+                    put(29, new Pair(R.drawable.chess_plt45, new Pair(0.689f, 0.812f)));
+                    put(30, new Pair(R.drawable.chess_plt45, new Pair(0.819f, 0.812f)));
+                    put(31, new Pair(R.drawable.chess_plt45, new Pair(0.939f, 0.812f)));
+                }
+            };
 
 
     //1x: Black --- 11:BRooks 12:BKnights 13:BBishops 14:BQueen 15:BKing 16:BPawn
@@ -102,8 +190,8 @@ public class Game {
     private Integer[][] initialMap = {iniMapLine1,iniMapLine2,iniMapEmptyLine,iniMapEmptyLine,
             iniMapEmptyLine,iniMapEmptyLine,iniMapLine7,iniMapLine8};
 
-    private List<List<Integer>> privousMap;
-    private List<List<Integer>> currentMap;
+    private List<List<ChessPiece>> previousBoardArray;
+    private List<List<ChessPiece>> currentBoardArray;
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -126,59 +214,62 @@ public class Game {
         gameBoard = Bitmap.createBitmap(boardDrawable.getIntrinsicWidth(),
                 boardDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
-        //
-        // Load the Black pieces
-        //
+        List<List<ChessPiece>> initialBoardArray = new ArrayList<>();
+        int numPieces = initialPieceMap.size();
 
-        // Rooks
-        pieces.add(new Rook(context, R.drawable.chess_rdt45, xPosition[0], yPosition[0]));
-        pieces.add(new Rook(context, R.drawable.chess_rdt45, xPosition[7], yPosition[0]));
-        // Knights
-        pieces.add(new Knight(context, R.drawable.chess_ndt45, xPosition[1], yPosition[0]));
-        pieces.add(new Knight(context, R.drawable.chess_ndt45, xPosition[6], yPosition[0]));
-        // Bishops
-        pieces.add(new Bishop(context, R.drawable.chess_bdt45, xPosition[2], yPosition[0]));
-        pieces.add(new Bishop(context, R.drawable.chess_bdt45, xPosition[5], yPosition[0]));
-        // Queen
-        pieces.add(new Queen(context, R.drawable.chess_qdt45, xPosition[3], yPosition[0]));
-        // King
-        pieces.add(new King(context, R.drawable.chess_kdt45, xPosition[4], yPosition[0]));
-        //Pawn
-        for (int i =0; i<8;i++){
-            pieces.add(new Pawn(context, R.drawable.chess_pdt45, xPosition[i], yPosition[1]));
-        }
+        List<ChessPiece> currentRow = new ArrayList<>();
+        int column = 0;
 
         //
-        // Load the White pieces
+        // Load the pieces
         //
-        // Rooks
-        pieces.add(new Rook(context, R.drawable.chess_rlt45, xPosition[0], yPosition[7]));
-        pieces.add(new Rook(context, R.drawable.chess_rlt45, xPosition[7], yPosition[7]));
-        // Knights
-        pieces.add(new Knight(context, R.drawable.chess_nlt45, xPosition[1], yPosition[7]));
-        pieces.add(new Knight(context, R.drawable.chess_nlt45, xPosition[6], yPosition[7]));
-        // Bishops
-        pieces.add(new Bishop(context, R.drawable.chess_blt45, xPosition[2], yPosition[7]));
-        pieces.add(new Bishop(context, R.drawable.chess_blt45, xPosition[5], yPosition[7]));
-        // Queen
-        pieces.add(new Queen(context, R.drawable.chess_qlt45, xPosition[3], yPosition[7]));
-        // King
-        pieces.add(new King(context, R.drawable.chess_klt45, xPosition[4], yPosition[7]));
-        //Pawns
-        for (int i =0; i<8;i++){
-            pieces.add(new Pawn(context, R.drawable.chess_plt45, xPosition[i], yPosition[6]));
-        }
+        for(int id = 0; id < numPieces; ++id){
 
-        List<List<Integer>> temp = new ArrayList<List<Integer>>();
-        for (int i=0; i<8;i++){
-            List<Integer> temp2 = new ArrayList<Integer>();
-            for (int j=0; j<8;j++){
-                temp2.add(initialMap[i][j]);
+            int drawableID = initialPieceMap.get(id).left;
+            float x = initialPieceMap.get(id).right.left;
+            float y = initialPieceMap.get(id).right.right;
+            ChessPiece piece;
+
+            if(Arrays.asList(0, 7, 16, 23).contains(id)){
+                piece = new Rook(context, id, drawableID, x, y);
             }
-            temp.add(temp2);
-        }
-        setCurrentMap(temp);
+            else if(Arrays.asList(1, 6, 17, 22).contains(id)){
+                piece = new Knight(context, id, drawableID, x, y);
+            }
+            else if(Arrays.asList(2, 5, 18, 21).contains(id)){
+                piece = new Bishop(context, id, drawableID, x, y);
+            }
+            else if(Arrays.asList(3, 19).contains(id)){
+                piece = new Queen(context, id, drawableID, x, y);
+            }
+            else if(Arrays.asList(4, 20).contains(id)){
+                piece = new King(context, id, drawableID, x, y);
+            }
+            else{
+                if(BuildConfig.DEBUG && !(Arrays.asList(8, 9, 10, 11, 12, 13, 14, 15,
+                        24, 25, 26, 27, 28, 29, 30, 31).contains(id))){
+                    throw new AssertionError("ID should belong to a Pawn");
+                }
+                piece = new Pawn(context, id, drawableID, x, y);
+            }
+            pieces.add(piece);
+            currentRow.add(piece);
 
+            ++column;
+            if(column == 8){
+                initialBoardArray.add(new ArrayList<>(currentRow));
+                currentRow.clear();
+                column = 0;
+            }
+        }
+
+        // Add four rows of empty spaces between the sets of black and white pieces
+        for(int i = 2; i < 6; ++i){
+            currentRow = Arrays.asList(null, null, null, null, null, null, null, null);
+            initialBoardArray.add(i, currentRow);
+        }
+
+        setCurrentBoardArray(initialBoardArray);
     }
 
     public Game() {
@@ -323,7 +414,7 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap(lastRelXind,lastRelYind,currentMap)) {
+            if(dragging.maybeSnap(lastRelXind, lastRelYind, currentBoardArray)) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
@@ -398,19 +489,19 @@ public class Game {
         }
     }
 
-    public List<List<Integer>> getCurrentMap() {
-        return currentMap;
+    public List<List<ChessPiece>> getCurrentBoardArray() {
+        return currentBoardArray;
     }
 
-    public void setCurrentMap(List<List<Integer>> CurrentMap) {
-        this.currentMap = CurrentMap;
+    public void setCurrentBoardArray(List<List<ChessPiece>> currentBoardArray) {
+        this.currentBoardArray = currentBoardArray;
     }
 
-    public List<List<Integer>> getPrivousMap() {
-        return privousMap;
+    public List<List<ChessPiece>> getPreviousBoardArray() {
+        return previousBoardArray;
     }
 
-    public void setPurrentMap(List<List<Integer>> privousMap) {
-        this.privousMap = privousMap;
+    public void setPreviousBoardArray(List<List<ChessPiece>> previousBoardArray) {
+        this.previousBoardArray = previousBoardArray;
     }
 }
