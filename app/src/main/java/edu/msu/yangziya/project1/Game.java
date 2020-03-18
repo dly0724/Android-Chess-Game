@@ -96,50 +96,6 @@ public class Game {
 
     public float[] xPositions = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
     public float[] yPositions = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
-    public Integer[] pieceIDs = {
-            R.drawable.chess_rdt45, R.drawable.chess_ndt45, R.drawable.chess_bdt45, // Rook, Knight, Bishop (Black)
-            R.drawable.chess_qdt45, R.drawable.chess_kdt45, R.drawable.chess_pdt45, // Queen, King, Pawn (Black)
-            R.drawable.chess_rlt45, R.drawable.chess_nlt45, R.drawable.chess_blt45, // Rook, Knight, Bishop (White)
-            R.drawable.chess_qlt45, R.drawable.chess_klt45, R.drawable.chess_plt45  // Queen, King, Pawn (White)
-    };
-
-    /**
-     * A Java Pair Class
-     * Source: https://stackoverflow.com/questions/521171/a-java-collection-of-value-pairs-tuples
-     * @param <L> Left Value
-     * @param <R> Right Value
-     */
-    public class Pair<L,R> {
-
-        private final L left;
-        private final R right;
-
-        public Pair(L left, R right) {
-            assert left != null;
-            assert right != null;
-
-            this.left = left;
-            this.right = right;
-        }
-
-        public L getLeft() { return left; }
-        public R getRight() { return right; }
-
-//        public L setLeft(L left) { this.left = left; }
-//        public R setRight(R right) { this.right = right; }
-
-        @Override
-        public int hashCode() { return left.hashCode() ^ right.hashCode(); }
-
-        @Override
-        public boolean equals(Object o) {
-            if (!(o instanceof Pair)) return false;
-            Pair pairo = (Pair) o;
-            return this.left.equals(pairo.getLeft()) &&
-                    this.right.equals(pairo.getRight());
-        }
-
-    }
 
     private Map<Integer, ArrayList<Object>> initialPieceMap = new HashMap<Integer, ArrayList<Object>>() {
         {
