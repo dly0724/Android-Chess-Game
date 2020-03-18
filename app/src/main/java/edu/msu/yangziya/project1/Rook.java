@@ -17,7 +17,7 @@ public class Rook extends ChessPiece {
         }
         // Check for vertical movement
         else if(abs(rowIndex-TpY)!=0 && abs(columnIndex-TpX)==0) {
-            for (int i= 1;i<=abs(rowIndex-TpY);i++){
+            for (int i= 1;i<abs(rowIndex-TpY);i++){
                 if (((rowIndex-TpY)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
                     return false;
                 }
@@ -29,11 +29,11 @@ public class Rook extends ChessPiece {
         }
         // Check for horizontal movement
         else if(abs(rowIndex-TpY)==0 && abs(columnIndex-TpX)!=0){
-            for (int i= 1;i<=abs(columnIndex-TpX);i++){
+            for (int i= 1;i<abs(columnIndex-TpX);i++){
                 if (((columnIndex-TpX)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
                     return false;
                 }
-                else if(((rowIndex-TpY)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
+                else if(((columnIndex-TpX)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
                     return false;
                 }
             }
