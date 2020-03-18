@@ -166,7 +166,6 @@ public class ChessPiece {
                         x=backupX;
                         y=backupY;
                     }
-//                    return true;
                 }
             }
         }
@@ -179,10 +178,7 @@ public class ChessPiece {
         if (targetPiece == null){  // Empty space, ok to move
             return true;
         }
-        else if(this.color == 'b' && targetPiece.color == 'b'){  // Don't move on fellow black piece
-            return false;
-        }
-        else if(this.color == 'w' && targetPiece.color == 'w'){  // Don't move on fellow white piece
+        else if(this.color == targetPiece.color){   // Can't overlap piece on own team
             return false;
         }
         else{
