@@ -422,7 +422,7 @@ public class Game {
                 pieces.remove(dragging);
                 pieces.add(0,dragging);
 
-
+                UpdateBoard(dragging);
                 // The puzzle is done
                 // Instantiate a dialog box builder
                 //AlertDialog.Builder builder =
@@ -437,6 +437,27 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void UpdateBoard(ChessPiece draggingPiece) {
+        Pair<Integer, Integer> position;  // indices in 2-D array of the piece we're dragging
+        boolean found = false;
+        for(int i = 0; i < currentBoardArray.size(); ++i){
+            for(int j = 0; j < currentBoardArray.size(); ++j){
+                ChessPiece piece = currentBoardArray.get(i).get(j);
+                int id;
+                if(piece != null){
+                    id = piece.id;
+                    if(draggingPiece.id == id){
+                        position = new Pair(i, j);
+                        found = true;
+                        break;
+                    }
+                }
+
+            }
+            if(found) break;
+        }
     }
 
     /**
