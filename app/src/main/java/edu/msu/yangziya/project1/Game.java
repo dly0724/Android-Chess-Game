@@ -141,47 +141,46 @@ public class Game {
 
     }
 
-    Map<Integer, Pair<Integer, Pair<Float, Float>>> initialPieceMap =
-            new HashMap<Integer, Pair<Integer, Pair<Float, Float>>>() {
-                {
-                    // Black Pieces (Leftmost to Rightmost)
-                    put(0, new Pair(R.drawable.chess_rdt45, new Pair(0.059f, 0.06f)));  // Rook
-                    put(1, new Pair(R.drawable.chess_ndt45, new Pair(0.189f, 0.06f)));  // Knight
-                    put(2, new Pair(R.drawable.chess_bdt45, new Pair(0.319f, 0.06f)));  // Bishop
-                    put(3, new Pair(R.drawable.chess_qdt45, new Pair(0.439f, 0.06f)));  // Queen
-                    put(4, new Pair(R.drawable.chess_kdt45, new Pair(0.569f, 0.06f)));  // King
-                    put(5, new Pair(R.drawable.chess_bdt45, new Pair(0.689f, 0.06f)));  // Bishop
-                    put(6, new Pair(R.drawable.chess_ndt45, new Pair(0.819f, 0.06f)));  // Knight
-                    put(7, new Pair(R.drawable.chess_rdt45, new Pair(0.939f, 0.06f)));  // Rook
-                    put(8, new Pair(R.drawable.chess_pdt45, new Pair(0.059f, 0.185f))); // Pawns
-                    put(9, new Pair(R.drawable.chess_pdt45, new Pair(0.189f, 0.185f)));
-                    put(10, new Pair(R.drawable.chess_pdt45, new Pair(0.319f, 0.185f)));
-                    put(11, new Pair(R.drawable.chess_pdt45, new Pair(0.439f, 0.185f)));
-                    put(12, new Pair(R.drawable.chess_pdt45, new Pair(0.569f, 0.185f)));
-                    put(13, new Pair(R.drawable.chess_pdt45, new Pair(0.689f, 0.185f)));
-                    put(14, new Pair(R.drawable.chess_pdt45, new Pair(0.819f, 0.185f)));
-                    put(15, new Pair(R.drawable.chess_pdt45, new Pair(0.939f, 0.185f)));
+    private Map<Integer, ArrayList<Object>> initialPieceMap = new HashMap<Integer, ArrayList<Object>>() {
+        {
+            // Black Pieces (Leftmost to Rightmost)
+            put(0, new ArrayList<Object>(Arrays.asList(R.drawable.chess_rdt45, 0.059f, 0.06f, 'b')));  // Rook
+            put(1, new ArrayList<Object>(Arrays.asList(R.drawable.chess_ndt45, 0.189f, 0.06f, 'b')));  // Knight
+            put(2, new ArrayList<Object>(Arrays.asList(R.drawable.chess_bdt45, 0.319f, 0.06f, 'b')));  // Bishop
+            put(3, new ArrayList<Object>(Arrays.asList(R.drawable.chess_qdt45, 0.439f, 0.06f, 'b')));  // Queen
+            put(4, new ArrayList<Object>(Arrays.asList(R.drawable.chess_kdt45, 0.569f, 0.06f, 'b')));  // King
+            put(5, new ArrayList<Object>(Arrays.asList(R.drawable.chess_bdt45, 0.689f, 0.06f, 'b')));  // Bishop
+            put(6, new ArrayList<Object>(Arrays.asList(R.drawable.chess_ndt45, 0.819f, 0.06f, 'b')));  // Knight
+            put(7, new ArrayList<Object>(Arrays.asList(R.drawable.chess_rdt45, 0.939f, 0.06f, 'b')));  // Rook
+            put(8, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.059f, 0.185f, 'b'))); // Pawns
+            put(9, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.189f, 0.185f, 'b')));
+            put(10, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.319f, 0.185f, 'b')));
+            put(11, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.439f, 0.185f, 'b')));
+            put(12, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.569f, 0.185f, 'b')));
+            put(13, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.689f, 0.185f, 'b')));
+            put(14, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.819f, 0.185f, 'b')));
+            put(15, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.939f, 0.185f, 'b')));
 
-                    // White Pieces (Leftmost to Rightmost)
-                    put(16, new Pair(R.drawable.chess_plt45, new Pair(0.059f, 0.812f))); // Pawns
-                    put(17, new Pair(R.drawable.chess_plt45, new Pair(0.189f, 0.812f)));
-                    put(18, new Pair(R.drawable.chess_plt45, new Pair(0.319f, 0.812f)));
-                    put(19, new Pair(R.drawable.chess_plt45, new Pair(0.439f, 0.812f)));
-                    put(20, new Pair(R.drawable.chess_plt45, new Pair(0.569f, 0.812f)));
-                    put(21, new Pair(R.drawable.chess_plt45, new Pair(0.689f, 0.812f)));
-                    put(22, new Pair(R.drawable.chess_plt45, new Pair(0.819f, 0.812f)));
-                    put(23, new Pair(R.drawable.chess_plt45, new Pair(0.939f, 0.812f)));
-                    put(24, new Pair(R.drawable.chess_rlt45, new Pair(0.059f, 0.94f)));  // Rook
-                    put(25, new Pair(R.drawable.chess_nlt45, new Pair(0.189f, 0.94f)));  // Knight
-                    put(26, new Pair(R.drawable.chess_blt45, new Pair(0.319f, 0.94f)));  // Bishop
-                    put(27, new Pair(R.drawable.chess_qlt45, new Pair(0.439f, 0.94f)));  // Queen
-                    put(28, new Pair(R.drawable.chess_klt45, new Pair(0.569f, 0.94f)));  // King
-                    put(29, new Pair(R.drawable.chess_blt45, new Pair(0.689f, 0.94f)));  // Bishop
-                    put(30, new Pair(R.drawable.chess_nlt45, new Pair(0.819f, 0.94f)));  // Knight
-                    put(31, new Pair(R.drawable.chess_rlt45, new Pair(0.939f, 0.94f)));  // Rook
+            // White Pieces (Leftmost to Rightmost)
+            put(16, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.059f, 0.812f, 'w'))); // Pawns
+            put(17, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.189f, 0.812f, 'w')));
+            put(18, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.319f, 0.812f, 'w')));
+            put(19, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.439f, 0.812f, 'w')));
+            put(20, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.569f, 0.812f, 'w')));
+            put(21, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.689f, 0.812f, 'w')));
+            put(22, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.819f, 0.812f, 'w')));
+            put(23, new ArrayList<Object>(Arrays.asList(R.drawable.chess_plt45, 0.939f, 0.812f, 'w')));
+            put(24, new ArrayList<Object>(Arrays.asList(R.drawable.chess_rlt45, 0.059f, 0.94f, 'w')));  // Rook
+            put(25, new ArrayList<Object>(Arrays.asList(R.drawable.chess_nlt45, 0.189f, 0.94f, 'w')));  // Knight
+            put(26, new ArrayList<Object>(Arrays.asList(R.drawable.chess_blt45, 0.319f, 0.94f, 'w')));  // Bishop
+            put(27, new ArrayList<Object>(Arrays.asList(R.drawable.chess_qlt45, 0.439f, 0.94f, 'w')));  // Queen
+            put(28, new ArrayList<Object>(Arrays.asList(R.drawable.chess_klt45, 0.569f, 0.94f, 'w')));  // King
+            put(29, new ArrayList<Object>(Arrays.asList(R.drawable.chess_blt45, 0.689f, 0.94f, 'w')));  // Bishop
+            put(30, new ArrayList<Object>(Arrays.asList(R.drawable.chess_nlt45, 0.819f, 0.94f, 'w')));  // Knight
+            put(31, new ArrayList<Object>(Arrays.asList(R.drawable.chess_rlt45, 0.939f, 0.94f, 'w')));  // Rook
 
-                }
-            };
+        }
+    };
 
 
     //1x: Black --- 11:BRooks 12:BKnights 13:BBishops 14:BQueen 15:BKing 16:BPawn
@@ -230,32 +229,33 @@ public class Game {
         //
         for(int id = 0; id < numPieces; ++id){
 
-            int drawableID = initialPieceMap.get(id).left;
-            float x = initialPieceMap.get(id).right.left;
-            float y = initialPieceMap.get(id).right.right;
+            int drawableID = (Integer)initialPieceMap.get(id).get(0);
+            float x = (Float)initialPieceMap.get(id).get(1);
+            float y = (Float)initialPieceMap.get(id).get(2);
+            char color = (Character)initialPieceMap.get(id).get(3);
             ChessPiece piece;
 
             if(Arrays.asList(0, 7, 24, 31).contains(id)){
-                piece = new Rook(context, id, drawableID, x, y);
+                piece = new Rook(context, id, drawableID, x, y, color);
             }
             else if(Arrays.asList(1, 6, 25, 30).contains(id)){
-                piece = new Knight(context, id, drawableID, x, y);
+                piece = new Knight(context, id, drawableID, x, y, color);
             }
             else if(Arrays.asList(2, 5, 26, 29).contains(id)){
-                piece = new Bishop(context, id, drawableID, x, y);
+                piece = new Bishop(context, id, drawableID, x, y, color);
             }
             else if(Arrays.asList(3, 27).contains(id)){
-                piece = new Queen(context, id, drawableID, x, y);
+                piece = new Queen(context, id, drawableID, x, y, color);
             }
             else if(Arrays.asList(4, 28).contains(id)){
-                piece = new King(context, id, drawableID, x, y);
+                piece = new King(context, id, drawableID, x, y, color);
             }
             else{
                 if(BuildConfig.DEBUG && !(Arrays.asList(8, 9, 10, 11, 12, 13, 14, 15,
                         16, 17, 18, 19, 20, 21, 22, 23).contains(id))){
                     throw new AssertionError("ID should belong to a Pawn");
                 }
-                piece = new Pawn(context, id, drawableID, x, y);
+                piece = new Pawn(context, id, drawableID, x, y, color);
             }
             piece.setBoardPosition(row, column);
             pieces.add(piece);

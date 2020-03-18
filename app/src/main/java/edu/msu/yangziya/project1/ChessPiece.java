@@ -68,12 +68,16 @@ public class ChessPiece {
      */
     protected int columnIndex;
 
+    /**
+     * 'b' if Black, 'w' if White
+     */
+    protected char color;
 
-
-    public ChessPiece(Context context, int id, int drawableId, float x, float y) {
+    public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.color = color;
 
         piece = BitmapFactory.decodeResource(context.getResources(), drawableId);
     }
@@ -151,17 +155,18 @@ public class ChessPiece {
             for (int j=0; j<8; j++){
                 if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&
                         Math.abs(y - yPositions[j]) < SNAP_DISTANCE) {
-                    if (isValidMove(i, j, currentBoard)){
-                        this.movingToRowIndex = i;
-                        this.movingToColumnIndex = j;
+                    if(isValidMove(i, j, currentBoard)){
+                        this.movingToRowIndex = j;
+                        this.movingToColumnIndex = i;
                         x = xPositions[i];
                         y = yPositions[j];
+                        return true;
                     }
                     else{
                         x=backupX;
                         y=backupY;
                     }
-                    return true;
+//                    return true;
                 }
             }
         }
@@ -170,26 +175,19 @@ public class ChessPiece {
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
         ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
-        List<Integer> blackPieces = Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
-        List<Integer> whitePieces = Arrays.asList(16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31);
 
-        if (targetPiece == null){
+        if (targetPiece == null){  // Empty space, ok to move
             return true;
         }
-        else if(blackPieces.contains(this.id) && blackPieces.contains(targetPiece.id)){
+        else if(this.color == 'b' && targetPiece.color == 'b'){  // Don't move on fellow black piece
             return false;
         }
-        else if(whitePieces.contains(this.id) && whitePieces.contains(targetPiece.id)){
+        else if(this.color == 'w' && targetPiece.color == 'w'){  // Don't move on fellow white piece
             return false;
         }
         else{
             return true;
         }
-        //
-        //
-        // Check if moving piece to the same spot
-        //
-        //
 
     }
 
