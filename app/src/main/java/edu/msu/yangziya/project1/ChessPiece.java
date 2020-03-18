@@ -163,8 +163,13 @@ public class ChessPiece {
                         return true;
                     }
                     else{
+                        int xIndex = Arrays.binarySearch(xPositions, backupX);
+                        this.movingToRowIndex = xIndex;
+                        int yIndex = Arrays.binarySearch(yPositions, backupY);
+                        this.movingToColumnIndex = yIndex;
                         x=backupX;
                         y=backupY;
+                        return true;
                     }
                 }
             }

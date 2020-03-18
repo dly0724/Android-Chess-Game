@@ -20,8 +20,8 @@ public class Knight extends ChessPiece {
             return false;
         }
         // Check for "L" shape movement
-        else if(!((abs(rowIndex-TpX)==1 && abs(columnIndex-TpY)==2) ||
-                (abs(rowIndex-TpX)==2 && abs(columnIndex-TpY)==1))){
+        else if(!((abs(rowIndex-TpY)==1 && abs(columnIndex-TpX)==2) ||
+                (abs(rowIndex-TpY)==2 && abs(columnIndex-TpX)==1))){
             return false;
         }
         else{
