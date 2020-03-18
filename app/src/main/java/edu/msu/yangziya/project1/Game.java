@@ -160,22 +160,23 @@ public class Game {
                     put(15, new Pair(R.drawable.chess_pdt45, new Pair(0.939f, 0.185f)));
 
                     // White Pieces (Leftmost to Rightmost)
-                    put(16, new Pair(R.drawable.chess_rlt45, new Pair(0.059f, 0.94f)));  // Rook
-                    put(17, new Pair(R.drawable.chess_nlt45, new Pair(0.189f, 0.94f)));  // Knight
-                    put(18, new Pair(R.drawable.chess_blt45, new Pair(0.319f, 0.94f)));  // Bishop
-                    put(19, new Pair(R.drawable.chess_qlt45, new Pair(0.439f, 0.94f)));  // Queen
-                    put(20, new Pair(R.drawable.chess_klt45, new Pair(0.569f, 0.94f)));  // King
-                    put(21, new Pair(R.drawable.chess_blt45, new Pair(0.689f, 0.94f)));  // Bishop
-                    put(22, new Pair(R.drawable.chess_nlt45, new Pair(0.819f, 0.94f)));  // Knight
-                    put(23, new Pair(R.drawable.chess_rlt45, new Pair(0.939f, 0.94f)));  // Rook
-                    put(24, new Pair(R.drawable.chess_plt45, new Pair(0.059f, 0.812f))); // Pawns
-                    put(25, new Pair(R.drawable.chess_plt45, new Pair(0.189f, 0.812f)));
-                    put(26, new Pair(R.drawable.chess_plt45, new Pair(0.319f, 0.812f)));
-                    put(27, new Pair(R.drawable.chess_plt45, new Pair(0.439f, 0.812f)));
-                    put(28, new Pair(R.drawable.chess_plt45, new Pair(0.569f, 0.812f)));
-                    put(29, new Pair(R.drawable.chess_plt45, new Pair(0.689f, 0.812f)));
-                    put(30, new Pair(R.drawable.chess_plt45, new Pair(0.819f, 0.812f)));
-                    put(31, new Pair(R.drawable.chess_plt45, new Pair(0.939f, 0.812f)));
+                    put(16, new Pair(R.drawable.chess_plt45, new Pair(0.059f, 0.812f))); // Pawns
+                    put(17, new Pair(R.drawable.chess_plt45, new Pair(0.189f, 0.812f)));
+                    put(18, new Pair(R.drawable.chess_plt45, new Pair(0.319f, 0.812f)));
+                    put(19, new Pair(R.drawable.chess_plt45, new Pair(0.439f, 0.812f)));
+                    put(20, new Pair(R.drawable.chess_plt45, new Pair(0.569f, 0.812f)));
+                    put(21, new Pair(R.drawable.chess_plt45, new Pair(0.689f, 0.812f)));
+                    put(22, new Pair(R.drawable.chess_plt45, new Pair(0.819f, 0.812f)));
+                    put(23, new Pair(R.drawable.chess_plt45, new Pair(0.939f, 0.812f)));
+                    put(24, new Pair(R.drawable.chess_rlt45, new Pair(0.059f, 0.94f)));  // Rook
+                    put(25, new Pair(R.drawable.chess_nlt45, new Pair(0.189f, 0.94f)));  // Knight
+                    put(26, new Pair(R.drawable.chess_blt45, new Pair(0.319f, 0.94f)));  // Bishop
+                    put(27, new Pair(R.drawable.chess_qlt45, new Pair(0.439f, 0.94f)));  // Queen
+                    put(28, new Pair(R.drawable.chess_klt45, new Pair(0.569f, 0.94f)));  // King
+                    put(29, new Pair(R.drawable.chess_blt45, new Pair(0.689f, 0.94f)));  // Bishop
+                    put(30, new Pair(R.drawable.chess_nlt45, new Pair(0.819f, 0.94f)));  // Knight
+                    put(31, new Pair(R.drawable.chess_rlt45, new Pair(0.939f, 0.94f)));  // Rook
+
                 }
             };
 
@@ -420,6 +421,8 @@ public class Game {
 
                 pieces.remove(dragging);
                 pieces.add(0,dragging);
+
+
                 // The puzzle is done
                 // Instantiate a dialog box builder
                 //AlertDialog.Builder builder =
