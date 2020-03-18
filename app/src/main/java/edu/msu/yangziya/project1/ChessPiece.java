@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -35,17 +36,37 @@ public class ChessPiece {
     protected int id;
 
     protected Game game = new Game();
-    /*
-     * map positions
+    /**
+     * Map positions
      */
     protected float[] xPositions = game.xPositions;
     protected float[] yPositions = game.yPositions;
 
-    /* We consider a piece to be in the right location if within
+    /**
+     * We consider a piece to be in the right location if within
      * this distance.
      */
     final static float SNAP_DISTANCE = 0.07f;
 
+    /**
+     * The index in the board array of the row to which this piece is moving
+     */
+    protected Integer movingToRowIndex;
+
+    /**
+     * The index in the board array of the column to which this piece is moving
+     */
+    protected Integer movingToColumnIndex;
+
+    /**
+     * Index of the row in board array at which this piece currently resides
+     */
+    protected int rowIndex;
+
+    /**
+     * Index of the column in board array at which this piece currently resides
+     */
+    protected int columnIndex;
 
 
 
@@ -130,14 +151,56 @@ public class ChessPiece {
             for (int j=0; j<8; j++){
                 if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&
                         Math.abs(y - yPositions[j]) < SNAP_DISTANCE) {
-                    x = xPositions[i];
-                    y = yPositions[j];
+                    if (isValidMove(i, j, currentBoard)){
+                        this.movingToRowIndex = i;
+                        this.movingToColumnIndex = j;
+                        x = xPositions[i];
+                        y = yPositions[j];
+                    }
+                    else{
+                        x=backupX;
+                        y=backupY;
+                    }
                     return true;
                 }
             }
         }
-
         return false;
+    }
+
+    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
+        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+        List<Integer> blackPieces = Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+        List<Integer> whitePieces = Arrays.asList(16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31);
+
+        if (targetPiece == null){
+            return true;
+        }
+        else if(blackPieces.contains(this.id) && blackPieces.contains(targetPiece.id)){
+            return false;
+        }
+        else if(whitePieces.contains(this.id) && whitePieces.contains(targetPiece.id)){
+            return false;
+        }
+        else{
+            return true;
+        }
+        //
+        //
+        // Check if moving piece to the same spot
+        //
+        //
+
+    }
+
+    /**
+     * Update the indices at which this piece resides in the board array
+     * @param row row index
+     * @param col col index
+     */
+    public void setBoardPosition(int row, int col){
+        this.rowIndex = row;
+        this.columnIndex = col;
     }
 
 

@@ -125,6 +125,9 @@ public class Game {
         public L getLeft() { return left; }
         public R getRight() { return right; }
 
+//        public L setLeft(L left) { this.left = left; }
+//        public R setRight(R right) { this.right = right; }
+
         @Override
         public int hashCode() { return left.hashCode() ^ right.hashCode(); }
 
@@ -220,6 +223,7 @@ public class Game {
 
         List<ChessPiece> currentRow = new ArrayList<>();
         int column = 0;
+        int row = 0;
 
         //
         // Load the pieces
@@ -253,6 +257,7 @@ public class Game {
                 }
                 piece = new Pawn(context, id, drawableID, x, y);
             }
+            piece.setBoardPosition(row, column);
             pieces.add(piece);
             currentRow.add(piece);
 
@@ -260,6 +265,12 @@ public class Game {
             if(column == 8){
                 initialBoardArray.add(new ArrayList<>(currentRow));
                 currentRow.clear();
+                if(row == 1){
+                    row = 6;  // skip over the empty rows
+                }
+                else {
+                    ++row;
+                }
                 column = 0;
             }
         }
@@ -422,7 +433,8 @@ public class Game {
                 pieces.remove(dragging);
                 pieces.add(0,dragging);
 
-                UpdateBoard(dragging);
+                updateBoardAfterMove(dragging);
+
                 // The puzzle is done
                 // Instantiate a dialog box builder
                 //AlertDialog.Builder builder =
@@ -439,25 +451,19 @@ public class Game {
         return false;
     }
 
-    public void UpdateBoard(ChessPiece draggingPiece) {
-        Pair<Integer, Integer> position;  // indices in 2-D array of the piece we're dragging
-        boolean found = false;
-        for(int i = 0; i < currentBoardArray.size(); ++i){
-            for(int j = 0; j < currentBoardArray.size(); ++j){
-                ChessPiece piece = currentBoardArray.get(i).get(j);
-                int id;
-                if(piece != null){
-                    id = piece.id;
-                    if(draggingPiece.id == id){
-                        position = new Pair(i, j);
-                        found = true;
-                        break;
-                    }
-                }
+    public void updateBoardAfterMove(ChessPiece draggingPiece) {
+        int sourceRow = draggingPiece.rowIndex;
+        int sourceCol = draggingPiece.columnIndex;
+        int destRow = draggingPiece.movingToRowIndex;
+        int destCol = draggingPiece.movingToColumnIndex;
 
-            }
-            if(found) break;
-        }
+        // Delete at old position
+        currentBoardArray.get(sourceRow).set(sourceCol, null);
+        // Set at new position
+        currentBoardArray.get(destRow).set(destCol, draggingPiece);
+        // Tell the piece where it is at now
+        currentBoardArray.get(destRow).get(destCol).setBoardPosition(destRow, destCol);
+
     }
 
     /**
