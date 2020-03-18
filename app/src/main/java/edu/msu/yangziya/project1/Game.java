@@ -382,14 +382,15 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap(lastRelXind, lastRelYind, currentBoardArray)) {
+            if(dragging.maybeSnap(lastRelXind, lastRelYind, currentBoardArray).get(0)) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
                 pieces.remove(dragging);
                 pieces.add(0,dragging);
-
-                updateBoardAfterMove(dragging);
+                if (dragging.maybeSnap(lastRelXind, lastRelYind, currentBoardArray).get(1)){
+                    updateBoardAfterMove(dragging);
+                }
 
                 // The puzzle is done
                 // Instantiate a dialog box builder
