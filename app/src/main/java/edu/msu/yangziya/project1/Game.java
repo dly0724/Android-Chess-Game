@@ -231,24 +231,24 @@ public class Game {
             float y = initialPieceMap.get(id).right.right;
             ChessPiece piece;
 
-            if(Arrays.asList(0, 7, 16, 23).contains(id)){
+            if(Arrays.asList(0, 7, 24, 31).contains(id)){
                 piece = new Rook(context, id, drawableID, x, y);
             }
-            else if(Arrays.asList(1, 6, 17, 22).contains(id)){
+            else if(Arrays.asList(1, 6, 25, 30).contains(id)){
                 piece = new Knight(context, id, drawableID, x, y);
             }
-            else if(Arrays.asList(2, 5, 18, 21).contains(id)){
+            else if(Arrays.asList(2, 5, 26, 29).contains(id)){
                 piece = new Bishop(context, id, drawableID, x, y);
             }
-            else if(Arrays.asList(3, 19).contains(id)){
+            else if(Arrays.asList(3, 27).contains(id)){
                 piece = new Queen(context, id, drawableID, x, y);
             }
-            else if(Arrays.asList(4, 20).contains(id)){
+            else if(Arrays.asList(4, 28).contains(id)){
                 piece = new King(context, id, drawableID, x, y);
             }
             else{
                 if(BuildConfig.DEBUG && !(Arrays.asList(8, 9, 10, 11, 12, 13, 14, 15,
-                        24, 25, 26, 27, 28, 29, 30, 31).contains(id))){
+                        16, 17, 18, 19, 20, 21, 22, 23).contains(id))){
                     throw new AssertionError("ID should belong to a Pawn");
                 }
                 piece = new Pawn(context, id, drawableID, x, y);
