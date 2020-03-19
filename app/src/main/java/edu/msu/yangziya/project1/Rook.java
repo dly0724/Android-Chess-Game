@@ -12,6 +12,7 @@ public class Rook extends ChessPiece {
     }
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
+        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
         if(!super.isValidMove(TpX, TpY, currentBoard)){
             return false;
         }
@@ -25,6 +26,8 @@ public class Rook extends ChessPiece {
                     return false;
                 }
             }
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
         // Check for horizontal movement
@@ -37,6 +40,8 @@ public class Rook extends ChessPiece {
                     return false;
                 }
             }
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
         else{

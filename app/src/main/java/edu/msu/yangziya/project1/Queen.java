@@ -12,6 +12,8 @@ public class Queen extends ChessPiece {
     }
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
+        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+
         if(!super.isValidMove(TpX, TpY, currentBoard)){
             return false;
         }
@@ -25,6 +27,8 @@ public class Queen extends ChessPiece {
                     return false;
                 }
             }
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
         // Check for horizontal movement
@@ -37,6 +41,8 @@ public class Queen extends ChessPiece {
                     return false;
                 }
             }
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
 
@@ -45,14 +51,17 @@ public class Queen extends ChessPiece {
             for (int i= 1;i<abs(rowIndex-TpY);i++){
                 if ((rowIndex-TpY)<0 && (columnIndex-TpX)<0 && currentBoard.get(rowIndex+i).get(columnIndex+i )!=null){  //right-bottom
                     return false;
-                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)<0 && currentBoard.get(TpY+i).get(columnIndex+i )!=null) { //right-top
+                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)<0 && currentBoard.get(rowIndex-i).get(columnIndex+i )!=null) { //right-top
                     return false;
-                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)>0 && currentBoard.get(TpY+i).get(TpX+i )!=null) { //left-top
+                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)>0 && currentBoard.get(rowIndex-i).get(columnIndex-i )!=null) { //left-top
                     return false;
-                }else if ((rowIndex-TpY)<0 && (columnIndex-TpX)>0 && currentBoard.get(rowIndex+i).get(TpX+i )!=null) { //left-bottom
+                }else if ((rowIndex-TpY)<0 && (columnIndex-TpX)>0 && currentBoard.get(rowIndex+i).get(columnIndex-i )!=null) { //left-bottom
                     return false;
                 }
+
             }
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
         else{

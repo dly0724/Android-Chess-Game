@@ -72,6 +72,11 @@ public class ChessPiece {
      * 'b' if Black, 'w' if White
      */
     protected char color;
+    /**
+     * delete the opponent piece in target space
+     */
+    protected boolean deletePieceInTarget;
+    protected ChessPiece deletedPiece;
 
     public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
@@ -167,10 +172,8 @@ public class ChessPiece {
                         int yIndex = Arrays.binarySearch(yPositions, backupY);
                         this.movingToRowIndex = yIndex;
                         this.movingToColumnIndex = xIndex;
-
                         x=backupX;
                         y=backupY;
-
                         return true;
                     }
                 }
@@ -181,7 +184,7 @@ public class ChessPiece {
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
         ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
-
+        deletePieceInTarget = false;
         if (targetPiece == null){  // Empty space, ok to move
             return true;
         }

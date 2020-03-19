@@ -107,6 +107,7 @@ public class Game {
             put(4, new ArrayList<Object>(Arrays.asList(R.drawable.chess_kdt45, 0.569f, 0.06f, 'b')));  // King
             put(5, new ArrayList<Object>(Arrays.asList(R.drawable.chess_bdt45, 0.689f, 0.06f, 'b')));  // Bishop
             put(6, new ArrayList<Object>(Arrays.asList(R.drawable.chess_ndt45, 0.819f, 0.06f, 'b')));  // Knight
+            put(6, new ArrayList<Object>(Arrays.asList(R.drawable.chess_ndt45, 0.819f, 0.06f, 'b')));  // Knight
             put(7, new ArrayList<Object>(Arrays.asList(R.drawable.chess_rdt45, 0.939f, 0.06f, 'b')));  // Rook
             put(8, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.059f, 0.185f, 'b'))); // Pawns
             put(9, new ArrayList<Object>(Arrays.asList(R.drawable.chess_pdt45, 0.189f, 0.185f, 'b')));
@@ -412,6 +413,15 @@ public class Game {
         int sourceCol = draggingPiece.columnIndex;
         int destRow = draggingPiece.movingToRowIndex;
         int destCol = draggingPiece.movingToColumnIndex;
+        boolean deleteOpponentPiece = draggingPiece.deletePieceInTarget;
+
+        //If there is an opponent piece in the new position
+        if (deleteOpponentPiece){
+            ChessPiece deletePiece = draggingPiece.deletedPiece;
+            pieces.remove(deletePiece);
+            currentBoardArray.get(destRow).set(destCol, null);
+
+        }
 
         // Delete at old position
         currentBoardArray.get(sourceRow).set(sourceCol, null);

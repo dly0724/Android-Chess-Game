@@ -17,6 +17,8 @@ public class Pawn extends ChessPiece {
     }
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
+        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+
         if(!super.isValidMove(TpX, TpY, currentBoard)){
             return false;
         }
@@ -60,6 +62,8 @@ public class Pawn extends ChessPiece {
             isFirstMove = false;
         }
 
+        deletePieceInTarget = true;
+        deletedPiece = targetPiece;
         return true;
     }
 }

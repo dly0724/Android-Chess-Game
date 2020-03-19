@@ -12,6 +12,8 @@ public class King extends ChessPiece {
     }
 
     protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
+        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+
         if(!super.isValidMove(TpX, TpY, currentBoard)){
             return false;
         }
@@ -21,6 +23,8 @@ public class King extends ChessPiece {
             return false;
         }
         else{
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
             return true;
         }
     }
