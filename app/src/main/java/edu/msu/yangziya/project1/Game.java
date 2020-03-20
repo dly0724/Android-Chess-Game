@@ -39,7 +39,7 @@ public class Game {
      * Percentage of the display width or height that
      * is occupied by the game.
      */
-    final static float SCALE_IN_VIEW = 0.9f;
+    final static float SCALE_IN_VIEW = 0.8f;
 
     /**
      * Paint for filling the area the game is in
