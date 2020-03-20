@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements ChoiceDialogFragm
         else{
             namePlayer2_2 = namePlayer1;
         }
+        Log.e("NamePlayer1", namePlayer1_1);
+        Log.e("NamePlayer2", namePlayer2_2);
         intent.putExtra("NamePlayer1", namePlayer1_1);
         intent.putExtra("NamePlayer2", namePlayer2_2);
         startActivity(intent);

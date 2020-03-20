@@ -36,6 +36,8 @@ public class GameActivity extends AppCompatActivity {
         namePlayer1 = intent.getStringExtra("NamePlayer1");
         namePlayer2 = intent.getStringExtra("NamePlayer2");
 
+        ((TextView)findViewById(R.id.player)).setText(namePlayer1 + " V.S. " + namePlayer2);
+
         if(bundle != null) {
             // We have saved state
             GameView view = (GameView)this.findViewById(R.id.gameView);
