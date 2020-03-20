@@ -1,17 +1,18 @@
 package edu.msu.yangziya.project1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity {
     private String namePlayer1 = "";
     private String namePlayer2 = "";
     private static final String PARAMETERS = "parameters";
     private GameView gameView = null;
+    private int current = 1;
 
     /**
      * Save the instance state into a bundle
@@ -81,11 +82,23 @@ public class GameActivity extends AppCompatActivity {
 
     public void onQuit(View view){
         Intent intent = new Intent(this, GameOverActivity.class);
+        if (current == 1){
+            intent.putExtra("winner", namePlayer1);
+            intent.putExtra("loser", namePlayer2);
+        }else {
+            intent.putExtra("winner", namePlayer2);
+            intent.putExtra("loser", namePlayer1);
+        }
+        startActivity(intent);
         startActivity(intent);
     }
 
-    public void onDone(View view){
+    public void onDone(View view) {
+        current = 1;
+    }
 
+    public void onDoneP1(View view) {
+        current = 2;
     }
 
     /**
