@@ -22,8 +22,21 @@ public class Pawn extends ChessPiece {
         if(!super.isValidMove(TpX, TpY, currentBoard)){
             return false;
         }
-        else if(abs(columnIndex-TpX) > 0){  // Moved to the side in either direction
+        else if(abs(columnIndex-TpX) > 1){  // Moved to the side in either direction
             return false;
+        }
+        else if (abs(columnIndex-TpX) == 1&& targetPiece == null){
+            return false;
+        }
+        else if(columnIndex-TpX == 1 && targetPiece != null){ //move to left diagonal
+            if(targetPiece.color == this.color){
+                return false;
+            }
+        }
+        else if(TpX- columnIndex == 1 && targetPiece != null){  //move to right diagonal
+            if(targetPiece.color == this.color){
+                return false;
+            }
         }
         else if(color == 'b'){
             if(TpY < rowIndex){  // Wrong direction
@@ -36,6 +49,11 @@ public class Pawn extends ChessPiece {
             }
             else if(isFirstMove && TpY-rowIndex > 2){  // Can move two spaces on first move
                 return false;
+            }
+            else if (!isFirstMove && TpY-rowIndex == 1){
+                if(currentBoard.get(TpY).get(TpX)!=null){
+                    return  false;
+                }
             }
             else if(!isFirstMove && TpY-rowIndex > 1) {  // Moved more than 1 space
                 return false;
@@ -52,6 +70,11 @@ public class Pawn extends ChessPiece {
             }
             else if(isFirstMove && rowIndex-TpY > 2){
                 return false;
+            }
+            else if (!isFirstMove && rowIndex-TpY == 1){
+                if(currentBoard.get(TpY).get(TpX)!=null){
+                    return  false;
+                }
             }
             else if(!isFirstMove && rowIndex-TpY > 1) {
                 return false;
