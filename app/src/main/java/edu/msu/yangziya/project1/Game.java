@@ -409,7 +409,7 @@ public class Game {
         boolean deleteOpponentPiece = draggingPiece.deletePieceInTarget;
 
         // show choose dialog
-        if (/*destRow == 8*/true){
+        if (destRow == 0){
             singleChoiceDialogeListener.showDialoge();
         }
 
