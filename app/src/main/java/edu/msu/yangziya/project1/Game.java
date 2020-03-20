@@ -286,7 +286,7 @@ public class Game {
 
 
         for(ChessPiece piece : pieces) {
-            piece.draw(canvas, marginX, marginY, gameSize, scaleFactor);
+            piece.draw(canvas, marginX, marginY, gameSize, (float) (scaleFactor * 0.65));
         }
 
         canvas.save();
