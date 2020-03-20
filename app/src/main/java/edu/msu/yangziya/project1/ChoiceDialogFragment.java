@@ -1,15 +1,13 @@
 package edu.msu.yangziya.project1;
 
-import android.app.Dialog;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
-import java.util.ArrayList;
 
 
 public class ChoiceDialogFragment extends DialogFragment {
@@ -20,6 +18,10 @@ public class ChoiceDialogFragment extends DialogFragment {
         void onPositiveButtonClicked(String[] list, int position);
 
         void onNegativeButtonClicked();
+    }
+
+    public interface SingleChoiceDialogeListener {
+        void showDialoge();
     }
 
     SingleChoiceListener mListener;
@@ -42,6 +44,33 @@ public class ChoiceDialogFragment extends DialogFragment {
 
         final String[] list = getActivity().getResources().getStringArray(R.array.choice_items);
 
+
+        builder.setTitle("Select a piece to promote to: ");
+        builder.setItems(new CharSequence[]
+                        {"Queen", "Rook", "Knight", "Bishop"},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+                                mListener.onPositiveButtonClicked(list, which);
+                                break;
+                            case 1:
+                                mListener.onPositiveButtonClicked(list, which);
+                                break;
+                            case 2:
+                                mListener.onPositiveButtonClicked(list, which);
+                                break;
+                            case 3:
+                                mListener.onPositiveButtonClicked(list, which);
+                                break;
+                        }
+                    }
+                });
+
+
+/*
         builder.setTitle("Select a piece to promote to: ")
                 .setSingleChoiceItems(list, position, new DialogInterface.OnClickListener() {
                     @Override
@@ -77,6 +106,7 @@ public class ChoiceDialogFragment extends DialogFragment {
                         mListener.onPositiveButtonClicked(list, position);
                     }
                 });
+*/
 
         return builder.create();
     }

@@ -1,37 +1,23 @@
 package edu.msu.yangziya.project1;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import static java.lang.System.in;
 
 
 public class Game {
@@ -156,6 +142,9 @@ public class Game {
 
     private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
+    Context context;
+    static ChoiceDialogFragment.SingleChoiceDialogeListener singleChoiceDialogeListener;
+
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -418,6 +407,11 @@ public class Game {
         int destRow = draggingPiece.movingToRowIndex;
         int destCol = draggingPiece.movingToColumnIndex;
         boolean deleteOpponentPiece = draggingPiece.deletePieceInTarget;
+
+        // show choose dialog
+        if (/*destRow == 8*/true){
+            singleChoiceDialogeListener.showDialoge();
+        }
 
         //If there is an opponent piece in the new position
         if (deleteOpponentPiece){
