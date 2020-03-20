@@ -26,8 +26,10 @@ public class Rook extends ChessPiece {
                     return false;
                 }
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
         // Check for horizontal movement
@@ -40,8 +42,10 @@ public class Rook extends ChessPiece {
                     return false;
                 }
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
         else{

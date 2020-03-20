@@ -93,6 +93,10 @@ public class Game {
      */
     private final static String LOCATIONS = "Chess.locations";
     private final static String IDS = "Chess.ids";
+    private final static String PIECECHANGES = "Chess.pieceChanges";
+    private final static String CURRENTMAP = "Chess.currentMap";
+    private ArrayList<Integer> PieceChangesUpdate = new ArrayList<Integer>();
+    private ArrayList<Integer> currentMapHold = new ArrayList<Integer>();
 
     public float[] xPositions = {0.059f,0.189f,0.319f,0.439f,0.569f,0.689f,0.819f,0.939f};
     public float[] yPositions = {0.06f,0.185f,0.31f,0.435f,0.56f,0.685f,0.812f,0.94f};
@@ -418,6 +422,7 @@ public class Game {
         //If there is an opponent piece in the new position
         if (deleteOpponentPiece){
             ChessPiece deletePiece = draggingPiece.deletedPiece;
+            setDeletePieceID(deletePiece.getId());
             pieces.remove(deletePiece);
             currentBoardArray.get(destRow).set(destCol, null);
 
@@ -440,6 +445,19 @@ public class Game {
         float [] locations = new float[pieces.size() * 2];
         int [] ids = new int[pieces.size()];
 
+        currentMapHold.clear();
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if (currentBoardArray.get(i).get(j)!= null){
+                    currentMapHold.add(currentBoardArray.get(i).get(j).getId());
+                }
+                else{
+                    currentMapHold.add(null);
+                }
+            }
+        }
+        int testingVar = 1;
+
         for(int i=0;  i<pieces.size(); i++) {
             ChessPiece piece = pieces.get(i);
             locations[i*2] = piece.getX();
@@ -448,7 +466,8 @@ public class Game {
         }
         bundle.putFloatArray(LOCATIONS, locations);
         bundle.putIntArray(IDS,  ids);
-
+        bundle.putIntegerArrayList(PIECECHANGES,PieceChangesUpdate);
+        bundle.putIntegerArrayList(CURRENTMAP,currentMapHold);
     }
 
     /**
@@ -459,6 +478,30 @@ public class Game {
         float [] locations = bundle.getFloatArray(LOCATIONS);
         int [] ids = bundle.getIntArray(IDS);
 
+        if (bundle.getIntegerArrayList(PIECECHANGES).size() != 0){
+            PieceChangesUpdate = bundle.getIntegerArrayList(PIECECHANGES);
+            for (int i=0;i<pieces.size();i++){
+                if (PieceChangesUpdate.contains(pieces.get(i).getId())){
+                    pieces.set(i,null);
+                }
+            }
+
+        }
+        currentMapHold = bundle.getIntegerArrayList(CURRENTMAP);
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if (currentMapHold.get(i*8+j)!=null){
+                    currentBoardArray.get(i).set(j,pieces.get(currentMapHold.get(i*8+j)));
+                }
+                else{
+                    currentBoardArray.get(i).set(j,null);
+                }
+            }
+        }
+
+        int x = 2;
+        while (pieces.remove(null)){}
+        x =5;
 
         assert ids != null;
         for(int i = 0; i<ids.length-1; i++) {
@@ -499,5 +542,9 @@ public class Game {
 
     public void setPreviousBoardArray(List<List<ChessPiece>> previousBoardArray) {
         this.previousBoardArray = previousBoardArray;
+    }
+
+    private void setDeletePieceID(int ID){
+        PieceChangesUpdate.add(ID);
     }
 }

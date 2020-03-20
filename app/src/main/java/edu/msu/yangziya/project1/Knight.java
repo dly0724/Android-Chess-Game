@@ -26,8 +26,10 @@ public class Knight extends ChessPiece {
             return false;
         }
         else{
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
     }

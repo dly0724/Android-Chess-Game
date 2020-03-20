@@ -30,8 +30,10 @@ public class Bishop extends ChessPiece {
                 }
 
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
         else{

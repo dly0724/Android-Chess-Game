@@ -27,8 +27,10 @@ public class Queen extends ChessPiece {
                     return false;
                 }
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
         // Check for horizontal movement
@@ -41,8 +43,10 @@ public class Queen extends ChessPiece {
                     return false;
                 }
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
 
@@ -60,8 +64,10 @@ public class Queen extends ChessPiece {
                 }
 
             }
-            deletePieceInTarget = true;
-            deletedPiece = targetPiece;
+            if(targetPiece != null){
+                deletePieceInTarget = true;
+                deletedPiece = targetPiece;
+            }
             return true;
         }
         else{

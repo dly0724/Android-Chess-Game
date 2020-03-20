@@ -85,8 +85,10 @@ public class Pawn extends ChessPiece {
             isFirstMove = false;
         }
 
-        deletePieceInTarget = true;
-        deletedPiece = targetPiece;
+        if(targetPiece != null){
+            deletePieceInTarget = true;
+            deletedPiece = targetPiece;
+        }
         return true;
     }
 }
