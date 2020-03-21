@@ -1,17 +1,23 @@
 package edu.msu.yangziya.project1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import static edu.msu.yangziya.project1.Game.singleChoiceDialogeListener;
+
+public class GameActivity extends AppCompatActivity implements
+        ChoiceDialogFragment.SingleChoiceListener{
     private String namePlayer1 = "";
     private String namePlayer2 = "";
     private static final String PARAMETERS = "parameters";
     private GameView gameView = null;
+    private int current = 1;
 
     /**
      * Save the instance state into a bundle
@@ -31,6 +37,23 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_play);
 
         gameView = (GameView)findViewById(R.id.gameView);
+
+        ChoiceDialogFragment.SingleChoiceDialogeListener SingleChoice =
+                new ChoiceDialogFragment.SingleChoiceDialogeListener() {
+            @Override
+            public void showDialoge() {
+                // close existing dialog fragments
+                FragmentManager manager = getFragmentManager();
+                Fragment frag = manager.findFragmentByTag("ChoiceDialogFragment");
+                if (frag != null) {
+                    manager.beginTransaction().remove(frag).commit();
+                }
+                ChoiceDialogFragment choiceDialogFragment = new ChoiceDialogFragment();
+                choiceDialogFragment.show(manager, "ChoiceDialogFragment");
+            }
+        };
+        singleChoiceDialogeListener = SingleChoice;
+
 
         Intent intent = getIntent();
         namePlayer1 = intent.getStringExtra("NamePlayer1");
@@ -81,6 +104,14 @@ public class GameActivity extends AppCompatActivity {
 
     public void onQuit(View view){
         Intent intent = new Intent(this, GameOverActivity.class);
+        if (current == 1){
+            intent.putExtra("winner", namePlayer1);
+            intent.putExtra("loser", namePlayer2);
+        }else {
+            intent.putExtra("winner", namePlayer2);
+            intent.putExtra("loser", namePlayer1);
+        }
+        startActivity(intent);
         startActivity(intent);
     }
 
@@ -89,7 +120,9 @@ public class GameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GameOverActivity.class);
             startActivity(intent);
         }
+        current = 1;
     }
+
 
     /**
      * Get the game view
@@ -97,5 +130,16 @@ public class GameActivity extends AppCompatActivity {
      */
     private GameView getGameView() {
         return (GameView) this.findViewById(R.id.gameView);
+    }
+
+
+    @Override
+    public void onPositiveButtonClicked(String[] list, int position) {
+
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
     }
 }

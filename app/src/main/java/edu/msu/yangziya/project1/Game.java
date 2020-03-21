@@ -157,6 +157,9 @@ public class Game {
 
     private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
+    Context context;
+    static ChoiceDialogFragment.SingleChoiceDialogeListener singleChoiceDialogeListener;
+
     private char currentPlayer;
     public int toWin = 0;
 
@@ -436,6 +439,11 @@ public class Game {
         int destCol = draggingPiece.movingToColumnIndex;
         boolean deleteOpponentPiece = draggingPiece.deletePieceInTarget;
 
+        // show choose dialog
+        if (destRow == 0){
+            singleChoiceDialogeListener.showDialoge();
+        }
+
         //If there is an opponent piece in the new position
         if (deleteOpponentPiece){
             ChessPiece deletePiece = draggingPiece.deletedPiece;
@@ -496,6 +504,7 @@ public class Game {
                 }
             }
         }
+        int testingVar = 1;
 
         for(int i=0;  i<pieces.size(); i++) {
             ChessPiece piece = pieces.get(i);
@@ -539,7 +548,9 @@ public class Game {
             }
         }
 
+        int x = 2;
         while (pieces.remove(null)){}
+        x =5;
 
         assert ids != null;
         for(int i = 0; i<ids.length-1; i++) {
