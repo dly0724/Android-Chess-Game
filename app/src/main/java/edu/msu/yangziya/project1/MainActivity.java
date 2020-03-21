@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements ChoiceDialogFragm
     private String namePlayer1 = "";
     private String namePlayer2 = "";
 
+    public static final String PLAYER_ONE = "PLAYER_ONE";
+    public static final String PLAYER_TWO = "PLAYER_TWO";
+
     private String namePlayer1_1 = "";
     private String namePlayer2_2 = "";
 
@@ -98,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements ChoiceDialogFragm
         else{
             namePlayer2_2 = namePlayer1;
         }
-        Log.e("NamePlayer1", namePlayer1_1);
-        Log.e("NamePlayer2", namePlayer2_2);
-        intent.putExtra("NamePlayer1", namePlayer1_1);
-        intent.putExtra("NamePlayer2", namePlayer2_2);
+//        Log.e("NamePlayer1", namePlayer1_1);
+//        Log.e("NamePlayer2", namePlayer2_2);
+        intent.putExtra(PLAYER_ONE, namePlayer1_1);
+        intent.putExtra(PLAYER_TWO, namePlayer2_2);
         startActivity(intent);
     }
 

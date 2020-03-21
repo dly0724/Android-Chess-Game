@@ -4,8 +4,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +25,8 @@ public class GameActivity extends AppCompatActivity implements
     private static final String PARAMETERS = "parameters";
     private GameView gameView = null;
     private int current = 1;
+    private SparseArray<String> playerMap = new SparseArray<>();
+//    private Map<Integer, String> playerMap = new HashMap<>();
 
     /**
      * Save the instance state into a bundle
@@ -54,12 +63,20 @@ public class GameActivity extends AppCompatActivity implements
         };
         singleChoiceDialogeListener = SingleChoice;
 
-
         Intent intent = getIntent();
-        namePlayer1 = intent.getStringExtra("NamePlayer1");
-        namePlayer2 = intent.getStringExtra("NamePlayer2");
+        namePlayer1 = intent.getStringExtra("PLAYER_ONE");
+        namePlayer2 = intent.getStringExtra("PLAYER_TWO");
 
-        ((TextView)findViewById(R.id.player)).setText(namePlayer1 + " V.S. " + namePlayer2);
+        // Randomly decide which player plays as white (and therefore goes first)
+        String firstPlayer = new Random().nextBoolean() ? namePlayer1 : namePlayer2;
+        String secondPlayer = firstPlayer.equals(namePlayer1)  ? namePlayer2 : namePlayer1;
+
+        // Map player number to name (player 1 plays as white)
+        playerMap.append(1, firstPlayer);
+        playerMap.append(2, secondPlayer);
+
+        gameView.setCurrentPlayer(current);
+        setTurnHeader();
 
         if(bundle != null) {
             // We have saved state
@@ -105,22 +122,30 @@ public class GameActivity extends AppCompatActivity implements
     public void onQuit(View view){
         Intent intent = new Intent(this, GameOverActivity.class);
         if (current == 1){
-            intent.putExtra("winner", namePlayer1);
-            intent.putExtra("loser", namePlayer2);
-        }else {
             intent.putExtra("winner", namePlayer2);
             intent.putExtra("loser", namePlayer1);
+        }
+        else {
+            intent.putExtra("winner", namePlayer1);
+            intent.putExtra("loser", namePlayer2);
         }
         startActivity(intent);
         startActivity(intent);
     }
 
     public void onDone(View view) {
-        current = 1;
+        current = current == 2 ? 1: 2;  // toggle the current player
+        setTurnHeader();
+        getGameView().setCurrentPlayer(current);
     }
 
-    public void onDoneP1(View view) {
-        current = 2;
+    public void setTurnHeader(){
+        if(current == 1){
+            ((TextView)findViewById(R.id.player)).setText(playerMap.get(1) + "'s Turn\n[Move White]");
+        }
+        else{
+            ((TextView)findViewById(R.id.player)).setText(playerMap.get(2) + "'s Turn\n[Move Black]");
+        }
     }
 
     /**

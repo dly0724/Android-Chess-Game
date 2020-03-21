@@ -1,6 +1,7 @@
 package edu.msu.yangziya.project1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -144,6 +146,9 @@ public class Game {
     private List<List<ChessPiece>> currentBoardArray;
     Context context;
     static ChoiceDialogFragment.SingleChoiceDialogeListener singleChoiceDialogeListener;
+    private String namePlayer1 = "";
+    private String namePlayer2 = "";
+    private int currentPlayer;
 
 
     public Game(Context context) {
@@ -323,11 +328,15 @@ public class Game {
                 Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
                 //If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
-                    dragging.move(relX - lastRelX, relY - lastRelY);
-                    lastRelX = relX;
-                    lastRelY = relY;
-                    view.invalidate();//redrawn
-                    return true;
+                    // Check that the player is moving the right color piece
+                    if(!(currentPlayer == 1 && dragging.color == 'b' ||
+                            currentPlayer == 2 && dragging.color == 'w')) {
+                        dragging.move(relX - lastRelX, relY - lastRelY);
+                        lastRelX = relX;
+                        lastRelY = relY;
+                        view.invalidate();//redrawn
+                        return true;
+                    }
                 }
                 break;
         }
@@ -540,5 +549,9 @@ public class Game {
 
     private void setDeletePieceID(int ID){
         PieceChangesUpdate.add(ID);
+    }
+
+    public void setCurrentPlayer(int player){
+        this.currentPlayer = player;
     }
 }
