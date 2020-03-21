@@ -85,7 +85,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onDone(View view){
-
+        if (gameView.Win() != 0){
+            Intent intent = new Intent(this, GameOverActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**

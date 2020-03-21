@@ -2,6 +2,7 @@ package edu.msu.yangziya.project1;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -156,6 +157,9 @@ public class Game {
 
     private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
+    private char currentPlayer;
+    public int toWin = 0;
+
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -243,6 +247,7 @@ public class Game {
         }
 
         setCurrentBoardArray(initialBoardArray);
+        currentPlayer = 'w';
     }
 
     public Game() {
@@ -396,6 +401,18 @@ public class Game {
 
                 updateBoardAfterMove(dragging);
 
+                int win = isWin();
+                if (win != 0){
+                    if (win == 1){              //white wins this turn
+                        //winner variable equals to player white's name,
+                        toWin = 1;
+
+                    }else if(win == 2){         //black wins this turn
+                        toWin = 2;
+                    }
+                    //go to win page,
+                }
+
                 // The puzzle is done
                 // Instantiate a dialog box builder
                 //AlertDialog.Builder builder =
@@ -437,6 +454,29 @@ public class Game {
 
     }
 
+    public int isWin(){
+        for (int i=0;i<8;i++){
+            for (int j =0; j<8;j++){
+                ChessPiece currentPiece = currentBoardArray.get(i).get(j);
+                //check all opponent players's piece, if any piece can capture the king, game end.
+                //if (currentPiece != null && currentPlayer != currentPiece.color){
+                if (currentPiece != null){
+                    currentPiece.toKing(currentBoardArray);
+                    Boolean kingCaptured = currentPiece.kingCaptured;
+                    if (kingCaptured){
+                        if (currentPiece.color == 'w'){
+                            return 1;
+                        }
+                        else{
+                            return 2;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     /**
      * Save the game to a bundle
      * @param bundle The bundle we save to
@@ -456,7 +496,6 @@ public class Game {
                 }
             }
         }
-        int testingVar = 1;
 
         for(int i=0;  i<pieces.size(); i++) {
             ChessPiece piece = pieces.get(i);
@@ -464,6 +503,7 @@ public class Game {
             locations[i*2+1] = piece.getY();
             ids[i] = piece.getId();
         }
+
         bundle.putFloatArray(LOCATIONS, locations);
         bundle.putIntArray(IDS,  ids);
         bundle.putIntegerArrayList(PIECECHANGES,PieceChangesUpdate);
@@ -499,9 +539,7 @@ public class Game {
             }
         }
 
-        int x = 2;
         while (pieces.remove(null)){}
-        x =5;
 
         assert ids != null;
         for(int i = 0; i<ids.length-1; i++) {

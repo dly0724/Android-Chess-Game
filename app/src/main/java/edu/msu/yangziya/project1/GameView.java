@@ -119,4 +119,8 @@ public class GameView extends View {
         params.col = col;
     }
 
+    public int Win(){
+        return game.toWin;
+    }
+
 }

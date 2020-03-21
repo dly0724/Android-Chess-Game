@@ -33,4 +33,95 @@ public class Knight extends ChessPiece {
             return true;
         }
     }
+
+    protected void toKing(List<List<ChessPiece>> currentBoard){
+        if (this.color=='w'){
+            if (rowIndex-2>=0 && columnIndex-1>=0 && currentBoard.get(rowIndex-2).get(columnIndex-1) != null){
+                if (currentBoard.get(rowIndex-2).get(columnIndex-1).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-2>=0 && columnIndex+1<8 && currentBoard.get(rowIndex-2).get(columnIndex+1) != null){
+                if (currentBoard.get(rowIndex-2).get(columnIndex+1).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+2<8 && columnIndex+1<8 && currentBoard.get(rowIndex+2).get(columnIndex+1) != null){
+                int x = currentBoard.get(rowIndex+2).get(columnIndex+1).id;
+                if (currentBoard.get(rowIndex+2).get(columnIndex+1).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+2<8 && columnIndex-1>=0 && currentBoard.get(rowIndex+2).get(columnIndex-1) != null){
+                if (currentBoard.get(rowIndex+2).get(columnIndex-1).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-1>=0 && columnIndex-2>=0 && currentBoard.get(rowIndex-1).get(columnIndex-2) != null){
+                if (currentBoard.get(rowIndex-1).get(columnIndex-2).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-1>=0 && columnIndex+2<8 && currentBoard.get(rowIndex-1).get(columnIndex+2) != null){
+                if (currentBoard.get(rowIndex-1).get(columnIndex+2).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+1<8 && columnIndex+2<8 && currentBoard.get(rowIndex+1).get(columnIndex+2) != null){
+                if (currentBoard.get(rowIndex+1).get(columnIndex+2).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+1<8 && columnIndex-2>=0 && currentBoard.get(rowIndex+1).get(columnIndex-2) != null){
+                if (currentBoard.get(rowIndex+1).get(columnIndex-2).id==4){
+                    kingCaptured=true;
+                    return;}
+            }
+        }
+        if (this.color=='b'){
+            if (rowIndex-2>=0 && columnIndex-1>=0 && currentBoard.get(rowIndex-2).get(columnIndex-1) != null){
+                if (currentBoard.get(rowIndex-2).get(columnIndex-1).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-2>=0 && columnIndex+1<8 && currentBoard.get(rowIndex-2).get(columnIndex+1) != null){
+                if (currentBoard.get(rowIndex-2).get(columnIndex+1).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+2<8 && columnIndex+1<8 && currentBoard.get(rowIndex+2).get(columnIndex+1) != null){
+                int x = currentBoard.get(rowIndex+2).get(columnIndex+1).id;
+                if (currentBoard.get(rowIndex+2).get(columnIndex+1).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+2<8 && columnIndex-1>=0 && currentBoard.get(rowIndex+2).get(columnIndex-1) != null){
+                if (currentBoard.get(rowIndex+2).get(columnIndex-1).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-1>=0 && columnIndex-2>=0 && currentBoard.get(rowIndex-1).get(columnIndex-2) != null){
+                if (currentBoard.get(rowIndex-1).get(columnIndex-2).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex-1>=0 && columnIndex+2<8 && currentBoard.get(rowIndex-1).get(columnIndex+2) != null){
+                if (currentBoard.get(rowIndex-1).get(columnIndex+2).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+1<8 && columnIndex+2<8 && currentBoard.get(rowIndex+1).get(columnIndex+2) != null){
+                if (currentBoard.get(rowIndex+1).get(columnIndex+2).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+            if (rowIndex+1<8 && columnIndex-2>=0 && currentBoard.get(rowIndex+1).get(columnIndex-2) != null){
+                if (currentBoard.get(rowIndex+1).get(columnIndex-2).id==28){
+                    kingCaptured=true;
+                    return;}
+            }
+        }
+        kingCaptured=false;
+        return;
+    }
 }

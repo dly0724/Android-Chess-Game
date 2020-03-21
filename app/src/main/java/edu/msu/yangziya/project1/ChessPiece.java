@@ -77,6 +77,7 @@ public class ChessPiece {
      */
     protected boolean deletePieceInTarget;
     protected ChessPiece deletedPiece;
+    protected boolean kingCaptured = false;
 
     public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
@@ -194,6 +195,8 @@ public class ChessPiece {
         else{
             return true;
         }
+    }
+    protected void toKing(List<List<ChessPiece>> currentBoard){
 
     }
 

@@ -52,4 +52,8 @@ public class Rook extends ChessPiece {
             return false;
         }
     }
+
+    protected void toKing(List<List<ChessPiece>> currentBoard){
+
+    }
 }
