@@ -29,10 +29,6 @@ public class GameView extends View {
      */
     private Bitmap boardBitmap = null;
 
-    private String playerOneName = "";
-    private String playerTwoName = "";
-
-
     public GameView(Context context) {
         super(context);
         init(null, 0);
@@ -123,9 +119,8 @@ public class GameView extends View {
         params.col = col;
     }
 
-
-    public void setCurrentPlayer(int currentPlayer){
-        game.setCurrentPlayer(currentPlayer);
+    public int Win(){
+        return game.toWin;
     }
 
 }

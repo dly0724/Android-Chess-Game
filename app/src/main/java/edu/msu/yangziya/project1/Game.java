@@ -1,25 +1,38 @@
 package edu.msu.yangziya.project1;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import static java.lang.System.in;
 
 
 public class Game {
@@ -146,9 +159,9 @@ public class Game {
     private List<List<ChessPiece>> currentBoardArray;
     Context context;
     static ChoiceDialogFragment.SingleChoiceDialogeListener singleChoiceDialogeListener;
-    private String namePlayer1 = "";
-    private String namePlayer2 = "";
-    private int currentPlayer;
+
+    private char currentPlayer;
+    public int toWin = 0;
 
 
     public Game(Context context) {
@@ -237,6 +250,7 @@ public class Game {
         }
 
         setCurrentBoardArray(initialBoardArray);
+        currentPlayer = 'w';
     }
 
     public Game() {
@@ -328,15 +342,11 @@ public class Game {
                 Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
                 //If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
-                    // Check that the player is moving the right color piece
-                    if(!(currentPlayer == 1 && dragging.color == 'b' ||
-                            currentPlayer == 2 && dragging.color == 'w')) {
-                        dragging.move(relX - lastRelX, relY - lastRelY);
-                        lastRelX = relX;
-                        lastRelY = relY;
-                        view.invalidate();//redrawn
-                        return true;
-                    }
+                    dragging.move(relX - lastRelX, relY - lastRelY);
+                    lastRelX = relX;
+                    lastRelY = relY;
+                    view.invalidate();//redrawn
+                    return true;
                 }
                 break;
         }
@@ -394,6 +404,18 @@ public class Game {
 
                 updateBoardAfterMove(dragging);
 
+                int win = isWin();
+                if (win != 0){
+                    if (win == 1){              //white wins this turn
+                        //winner variable equals to player white's name,
+                        toWin = 1;
+
+                    }else if(win == 2){         //black wins this turn
+                        toWin = 2;
+                    }
+                    //go to win page,
+                }
+
                 // The puzzle is done
                 // Instantiate a dialog box builder
                 //AlertDialog.Builder builder =
@@ -440,6 +462,29 @@ public class Game {
 
     }
 
+    public int isWin(){
+        for (int i=0;i<8;i++){
+            for (int j =0; j<8;j++){
+                ChessPiece currentPiece = currentBoardArray.get(i).get(j);
+                //check all opponent players's piece, if any piece can capture the king, game end.
+                //if (currentPiece != null && currentPlayer != currentPiece.color){
+                if (currentPiece != null){
+                    currentPiece.toKing(currentBoardArray);
+                    Boolean kingCaptured = currentPiece.kingCaptured;
+                    if (kingCaptured){
+                        if (currentPiece.color == 'w'){
+                            return 1;
+                        }
+                        else{
+                            return 2;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     /**
      * Save the game to a bundle
      * @param bundle The bundle we save to
@@ -467,6 +512,7 @@ public class Game {
             locations[i*2+1] = piece.getY();
             ids[i] = piece.getId();
         }
+
         bundle.putFloatArray(LOCATIONS, locations);
         bundle.putIntArray(IDS,  ids);
         bundle.putIntegerArrayList(PIECECHANGES,PieceChangesUpdate);
@@ -549,9 +595,5 @@ public class Game {
 
     private void setDeletePieceID(int ID){
         PieceChangesUpdate.add(ID);
-    }
-
-    public void setCurrentPlayer(int player){
-        this.currentPlayer = player;
     }
 }
