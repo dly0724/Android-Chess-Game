@@ -20,8 +20,8 @@ public class ChoiceDialogFragment extends DialogFragment {
         void onNegativeButtonClicked();
     }
 
-    public interface SingleChoiceDialogeListener {
-        void showDialoge();
+    public interface SingleChoiceDialogListener {
+        void showDialog();
     }
 
     SingleChoiceListener mListener;

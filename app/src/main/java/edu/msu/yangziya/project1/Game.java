@@ -158,9 +158,9 @@ public class Game {
     private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
     Context context;
-    static ChoiceDialogFragment.SingleChoiceDialogeListener singleChoiceDialogeListener;
+    static ChoiceDialogFragment.SingleChoiceDialogListener singleChoiceDialogListener;
 
-    private char currentPlayer;
+    private int currentPlayer;
     public int toWin = 0;
 
 
@@ -250,7 +250,6 @@ public class Game {
         }
 
         setCurrentBoardArray(initialBoardArray);
-        currentPlayer = 'w';
     }
 
     public Game() {
@@ -441,7 +440,7 @@ public class Game {
 
         // show choose dialog
         if (destRow == 0){
-            singleChoiceDialogeListener.showDialoge();
+            singleChoiceDialogListener.showDialog();
         }
 
         //If there is an opponent piece in the new position
@@ -595,5 +594,13 @@ public class Game {
 
     private void setDeletePieceID(int ID){
         PieceChangesUpdate.add(ID);
+    }
+
+    public void setCurrentPlayer(int player){
+        this.currentPlayer = player;
+    }
+
+    public int getWin(){
+        return toWin;
     }
 }

@@ -119,8 +119,11 @@ public class GameView extends View {
         params.col = col;
     }
 
-    public int Win(){
-        return game.toWin;
+    public void setCurrentPlayer(int currentPlayer) {
+        game.setCurrentPlayer(currentPlayer);
     }
 
+    public int Win(){
+        return game.getWin();
+    }
 }
