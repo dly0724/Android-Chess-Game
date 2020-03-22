@@ -137,6 +137,12 @@ public class GameActivity extends AppCompatActivity implements
 
         if (getGameView().Win() != 0){
             Intent intent = new Intent(this, GameOverActivity.class);
+            if(current == 1){
+                intent.putExtra(WINNER, playerMap.get(1));
+            }
+            else if(current == 2){
+                intent.putExtra(LOSER, playerMap.get(2));
+            }
             startActivity(intent);
         }
     }
