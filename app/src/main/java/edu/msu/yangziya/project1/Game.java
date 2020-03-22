@@ -19,6 +19,8 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -57,11 +59,6 @@ public class Game {
     private float scaleFactor = 0.8f;
 
     /**
-     * The image for the game board.
-     */
-    private Bitmap gameBoard;
-
-    /**
      * Collection of chess pieces
      */
     private ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -88,7 +85,21 @@ public class Game {
 
     private float lastRelXind;
     private float lastRelYind;
+
+    /**
+     * True if an invalid move was committed
+     */
+    private Boolean invalidMove = false;
+
+    /**
+     * True if the current player makes a valid move with one of their pieces
+     */
     private Boolean moveCompleted;
+
+    /**
+     * Toast error message
+     */
+    private String toast = "";
 
     /**
      * The name of the bundle keys to save the game
@@ -145,17 +156,6 @@ public class Game {
         }
     };
 
-
-    //1x: Black --- 11:BRooks 12:BKnights 13:BBishops 14:BQueen 15:BKing 16:BPawn
-    //2x: White --- 21:WRooks 22:WKnights 23:BBishops 24:WQueen 25:WKing 26:WPawn
-    private Integer[] iniMapLine1 = {11,12,13,14,15,13,12,11};
-    private Integer[] iniMapLine2 = {16,16,16,16,16,16,16,16};
-    private Integer[] iniMapEmptyLine = {0,0,0,0,0,0,0,0};
-    private Integer[] iniMapLine7 = {21,22,23,24,25,23,22,21};
-    private Integer[] iniMapLine8 = {26,26,26,26,26,26,26,26};
-    private Integer[][] initialMap = {iniMapLine1,iniMapLine2,iniMapEmptyLine,iniMapEmptyLine,
-            iniMapEmptyLine,iniMapEmptyLine,iniMapLine7,iniMapLine8};
-
     private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
     Context context;
@@ -181,10 +181,6 @@ public class Game {
         Light = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color_L = ContextCompat.getColor(context, R.color.colorPrimary);
         Light.setColor(color_L);
-
-        Drawable boardDrawable = AppCompatResources.getDrawable(context, R.drawable.ic_launcher_background);
-        gameBoard = Bitmap.createBitmap(boardDrawable.getIntrinsicWidth(),
-                boardDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
         List<List<ChessPiece>> initialBoardArray = new ArrayList<>();
         int numPieces = initialPieceMap.size();
@@ -349,6 +345,17 @@ public class Game {
                         view.invalidate();//redrawn
                         return true;
                     }
+                    else{
+                        invalidMove = true;
+                        if(currentPlayer == 1 && dragging.color == 'b' ||
+                                currentPlayer == 2 && dragging.color == 'w'){
+                            dragging.setViolationCode(7);
+                        }
+                        else{
+                            dragging.setViolationCode(6);
+                        }
+                        setToast(decodeViolationMessage(dragging.getViolationCode()));
+                    }
                 }
                 break;
         }
@@ -399,37 +406,54 @@ public class Game {
         if(dragging != null) {
             if(x > 1 || x < 0 || y > 1 || y < 0){  // Off the board
                 view.invalidate();//redraw
+                invalidMove = true;
+                if(!moveCompleted){
+                    if(currentPlayer == 1 && dragging.color == 'b' ||  // Can't move opponent's piece
+                            currentPlayer == 2 && dragging.color == 'w'){
+                        dragging.setViolationCode(5);
+                    }
+                    else{
+                        dragging.setViolationCode(3);
+                    }
+                }
                 dragging.updateBackup(lastRelXind, lastRelYind);
             }
             else if(dragging.maybeSnap()) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
-                if(!moveCompleted && dragging.isValidMove(currentBoardArray, currentPlayer)){
-                    dragging.updatePosition();
-                    moveCompleted = true;
+                if(!moveCompleted) {
+                    if(dragging.isValidMove(currentBoardArray, currentPlayer)){
+                        invalidMove = false;
+                        dragging.updatePosition();
+                        moveCompleted = true;
+                        pieces.remove(dragging);
+                        pieces.add(0, dragging);
 
-                    pieces.remove(dragging);
-                    pieces.add(0, dragging);
+                        updateBoardAfterMove(dragging);
 
-                    updateBoardAfterMove(dragging);
+                        int win = isWin();
+                        if(win != 0){
+                            if(win == 1){              //white wins this turn
+                                //winner variable equals to player white's name,
+                                toWin = 1;
 
-                    int win = isWin();
-                    if (win != 0){
-                        if (win == 1){              //white wins this turn
-                            //winner variable equals to player white's name,
-                            toWin = 1;
-
+                            }
+                            else if(win == 2){         //black wins this turn
+                                toWin = 2;
+                            }
+                            //go to win page,
                         }
-                        else if(win == 2){         //black wins this turn
-                            toWin = 2;
-                        }
-                        //go to win page,
+                    }
+                    else{
+                        invalidMove = true;
+                        dragging.updateBackup(lastRelXind, lastRelYind);
                     }
                 }
-                else{
-                    dragging.updateBackup(lastRelXind, lastRelYind);
-                }
+            }
+            Integer code = dragging.getViolationCode();
+            if(code != null){
+                setToast(decodeViolationMessage(code));
             }
             dragging = null;
             return true;
@@ -593,20 +617,8 @@ public class Game {
         }
     }
 
-    public List<List<ChessPiece>> getCurrentBoardArray() {
-        return currentBoardArray;
-    }
-
     public void setCurrentBoardArray(List<List<ChessPiece>> currentBoardArray) {
         this.currentBoardArray = currentBoardArray;
-    }
-
-    public List<List<ChessPiece>> getPreviousBoardArray() {
-        return previousBoardArray;
-    }
-
-    public void setPreviousBoardArray(List<List<ChessPiece>> previousBoardArray) {
-        this.previousBoardArray = previousBoardArray;
     }
 
     private void setDeletePieceID(int ID){
@@ -622,7 +634,68 @@ public class Game {
         return toWin;
     }
 
-    public Boolean getMoveCompleted(){
+    public Boolean moveWasCompleted(){
         return this.moveCompleted;
+    }
+
+    public Boolean moveWasInvalid(){
+        return this.invalidMove;
+    }
+
+    public ChessPiece getDragging(){
+        return this.dragging;
+    }
+
+    public String decodeViolationMessage(Integer code){
+        if(code == 1){
+            return "Can't Move Opponent's Piece";
+        }
+        else if(code == 2){
+            return "Space Occupied By Ally Piece";
+        }
+        else if(code == 3){
+            return "Board Is This Way";
+        }
+        else if(code == 4){
+            return "Must Move A Piece To A New Spot";
+        }
+        else if(code == 5){
+            return "That's Not Your Piece (Plus That's Not Even On The Board)";
+        }
+        else if(code == 6){
+            return "You've Had Your Turn";
+        }
+        else if(code == 7){
+            return "Your Opponent Can Move That Piece Once You Hit 'DONE'";
+        }
+        else if(code == 8){
+            return "Invalid Pawn Move";
+        }
+        else if(code == 9){
+            return "Invalid Bishop Move";
+        }
+        else if(code == 10){
+            return "Invalid King Move";
+        }
+        else if(code == 11){
+            return "Invalid Knight Move";
+        }
+        else if(code == 12){
+            return "Invalid Queen Move";
+        }
+        else if(code == 13){
+            return "Invalid Rook Move";
+        }
+        else{
+            return null;
+        }
+    }
+
+    public String getToast(){
+        return this.toast;
+    }
+
+    public void setToast(String msg){
+        this.toast = msg;
     }
 }

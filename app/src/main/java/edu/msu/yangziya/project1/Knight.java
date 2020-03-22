@@ -23,6 +23,7 @@ public class Knight extends ChessPiece {
         // Check for "L" shape movement
         else if(!((abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==2) ||
                 (abs(rowIndex-snapYIndex)==2 && abs(columnIndex-snapXIndex)==1))){
+            setViolationCode(11);
             return false;
         }
         else{

@@ -20,12 +20,16 @@ public class Bishop extends ChessPiece {
         else if(abs(rowIndex-snapYIndex) ==abs(columnIndex-snapXIndex)) {
             for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
                 if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex+i).get(columnIndex+i )!=null){  //right-bottom
+                    setViolationCode(9);
                     return false;
                 }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex-i).get(columnIndex+i )!=null) { //right-top
+                    setViolationCode(9);
                     return false;
                 }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex-i).get(columnIndex-i )!=null) { //left-top
+                    setViolationCode(9);
                     return false;
                 }else if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex+i).get(columnIndex-i )!=null) { //left-bottom
+                    setViolationCode(9);
                     return false;
                 }
 
@@ -37,6 +41,7 @@ public class Bishop extends ChessPiece {
             return true;
         }
         else{
+            setViolationCode(9);
             return false;
         }
     }

@@ -20,9 +20,11 @@ public class Rook extends ChessPiece {
         else if(abs(rowIndex-snapYIndex)!=0 && abs(columnIndex-snapXIndex)==0) {
             for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
                 if (((rowIndex-snapYIndex)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
+                    setViolationCode(13);
                     return false;
                 }
                 else if(((rowIndex-snapYIndex)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
+                    setViolationCode(13);
                     return false;
                 }
             }

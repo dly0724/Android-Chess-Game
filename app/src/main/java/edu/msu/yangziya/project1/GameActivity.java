@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import static edu.msu.yangziya.project1.Game.singleChoiceDialogListener;
 
 public class GameActivity extends AppCompatActivity implements
-        ChoiceDialogFragment.SingleChoiceListener{
+        ChoiceDialogFragment.SingleChoiceListener {
     private String namePlayer1 = "";
     private String namePlayer2 = "";
     public static final String WINNER = "WINNER";
@@ -152,4 +153,19 @@ public class GameActivity extends AppCompatActivity implements
     public void onNegativeButtonClicked() {
 
     }
+
+
+    public void setHeader(String text){
+        getPlayerText().setText(text);
+    }
+
+    public String getHeader(){
+        return (String)getPlayerText().getText();
+    }
+
+    public void displayToast(String msg, int duration){
+        Toast.makeText(this, msg, duration).show();
+
+    }
+
 }

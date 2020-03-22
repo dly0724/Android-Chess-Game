@@ -21,9 +21,11 @@ public class Queen extends ChessPiece {
         else if(abs(rowIndex-snapYIndex)!=0 && abs(columnIndex-snapXIndex)==0) {
             for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
                 if (((rowIndex-snapYIndex)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
+                    setViolationCode(12);
                     return false;
                 }
                 else if(((rowIndex-snapYIndex)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
+                    setViolationCode(12);
                     return false;
                 }
             }
@@ -37,9 +39,11 @@ public class Queen extends ChessPiece {
         else if(abs(rowIndex-snapXIndex)==0 && abs(columnIndex-snapXIndex)!=0){
             for (int i= 1;i<abs(columnIndex-snapXIndex);i++){
                 if (((columnIndex-snapXIndex)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
+                    setViolationCode(12);
                     return false;
                 }
                 else if(((columnIndex-snapXIndex)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
+                    setViolationCode(12);
                     return false;
                 }
             }
@@ -54,12 +58,16 @@ public class Queen extends ChessPiece {
         else if(abs(rowIndex-snapYIndex) ==abs(columnIndex-snapXIndex)) {
             for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
                 if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex+i).get(columnIndex+i )!=null){  //right-bottom
+                    setViolationCode(12);
                     return false;
                 }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex-i).get(columnIndex+i )!=null) { //right-top
+                    setViolationCode(12);
                     return false;
                 }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex-i).get(columnIndex-i )!=null) { //left-top
+                    setViolationCode(12);
                     return false;
                 }else if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex+i).get(columnIndex-i )!=null) { //left-bottom
+                    setViolationCode(12);
                     return false;
                 }
 
@@ -71,6 +79,7 @@ public class Queen extends ChessPiece {
             return true;
         }
         else{
+            setViolationCode(12);
             return false;
         }
     }

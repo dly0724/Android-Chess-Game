@@ -1,5 +1,6 @@
 package edu.msu.yangziya.project1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -59,9 +61,20 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-//        if(game.getMoveCompleted()){
-//            ((TextView)findViewById(R.id.player)).setText("Move Completed\n[Select DONE]");
-//        }
+        if(game.getDragging() == null){
+            GameActivity activity = (GameActivity)getContext();
+            if(game.moveWasInvalid()){
+                if(game.getToast() != null){
+                    activity.displayToast(game.getToast(), Toast.LENGTH_LONG);
+                }
+            }
+            else if(game.moveWasCompleted()){
+                String completedMsg = "Move Completed\n[Select DONE]";
+                if(!activity.getHeader().equals(completedMsg)){
+                    activity.setHeader(completedMsg);
+                }
+            }
+        }
 
         game.draw(canvas);
     }
@@ -94,10 +107,6 @@ public class GameView extends View {
         game.loadInstanceState(bundle);
     }
 
-    public Game getGame() {
-        return game;
-    }
-
     private static class Parameters implements Serializable {
         public int[][] board = new int[8][8];
         public int[] rowPos = new int[]{4, 4, 4, 4};
@@ -105,10 +114,6 @@ public class GameView extends View {
         public int col = -1;
         public float X = 0;
         public float Y = 0;
-    }
-
-    public void setBoa(int[][] boa) {
-        params.board = boa;
     }
 
 

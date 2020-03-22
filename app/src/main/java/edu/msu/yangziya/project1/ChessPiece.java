@@ -89,6 +89,20 @@ public class ChessPiece {
      */
     protected int snapYIndex;
 
+    /**
+     * Code for move violation
+     * null = no violation
+     * 1 = tried to move opponent's piece
+     * 2 = tried to move on an ally-occupied space
+     * 3 = tried to move off the board
+     * 4 = snapping to same space (i.e. not moving)
+     * 5 = trying to move opponent's piece off the board
+     * 6 = player already made a move
+     * 7 = player already made move and trying to move opponent's piece
+     * 8 = invalid Pawn move
+     */
+    private Integer moveViolation;
+
     public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
         this.y = y;
@@ -186,15 +200,23 @@ public class ChessPiece {
 
         if(currentPlayer == 1 && this.color == 'b' ||  // Can't move opponent's piece
                 currentPlayer == 2 && this.color == 'w'){
+            setViolationCode(1);
             return false;
         }
         else if(targetPiece == null){  // Moving to an empty space
+            setViolationCode(null);
             return true;
         }
+        else if(targetPiece.id == this.id){  // Moving to same space (i.e. not moving)
+            setViolationCode(4);
+            return false;
+        }
         else if(this.color == targetPiece.color){  // Can't land on ally piece
+            setViolationCode(2);
             return false;
         }
         else{
+            setViolationCode(null);
             return true;  // Moving to an opponent's space
         }
     }
@@ -249,6 +271,14 @@ public class ChessPiece {
         this.movingToColumnIndex = xIndex;
         this.x=backupX;
         this.y=backupY;
+    }
+
+    public Integer getViolationCode(){
+        return this.moveViolation;
+    }
+
+    public void setViolationCode(Integer code){
+        this.moveViolation = code;
     }
 
 }

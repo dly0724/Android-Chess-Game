@@ -23,65 +23,80 @@ public class Pawn extends ChessPiece {
             return false;
         }
         else if(abs(columnIndex-snapXIndex) > 1){  // Moved to the side in either direction
+            setViolationCode(8);
             return false;
         }
         else if (abs(columnIndex-snapXIndex) == 1&& targetPiece == null){
+            setViolationCode(8);
             return false;
         }
         else if(columnIndex-snapXIndex == 1 && targetPiece != null){ //move to left diagonal
             if(targetPiece.color == this.color){
+                setViolationCode(8);
                 return false;
             }
         }
         else if(snapXIndex- columnIndex == 1 && targetPiece != null){  //move to right diagonal
             if(targetPiece.color == this.color){
+                setViolationCode(8);
                 return false;
             }
         }
         else if(color == 'b'){
             if(snapYIndex < rowIndex){  // Wrong direction
+                setViolationCode(8);
                 return false;
             }
             if (isFirstMove && snapYIndex-rowIndex == 2){
                 if(currentBoard.get(rowIndex+1).get(columnIndex)!=null){
+                    setViolationCode(8);
                     return  false;
                 }
             }
             else if(isFirstMove && snapYIndex-rowIndex > 2){  // Can move two spaces on first move
+                setViolationCode(8);
                 return false;
             }
             else if (!isFirstMove && snapYIndex-rowIndex == 1){
                 if(currentBoard.get(snapYIndex).get(snapXIndex)!=null){
+                    setViolationCode(8);
                     return  false;
                 }
             }
             else if(!isFirstMove && snapYIndex-rowIndex > 1) {  // Moved more than 1 space
+                setViolationCode(8);
                 return false;
             }
         }
         else if(color == 'w'){  // Apply same rules in opposite direction for white pawns
             if(snapYIndex > rowIndex){
+                setViolationCode(8);
                 return false;
             }
             if (isFirstMove && rowIndex-snapYIndex == 2){
                 if(currentBoard.get(snapYIndex+1).get(columnIndex)!=null){
+                    setViolationCode(8);
                     return  false;
                 }
             }
             else if(isFirstMove && rowIndex-snapYIndex > 2){
+                setViolationCode(8);
                 return false;
             }
             else if (!isFirstMove && rowIndex-snapYIndex == 1){
                 if(currentBoard.get(snapYIndex).get(snapXIndex)!=null){
+                    setViolationCode(8);
                     return  false;
                 }
             }
             else if(!isFirstMove && rowIndex-snapYIndex > 1) {
+                setViolationCode(8);
                 return false;
             }
         }
 
         if(isFirstMove){
+            setViolationCode(8);
             isFirstMove = false;
         }
 

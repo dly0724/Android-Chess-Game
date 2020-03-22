@@ -20,6 +20,7 @@ public class King extends ChessPiece {
         else if(!((abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==1) ||
                 (abs(rowIndex-snapYIndex)==0 && abs(columnIndex-snapXIndex)==1) ||
                 (abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==0))){
+            setViolationCode(10);
             return false;
         }
         else{
