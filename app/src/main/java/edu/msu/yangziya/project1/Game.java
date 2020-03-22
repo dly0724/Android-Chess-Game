@@ -465,13 +465,23 @@ public class Game {
     }
 
     public int isWin(){
+        int currentPieceColor=0;
         for (int i=0;i<8;i++){
             for (int j =0; j<8;j++){
                 ChessPiece currentPiece = currentBoardArray.get(i).get(j);
                 //check all opponent players's piece, if any piece can capture the king, game end.
-                //if (currentPiece != null && currentPlayer != currentPiece.color){
-                if (currentPiece != null){
+                if (currentPiece != null && currentPiece.color=='w'){
+                    currentPieceColor = 1;
+                }
+                else if(currentPiece != null && currentPiece.color=='b'){
+                    currentPieceColor = 2;
+                }
+                int x = 3;
+                if (currentPiece != null && currentPlayer != currentPieceColor){
+                //if (currentPiece != null){
+
                     currentPiece.toKing(currentBoardArray);
+                    x = 3;
                     Boolean kingCaptured = currentPiece.kingCaptured;
                     if (kingCaptured){
                         if (currentPiece.color == 'w'){
