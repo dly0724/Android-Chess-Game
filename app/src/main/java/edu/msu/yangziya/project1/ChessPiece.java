@@ -166,7 +166,7 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap(List<List<ChessPiece>> currentBoard) {
+    public boolean maybeSnap() {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&

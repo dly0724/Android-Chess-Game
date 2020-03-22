@@ -397,7 +397,11 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap(currentBoardArray)) {
+            if(x > 1 || x < 0 || y > 1 || y < 0){  // Off the board
+                view.invalidate();//redraw
+                dragging.updateBackup(lastRelXind, lastRelYind);
+            }
+            else if(dragging.maybeSnap()) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
@@ -422,7 +426,6 @@ public class Game {
                         }
                         //go to win page,
                     }
-
                 }
                 else{
                     dragging.updateBackup(lastRelXind, lastRelYind);
