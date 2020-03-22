@@ -88,6 +88,7 @@ public class Game {
 
     private float lastRelXind;
     private float lastRelYind;
+    private Boolean moveCompleted;
 
     /**
      * The name of the bundle keys to save the game
@@ -341,8 +342,7 @@ public class Game {
                 Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
                 //If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
-                    if(!(currentPlayer == 1 && dragging.color == 'b' ||
-                            currentPlayer == 2 && dragging.color == 'w')) {
+                    if(!moveCompleted){
                         dragging.move(relX - lastRelX, relY - lastRelY);
                         lastRelX = relX;
                         lastRelY = relY;
@@ -397,35 +397,36 @@ public class Game {
     private boolean onReleased(View view, float x, float y) {
 
         if(dragging != null) {
-            if(dragging.maybeSnap(lastRelXind, lastRelYind, currentBoardArray)) {
+            if(dragging.maybeSnap(currentBoardArray)) {
                 // We have snapped into place
                 view.invalidate();//redraw
 
-                pieces.remove(dragging);
-                pieces.add(0,dragging);
+                if(!moveCompleted && dragging.isValidMove(currentBoardArray, currentPlayer)){
+                    dragging.updatePosition();
+                    moveCompleted = true;
 
-                updateBoardAfterMove(dragging);
+                    pieces.remove(dragging);
+                    pieces.add(0, dragging);
 
-                int win = isWin();
-                if (win != 0){
-                    if (win == 1){              //white wins this turn
-                        //winner variable equals to player white's name,
-                        toWin = 1;
+                    updateBoardAfterMove(dragging);
 
-                    }else if(win == 2){         //black wins this turn
-                        toWin = 2;
+                    int win = isWin();
+                    if (win != 0){
+                        if (win == 1){              //white wins this turn
+                            //winner variable equals to player white's name,
+                            toWin = 1;
+
+                        }
+                        else if(win == 2){         //black wins this turn
+                            toWin = 2;
+                        }
+                        //go to win page,
                     }
-                    //go to win page,
+
                 }
-
-                // The puzzle is done
-                // Instantiate a dialog box builder
-                //AlertDialog.Builder builder =
-                //        new AlertDialog.Builder(view.getContext());
-
-                // Create the dialog box and show it
-                //AlertDialog alertDialog = builder.create();
-                //alertDialog.show();
+                else{
+                    dragging.updateBackup(lastRelXind, lastRelYind);
+                }
             }
             dragging = null;
             return true;
@@ -611,9 +612,14 @@ public class Game {
 
     public void setCurrentPlayer(int player){
         this.currentPlayer = player;
+        this.moveCompleted = false;  // New player, reset movement status
     }
 
     public int getWin(){
         return toWin;
+    }
+
+    public Boolean getMoveCompleted(){
+        return this.moveCompleted;
     }
 }

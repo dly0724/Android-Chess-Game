@@ -12,14 +12,14 @@ public class King extends ChessPiece {
         super(context, id, drawableId, x, y, color);
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
-        if(!super.isValidMove(TpX, TpY, currentBoard)){
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
+        if(!super.isValidMove(currentBoard, currentPlayer)){
             return false;
         }
-        else if(!((abs(rowIndex-TpY)==1 && abs(columnIndex-TpX)==1) ||
-                (abs(rowIndex-TpY)==0 && abs(columnIndex-TpX)==1) ||
-                (abs(rowIndex-TpY)==1 && abs(columnIndex-TpX)==0))){
+        else if(!((abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==1) ||
+                (abs(rowIndex-snapYIndex)==0 && abs(columnIndex-snapXIndex)==1) ||
+                (abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==0))){
             return false;
         }
         else{

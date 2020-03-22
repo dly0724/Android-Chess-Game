@@ -15,14 +15,14 @@ public class Knight extends ChessPiece {
         super(context, id, drawableId, x, y, color);
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
-        if(!super.isValidMove(TpX, TpY, currentBoard)){
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
+        if(!super.isValidMove(currentBoard, currentPlayer)){
             return false;
         }
         // Check for "L" shape movement
-        else if(!((abs(rowIndex-TpY)==1 && abs(columnIndex-TpX)==2) ||
-                (abs(rowIndex-TpY)==2 && abs(columnIndex-TpX)==1))){
+        else if(!((abs(rowIndex-snapYIndex)==1 && abs(columnIndex-snapXIndex)==2) ||
+                (abs(rowIndex-snapYIndex)==2 && abs(columnIndex-snapXIndex)==1))){
             return false;
         }
         else{

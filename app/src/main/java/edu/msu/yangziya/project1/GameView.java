@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -57,6 +58,10 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+//        if(game.getMoveCompleted()){
+//            ((TextView)findViewById(R.id.player)).setText("Move Completed\n[Select DONE]");
+//        }
 
         game.draw(canvas);
     }

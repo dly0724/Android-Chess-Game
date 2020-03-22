@@ -79,6 +79,16 @@ public class ChessPiece {
     protected ChessPiece deletedPiece;
     protected boolean kingCaptured = false;
 
+    /**
+     * Index into xPositions array of space to which we're snapping
+     */
+    protected int snapXIndex;
+
+    /**
+     * Index into yPositions array of space to which we're snapping
+     */
+    protected int snapYIndex;
+
     public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
         this.y = y;
@@ -156,46 +166,39 @@ public class ChessPiece {
      * answer, snap to the correct answer exactly.
      * @return TRUE OF false
      */
-    public boolean maybeSnap(float backupX, float backupY, List<List<ChessPiece>> currentBoard) {
+    public boolean maybeSnap(List<List<ChessPiece>> currentBoard) {
         for (int i =0; i<8;i++){
             for (int j=0; j<8; j++){
                 if(Math.abs(x - xPositions[i]) < SNAP_DISTANCE &&
                         Math.abs(y - yPositions[j]) < SNAP_DISTANCE) {
-                    if(isValidMove(i, j, currentBoard)){
-                        this.movingToRowIndex = j;
-                        this.movingToColumnIndex = i;
-                        x = xPositions[i];
-                        y = yPositions[j];
-                        return true;
-                    }
-                    else{
-                        int xIndex = Arrays.binarySearch(xPositions, backupX);
-                        int yIndex = Arrays.binarySearch(yPositions, backupY);
-                        this.movingToRowIndex = yIndex;
-                        this.movingToColumnIndex = xIndex;
-                        x=backupX;
-                        y=backupY;
-                        return true;
-                    }
+                    snapXIndex = i;
+                    snapYIndex = j;
+                    return true;
                 }
             }
         }
         return false;
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
         deletePieceInTarget = false;
-        if (targetPiece == null){  // Empty space, ok to move
+
+        if(currentPlayer == 1 && this.color == 'b' ||  // Can't move opponent's piece
+                currentPlayer == 2 && this.color == 'w'){
+            return false;
+        }
+        else if(targetPiece == null){  // Moving to an empty space
             return true;
         }
-        else if(this.color == targetPiece.color){   // Can't overlap piece on own team
+        else if(this.color == targetPiece.color){  // Can't land on ally piece
             return false;
         }
         else{
-            return true;
+            return true;  // Moving to an opponent's space
         }
     }
+
     protected void toKing(List<List<ChessPiece>> currentBoard){
 
     }
@@ -231,25 +234,21 @@ public class ChessPiece {
         return id;
     }
 
-    public float[] getXPositions() {
-        return xPositions;
+    public void updatePosition(){
+        this.movingToRowIndex = snapYIndex;
+        this.movingToColumnIndex = snapXIndex;
+        x = xPositions[snapXIndex];
+        y = yPositions[snapYIndex];
     }
 
-    public void setxPositions(float[] newXPositions) {
-        xPositions = newXPositions;
-    }
+    public void updateBackup(float backupX, float backupY){
+        int xIndex = Arrays.binarySearch(xPositions, backupX);
+        int yIndex = Arrays.binarySearch(yPositions, backupY);
 
-    public float[] getYPositions() {
-        return yPositions;
+        this.movingToRowIndex = yIndex;
+        this.movingToColumnIndex = xIndex;
+        this.x=backupX;
+        this.y=backupY;
     }
-
-    public void setYPositions(float[] newYPositions) {
-        yPositions = newYPositions;
-    }
-
-    public List<List<ChessPiece>> getCurrentBoard() {
-        return game.getCurrentBoardArray();
-    }
-
 
 }

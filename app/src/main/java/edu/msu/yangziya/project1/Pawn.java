@@ -16,67 +16,67 @@ public class Pawn extends ChessPiece {
         super(context, id, drawableId, x, y, color);
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
 
-        if(!super.isValidMove(TpX, TpY, currentBoard)){
+        if(!super.isValidMove(currentBoard, currentPlayer)){
             return false;
         }
-        else if(abs(columnIndex-TpX) > 1){  // Moved to the side in either direction
+        else if(abs(columnIndex-snapXIndex) > 1){  // Moved to the side in either direction
             return false;
         }
-        else if (abs(columnIndex-TpX) == 1&& targetPiece == null){
+        else if (abs(columnIndex-snapXIndex) == 1&& targetPiece == null){
             return false;
         }
-        else if(columnIndex-TpX == 1 && targetPiece != null){ //move to left diagonal
+        else if(columnIndex-snapXIndex == 1 && targetPiece != null){ //move to left diagonal
             if(targetPiece.color == this.color){
                 return false;
             }
         }
-        else if(TpX- columnIndex == 1 && targetPiece != null){  //move to right diagonal
+        else if(snapXIndex- columnIndex == 1 && targetPiece != null){  //move to right diagonal
             if(targetPiece.color == this.color){
                 return false;
             }
         }
         else if(color == 'b'){
-            if(TpY < rowIndex){  // Wrong direction
+            if(snapYIndex < rowIndex){  // Wrong direction
                 return false;
             }
-            if (isFirstMove && TpY-rowIndex == 2){
+            if (isFirstMove && snapYIndex-rowIndex == 2){
                 if(currentBoard.get(rowIndex+1).get(columnIndex)!=null){
                     return  false;
                 }
             }
-            else if(isFirstMove && TpY-rowIndex > 2){  // Can move two spaces on first move
+            else if(isFirstMove && snapYIndex-rowIndex > 2){  // Can move two spaces on first move
                 return false;
             }
-            else if (!isFirstMove && TpY-rowIndex == 1){
-                if(currentBoard.get(TpY).get(TpX)!=null){
+            else if (!isFirstMove && snapYIndex-rowIndex == 1){
+                if(currentBoard.get(snapYIndex).get(snapXIndex)!=null){
                     return  false;
                 }
             }
-            else if(!isFirstMove && TpY-rowIndex > 1) {  // Moved more than 1 space
+            else if(!isFirstMove && snapYIndex-rowIndex > 1) {  // Moved more than 1 space
                 return false;
             }
         }
         else if(color == 'w'){  // Apply same rules in opposite direction for white pawns
-            if(TpY > rowIndex){
+            if(snapYIndex > rowIndex){
                 return false;
             }
-            if (isFirstMove && rowIndex-TpY == 2){
-                if(currentBoard.get(TpY+1).get(columnIndex)!=null){
+            if (isFirstMove && rowIndex-snapYIndex == 2){
+                if(currentBoard.get(snapYIndex+1).get(columnIndex)!=null){
                     return  false;
                 }
             }
-            else if(isFirstMove && rowIndex-TpY > 2){
+            else if(isFirstMove && rowIndex-snapYIndex > 2){
                 return false;
             }
-            else if (!isFirstMove && rowIndex-TpY == 1){
-                if(currentBoard.get(TpY).get(TpX)!=null){
+            else if (!isFirstMove && rowIndex-snapYIndex == 1){
+                if(currentBoard.get(snapYIndex).get(snapXIndex)!=null){
                     return  false;
                 }
             }
-            else if(!isFirstMove && rowIndex-TpY > 1) {
+            else if(!isFirstMove && rowIndex-snapYIndex > 1) {
                 return false;
             }
         }

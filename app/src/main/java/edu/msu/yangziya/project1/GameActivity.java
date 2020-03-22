@@ -42,7 +42,7 @@ public class GameActivity extends AppCompatActivity implements
         super.onCreate(bundle);
         setContentView(R.layout.activity_game_play);
 
-        gameView = (GameView)findViewById(R.id.gameView);
+        gameView = getGameView();
 
         ChoiceDialogFragment.SingleChoiceDialogListener SingleChoice =
                 new ChoiceDialogFragment.SingleChoiceDialogListener() {
@@ -78,31 +78,10 @@ public class GameActivity extends AppCompatActivity implements
 
         if(bundle != null) {
             // We have saved state
-            GameView view = (GameView)this.findViewById(R.id.gameView);
-            view.loadInstanceState(bundle);
+            gameView.loadInstanceState(bundle);
         }
-
-
-//         /* Restore any state*/
-//
-//        if(savedInstanceState != null) {
-//
-//            gameView.getFromBundle(PARAMETERS, savedInstanceState);
-//            switch( gameView.getTurn()) {
-//                case 1:
-//                    getPlayerText().setText("Black's Turn: " + namePlayer1 );
-//                    break;
-//                case 2:
-//                    getPlayerText().setText("White's Turn: " + namePlayer2 );
-//                    break;
-//                default:
-//                    break;
-//            }
-//        } else {
-//            getPlayerText().setText( "Black's Turn: " + namePlayer1 );
-//        }
-
     }
+
     private TextView getPlayerText() {
         return (TextView)findViewById(R.id.player);
     }
@@ -149,13 +128,12 @@ public class GameActivity extends AppCompatActivity implements
 
     public void setTurnHeader(){
         if(current == 1){
-            ((TextView)findViewById(R.id.player)).setText(playerMap.get(1) + "'s Turn\n[Move White]");
+            getPlayerText().setText(playerMap.get(1) + "'s Turn\n[Move White]");
         }
         else{
-            ((TextView)findViewById(R.id.player)).setText(playerMap.get(2) + "'s Turn\n[Move Black]");
+            getPlayerText().setText(playerMap.get(2) + "'s Turn\n[Move Black]");
         }
     }
-
 
     /**
      * Get the game view
@@ -164,7 +142,6 @@ public class GameActivity extends AppCompatActivity implements
     private GameView getGameView() {
         return (GameView) this.findViewById(R.id.gameView);
     }
-
 
     @Override
     public void onPositiveButtonClicked(String[] list, int position) {

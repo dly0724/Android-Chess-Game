@@ -11,19 +11,19 @@ public class Queen extends ChessPiece {
         super(context, id, drawableId, x, y, color);
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
 
-        if(!super.isValidMove(TpX, TpY, currentBoard)){
+        if(!super.isValidMove(currentBoard, currentPlayer)){
             return false;
         }
         // Check for vertical movement
-        else if(abs(rowIndex-TpY)!=0 && abs(columnIndex-TpX)==0) {
-            for (int i= 1;i<abs(rowIndex-TpY);i++){
-                if (((rowIndex-TpY)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
+        else if(abs(rowIndex-snapYIndex)!=0 && abs(columnIndex-snapXIndex)==0) {
+            for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
+                if (((rowIndex-snapYIndex)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
                     return false;
                 }
-                else if(((rowIndex-TpY)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
+                else if(((rowIndex-snapYIndex)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
                     return false;
                 }
             }
@@ -34,12 +34,12 @@ public class Queen extends ChessPiece {
             return true;
         }
         // Check for horizontal movement
-        else if(abs(rowIndex-TpY)==0 && abs(columnIndex-TpX)!=0){
-            for (int i= 1;i<abs(columnIndex-TpX);i++){
-                if (((columnIndex-TpX)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
+        else if(abs(rowIndex-snapXIndex)==0 && abs(columnIndex-snapXIndex)!=0){
+            for (int i= 1;i<abs(columnIndex-snapXIndex);i++){
+                if (((columnIndex-snapXIndex)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
                     return false;
                 }
-                else if(((columnIndex-TpX)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
+                else if(((columnIndex-snapXIndex)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
                     return false;
                 }
             }
@@ -51,15 +51,15 @@ public class Queen extends ChessPiece {
         }
 
         //check for diagonal
-        else if(abs(rowIndex-TpY) ==abs(columnIndex-TpX)) {
-            for (int i= 1;i<abs(rowIndex-TpY);i++){
-                if ((rowIndex-TpY)<0 && (columnIndex-TpX)<0 && currentBoard.get(rowIndex+i).get(columnIndex+i )!=null){  //right-bottom
+        else if(abs(rowIndex-snapYIndex) ==abs(columnIndex-snapXIndex)) {
+            for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
+                if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex+i).get(columnIndex+i )!=null){  //right-bottom
                     return false;
-                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)<0 && currentBoard.get(rowIndex-i).get(columnIndex+i )!=null) { //right-top
+                }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)<0 && currentBoard.get(rowIndex-i).get(columnIndex+i )!=null) { //right-top
                     return false;
-                }else if ((rowIndex-TpY)>0 && (columnIndex-TpX)>0 && currentBoard.get(rowIndex-i).get(columnIndex-i )!=null) { //left-top
+                }else if ((rowIndex-snapYIndex)>0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex-i).get(columnIndex-i )!=null) { //left-top
                     return false;
-                }else if ((rowIndex-TpY)<0 && (columnIndex-TpX)>0 && currentBoard.get(rowIndex+i).get(columnIndex-i )!=null) { //left-bottom
+                }else if ((rowIndex-snapYIndex)<0 && (columnIndex-snapXIndex)>0 && currentBoard.get(rowIndex+i).get(columnIndex-i )!=null) { //left-bottom
                     return false;
                 }
 

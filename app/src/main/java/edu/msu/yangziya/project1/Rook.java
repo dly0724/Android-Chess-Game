@@ -11,18 +11,18 @@ public class Rook extends ChessPiece {
         super(context, id, drawableId, x, y, color);
     }
 
-    protected Boolean isValidMove (int TpX, int TpY, List<List<ChessPiece>> currentBoard){
-        ChessPiece targetPiece = currentBoard.get(TpY).get(TpX);
-        if(!super.isValidMove(TpX, TpY, currentBoard)){
+    protected Boolean isValidMove (List<List<ChessPiece>> currentBoard, int currentPlayer){
+        ChessPiece targetPiece = currentBoard.get(snapYIndex).get(snapXIndex);
+        if(!super.isValidMove(currentBoard, currentPlayer)){
             return false;
         }
         // Check for vertical movement
-        else if(abs(rowIndex-TpY)!=0 && abs(columnIndex-TpX)==0) {
-            for (int i= 1;i<abs(rowIndex-TpY);i++){
-                if (((rowIndex-TpY)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
+        else if(abs(rowIndex-snapYIndex)!=0 && abs(columnIndex-snapXIndex)==0) {
+            for (int i= 1;i<abs(rowIndex-snapYIndex);i++){
+                if (((rowIndex-snapYIndex)<0)&&(currentBoard.get(rowIndex+i).get(columnIndex))!=null){
                     return false;
                 }
-                else if(((rowIndex-TpY)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
+                else if(((rowIndex-snapYIndex)>0)&&(currentBoard.get(rowIndex-i).get(columnIndex))!=null){
                     return false;
                 }
             }
@@ -33,12 +33,12 @@ public class Rook extends ChessPiece {
             return true;
         }
         // Check for horizontal movement
-        else if(abs(rowIndex-TpY)==0 && abs(columnIndex-TpX)!=0){
-            for (int i= 1;i<abs(columnIndex-TpX);i++){
-                if (((columnIndex-TpX)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
+        else if(abs(rowIndex-snapYIndex)==0 && abs(columnIndex-snapXIndex)!=0){
+            for (int i= 1;i<abs(columnIndex-snapXIndex);i++){
+                if (((columnIndex-snapXIndex)<0)&&(currentBoard.get(rowIndex).get(columnIndex+i))!=null){
                     return false;
                 }
-                else if(((columnIndex-TpX)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
+                else if(((columnIndex-snapXIndex)>0)&&(currentBoard.get(rowIndex).get(columnIndex-i))!=null){
                     return false;
                 }
             }
