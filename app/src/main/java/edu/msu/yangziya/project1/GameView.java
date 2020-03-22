@@ -65,7 +65,7 @@ public class GameView extends View {
             GameActivity activity = (GameActivity)getContext();
             if(game.moveWasInvalid()){
                 if(game.getToast() != null){
-                    activity.displayToast(game.getToast(), Toast.LENGTH_LONG);
+                    activity.displayToast(game.getToast(), Toast.LENGTH_SHORT);
                 }
             }
             else if(game.moveWasCompleted()){
