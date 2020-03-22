@@ -14,25 +14,97 @@ android:layout_height="match_parent" >
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/rule1"
+            android:id="@+id/Move"
+            android:layout_width="550dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="0"
+            android:text="@string/Moves"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/BasicMoves"
             android:layout_width="496dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_weight="0"
-            android:text="@string/rules_text" />
+            android:text="@string/BasicMoves"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/rule2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/BasicMovesRule"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="0"
-            android:text="@string/rule2" />
+            android:text="@string/BasicMovesRule" />
 
         <TextView
-            android:id="@+id/rule3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/Promotion"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_weight="0"
-            android:text="@string/rule3" />
+            android:text="@string/Promotion"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/PromotionRule"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:text="@string/PromotionRule" />
+
+        <TextView
+            android:id="@+id/endGame"
+            android:layout_width="550dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="0"
+            android:text="@string/EndofTheGame"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Checkmate"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="0"
+            android:text="@string/Checkmate"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/CheckmateRule"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:text="@string/CheckmateRule" />
+
+        <TextView
+            android:id="@+id/Resign"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="0"
+            android:text="@string/Resign"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ResignRule"
+            android:layout_width="496dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:text="@string/ResignRule" />
 
     </LinearLayout>
 </ScrollView>

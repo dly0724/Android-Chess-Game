@@ -437,10 +437,11 @@ public class Game {
                             if(win == 1){              //white wins this turn
                                 //winner variable equals to player white's name,
                                 toWin = 1;
-
+                                setToast("White wins, Please click Done button to return the Game Over Page.");
                             }
                             else if(win == 2){         //black wins this turn
                                 toWin = 2;
+                                setToast("Black wins, Please click Done button to return the Game Over Page.");
                             }
                             //go to win page,
                         }

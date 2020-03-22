@@ -4,80 +4,27 @@
     <string name="Rule_button">Rules</string>
     <string name="boardBackground">Board Background</string>
     <string name="CoverPic">A cover picture</string>
-    <string name="rules_text">The king moves one square in any direction. The king also has a
-        special move called castling that involves also moving a rook. A rook can move any number
-        of squares along a rank or file, but cannot leap over other pieces. Along with the king,
-        a rook is involved during the king\'s castling move. A bishop can move any number of
-        squares diagonally, but cannot leap over other pieces. The queen combines the power of
-        a rook and bishop and can move any number of squares along a rank, file, or diagonal,
-        but cannot leap over other pieces. A knight moves to any of the closest squares that
-        are not on the same rank, file, or diagonal. (Thus the move forms an \"L\"-shape: two
-        squares vertically and one square horizontally, or two squares horizontally and one
-        square vertically.) The knight is the only piece that can leap over other pieces.
-        A pawn can move forward to the unoccupied square immediately in front of it on the same
-        file, or on its first move it can advance two squares along the same file, provided
-        both squares are unoccupied (black dots in the diagram); or the pawn can capture an
-        opponent\'s piece on a square diagonally in front of it on an adjacent file, by moving
-        to that square (black \"x\"s). A pawn has two special moves: the en passant capture
-        and promotion.</string>
-    <string name="rule2">When a pawn advances to the eighth rank, as a part of the move it is
-        promoted and must be exchanged for the player\'s choice of queen, rook, bishop, or
-        knight of the same color. Usually, the pawn is chosen to be promoted to a queen,
-        but in some cases another piece is chosen; this is called underpromotion. In the animated
-        diagram, the pawn on c7 can be advanced to the eighth rank and be promoted. There is no
-        restriction on the piece promoted to, so it is possible to have more pieces of the same
-        type than at the start of the game (e.g., two or more queens).When a pawn makes a
-        two-step advance from its starting position and there is an opponent\'s pawn on a
-        square next to the destination square on an adjacent file, then the opponent\'s pawn
-        can capture it en passant (\"in passing\"), moving to the square the pawn passed over.
-        This can be done only on the very next turn; otherwise the right to do so is forfeited.
-        For example, in the animated diagram, the black pawn advances two steps from g7 to g5,
-        and the white pawn on f5 can take it en passant on g6 (but only on White\'s next move).
-        When a king is under immediate attack by one or two of the opponent\'s pieces, it is
-        said to be in check. A move in response to a check is legal only if it results in a
-        position where the king is no longer in check. This can involve capturing the checking
-        piece; interposing a piece between the checking piece and the king (which is possible
-        only if the attacking piece is a queen, rook, or bishop and there is a square between
-        it and the king); or moving the king to a square where it is not under attack. Castling
-        is not a permissible response to a check.  The object of the game is to checkmate the
-        opponent; this occurs when the opponent\'s king is in check, and there is no legal way
-        to remove it from attack. It is never legal for a player to make a move that puts or
-        leaves the player\'s own king in check. In casual games it is common to announce \"check\"
-        when putting the opponent\'s king in check, but this is not required by the rules of chess,
-        and is not usually done in tournaments.</string>
-    <string name="rule3">There are several ways games can end in a draw:  Draw by agreement:
-        Draws are most commonly reached by mutual agreement between the players.
-        The correct procedure is to verbally offer the draw, make a move, then start the
-        opponent\'s clock. Traditionally, players have been allowed to agree to a draw at
-        any point in the game, occasionally even without playing a move; in recent years
-        efforts have been made to discourage short draws, for example by forbidding draw
-        offers before move thirty. Stalemate: The player whose turn it is to move has no legal
-        move and is not in check. Threefold repetition of position: This most commonly occurs
-        when neither side is able to avoid repeating moves without incurring a disadvantage.
-        In this situation, either player can claim a draw; this requires the players to keep a
-        valid written record of the game so that the claim can be verified by the arbiter if
-        challenged. The three occurrences of the position need not occur on consecutive moves
-        for a claim to be valid. FIDE rules make no mention of perpetual check; this is merely
-        a specific type of draw by threefold repetition. Fifty-move rule: If during the previous
-        50 moves no pawn has been moved and no capture has been made, either player can claim
-        a draw. There are several known endgames where it is possible to force a mate but it
-        requires more than 50 moves before a pawn move or capture is made; examples include
-        some endgames with two knights against a pawn and some pawnless endgames such as queen
-        against two bishops. Historically, FIDE has sometimes revised the fifty-move rule to make
-        exceptions for these endgames, but these have since been repealed. Some correspondence
-        chess organizations do not enforce the fifty-move rule.[note 2] Fivefold repetition of
-        position: Similar to the threefold-repetition rule, but in this case neither player needs
-        to claim the draw; thus a tournament director can intervene and declare the game to be
-        drawn. This is a relatively recent (2014) addition to the FIDE rules. Seventy-five-move
-        rule: Similar to the fifty-move rule, but as with the fivefold repetition rule, this
-        applies independently of claims by the players, and allows a tournament director to
-        intervene. This rule likewise is a recent addition to the FIDE rules. Insufficient
-        material: If neither player has a theoretical possibility to checkmate the opponent;
-        for example, if a player has only the king and a knight, and the opponent has only the
-        king, checkmate is impossible and the game is drawn by this rule. On the other hand, if
-        both players still have a knight there is a highly unlikely yet theoretical possibility
-        of checkmate, so this rule does not apply. Draw on time: In games with a time control,
-        the game is drawn if a player is out of time and the opponent has no theoretical possibility to checkmate the player.</string>
+    <string name="Moves">Moving Rule</string>
+    <string name="BasicMoves">Basic moves</string>
+    <string name="BasicMovesRule">Each type of chess piece has its own method of movement. A piece moves to a vacant square except when capturing an opponent\'s piece.
+Except for any move of the knight and castling, pieces cannot jump over other pieces. A piece is captured (or taken) when an attacking enemy piece replaces it on its square (en passant is the only exception). The captured piece is thereby permanently removed from the game.[1] The king can be put in check but cannot be captured (see below).
+The king moves exactly one square horizontally, vertically, or diagonally. A special move with the king known as castling is allowed only once per player, per game (see below).
+A rook moves any number of vacant squares horizontally or vertically. It also is moved when castling.
+A bishop moves any number of vacant squares diagonally.
+The queen moves any number of vacant squares horizontally, vertically, or diagonally.
+A knight moves to the nearest square not on the same rank, file, or diagonal. (This can be thought of as moving two squares horizontally then one square vertically, or moving one square horizontally then two squares vertically—i.e. in an "L" pattern.) The knight is not blocked by other pieces: it jumps to the new location.
+Pawns have the most complex rules of movement:
+A pawn moves straight forward one square, if that square is vacant. If it has not yet moved, a pawn also has the option of moving two squares straight forward, provided both squares are vacant. Pawns cannot move backwards.
+Pawns are the only pieces that capture differently from how they move. A pawn can capture an enemy piece on either of the two squares diagonally in front of the pawn (but cannot move to those squares if they are vacant).
+The pawn is also involved in the two special moves en passant and promotion (Schiller 2003:17–19).</string>
+    <string name="Promotion">Pawn promotion</string>
+    <string name="PromotionRule">If a player advances a pawn to its eighth rank, the pawn is then promoted (converted) to a queen, rook, bishop, or knight of the same color at the choice of the player (a queen is usually chosen). The choice is not limited to previously captured pieces. Hence it is theoretically possible for a player to have up to nine queens or up to ten rooks, bishops, or knights if all of their pawns are promoted. If the desired piece is not available, the player should call the arbiter to provide the piece (Schiller 2003:17–19).</string>
+    <string name="EndofTheGame">End of the game</string>
+    <string name="Checkmate">Checkmate</string>
+    <string name="CheckmateRule">If a player\'s king is placed in check and there is no legal move that player can make to escape check, then the king is said to be checkmated, the game ends, and that player loses (Schiller 2003:20–21). Unlike other pieces, the king is never actually captured or removed from the board because checkmate ends the game (Burgess 2009:502).
+The diagram shows an example checkmate position. The white king is threatened by the black queen; the square to which the king could move is also threatened; it cannot capture the queen, because it would then be in check by the rook.</string>
+    <string name="Resign">Resign</string>
+    <string name="ResignRule">Either player may resign at any time and their opponent wins the game. Players typically resign when they believe they are very likely to lose the game. A player may resign by saying it verbally or by indicating it on their score sheet in any of three ways: (1) by writing "resigns", (2) by circling the result of the game, or (3) by writing "1–0" if Black resigns or "0–1" if White resigns (Schiller 2003:21). Tipping over the king also indicates resignation, but it is not frequently used (and should be distinguished from accidentally knocking the king over). Stopping both clocks is not an indication of resigning, since clocks can be stopped to call the arbiter. An offer of a handshake is not necessarily a resignation either, since one player could think they are agreeing to a draw.</string>
     <string name="playVSInfo">Player 1 V.S. Player 2</string>
     <string name="restart">Restart Game</string>
     <string name="ResignButton">Resign</string>

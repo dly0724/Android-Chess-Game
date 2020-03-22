@@ -68,6 +68,11 @@ public class GameView extends View {
                     activity.displayToast(game.getToast(), Toast.LENGTH_SHORT);
                 }
             }
+            else if (game.getWin()!=0){
+                if(game.getToast() != null){
+                    activity.displayToast(game.getToast(), Toast.LENGTH_SHORT);
+                }
+            }
             else if(game.moveWasCompleted()){
                 String completedMsg = "Move Completed\n[Select DONE]";
                 if(!activity.getHeader().equals(completedMsg)){
