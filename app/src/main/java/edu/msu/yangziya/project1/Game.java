@@ -341,11 +341,14 @@ public class Game {
                 Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
                 //If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
-                    dragging.move(relX - lastRelX, relY - lastRelY);
-                    lastRelX = relX;
-                    lastRelY = relY;
-                    view.invalidate();//redrawn
-                    return true;
+                    if(!(currentPlayer == 1 && dragging.color == 'b' ||
+                            currentPlayer == 2 && dragging.color == 'w')) {
+                        dragging.move(relX - lastRelX, relY - lastRelY);
+                        lastRelX = relX;
+                        lastRelY = relY;
+                        view.invalidate();//redrawn
+                        return true;
+                    }
                 }
                 break;
         }
