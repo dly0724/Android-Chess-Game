@@ -13,11 +13,13 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over);
+
         Intent intent = getIntent();
-        String namePlayer1 = intent.getStringExtra("winner");
-        String namePlayer2 = intent.getStringExtra("loser");
-        ((TextView) findViewById(R.id.winnerTV)).setText("Winner: " + namePlayer1);
-        ((TextView) findViewById(R.id.loserTV)).setText("Loser: " + namePlayer2);
+
+        String winner = intent.getStringExtra("WINNER");
+        String loser = intent.getStringExtra("LOSER");
+        ((TextView) findViewById(R.id.winnerTV)).setText("Winner: " + winner);
+        ((TextView) findViewById(R.id.loserTV)).setText("Loser: " + loser);
     }
 
     public void onRestart(View view){

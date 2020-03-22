@@ -18,6 +18,8 @@ public class GameActivity extends AppCompatActivity implements
         ChoiceDialogFragment.SingleChoiceListener{
     private String namePlayer1 = "";
     private String namePlayer2 = "";
+    public static final String WINNER = "WINNER";
+    public static final String LOSER = "LOSER";
     private static final String PARAMETERS = "parameters";
     private GameView gameView = null;
     private int current = 1;
@@ -118,13 +120,13 @@ public class GameActivity extends AppCompatActivity implements
     public void onQuit(View view){
         Intent intent = new Intent(this, GameOverActivity.class);
         if (current == 1){
-            intent.putExtra("winner", namePlayer2);
-            intent.putExtra("loser", namePlayer1);
-        }else {
-            intent.putExtra("winner", namePlayer1);
-            intent.putExtra("loser", namePlayer2);
+            intent.putExtra(WINNER, playerMap.get(2));
+            intent.putExtra(LOSER, playerMap.get(1));
         }
-        startActivity(intent);
+        else {
+            intent.putExtra(WINNER, playerMap.get(1));
+            intent.putExtra(LOSER, playerMap.get(2));
+        }
         startActivity(intent);
     }
 
