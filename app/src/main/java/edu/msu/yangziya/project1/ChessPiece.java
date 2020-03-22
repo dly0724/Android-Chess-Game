@@ -100,6 +100,11 @@ public class ChessPiece {
      * 6 = player already made a move
      * 7 = player already made move and trying to move opponent's piece
      * 8 = invalid Pawn move
+     * 9 = invalid Bishop move
+     * 10 = invalid King move
+     * 11 = invalid Knight move
+     * 12 = invalid Queen move
+     * 13 = invalid Rook move
      */
     private Integer moveViolation;
 
