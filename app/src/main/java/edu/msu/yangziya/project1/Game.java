@@ -453,10 +453,12 @@ public class Game {
         // show choose dialog
         if (destRow == 0){
             singleChoiceDialogListener.showDialog();
+
         }
 
         if (destRow == 7) {
             singleChoiceDialogListener.showDialog();
+            //
         }
 
         //If there is an opponent piece in the new position
