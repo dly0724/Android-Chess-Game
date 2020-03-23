@@ -1,40 +1,20 @@
 package edu.msu.yangziya.project1;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import static java.lang.System.in;
 
 
 public class Game {
@@ -472,6 +452,10 @@ public class Game {
 
         // show choose dialog
         if (destRow == 0){
+            singleChoiceDialogListener.showDialog();
+        }
+
+        if (destRow == 7) {
             singleChoiceDialogListener.showDialog();
         }
 
