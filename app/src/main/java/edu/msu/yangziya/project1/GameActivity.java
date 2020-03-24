@@ -3,12 +3,15 @@ package edu.msu.yangziya.project1;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,8 @@ public class GameActivity extends AppCompatActivity implements
     private GameView gameView = null;
     private int current = 1;
     private SparseArray<String> playerMap = new SparseArray<>();
+    private static int p;
+    private static List<Integer> promotion = new ArrayList<Integer>();
 
     /**
      * Save the instance state into a bundle
@@ -60,7 +65,6 @@ public class GameActivity extends AppCompatActivity implements
             }
         };
         singleChoiceDialogListener = SingleChoice;
-
 
         Intent intent = getIntent();
         namePlayer1 = intent.getStringExtra("PLAYER_ONE");
@@ -111,6 +115,10 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void onDone(View view){
+        if (p!=0){
+            getGameView().promotionIndex=p;
+            p=0;
+        }
         current = current == 2 ? 1: 2;  // toggle the current player
         setTurnHeader();
         getGameView().setCurrentPlayer(current);
@@ -145,9 +153,11 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onPositiveButtonClicked(String[] list, int position) {
-
+    public void onPositiveButtonClicked(int position) {
+        p = position;
     }
+
+
 
     @Override
     public void onNegativeButtonClicked() {

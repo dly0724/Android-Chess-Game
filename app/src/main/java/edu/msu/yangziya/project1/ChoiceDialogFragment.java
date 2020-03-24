@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +17,8 @@ public class ChoiceDialogFragment extends DialogFragment {
     int position = 0; //default selected position
 
     public interface SingleChoiceListener {
-        void onPositiveButtonClicked(String[] list, int position);
+
+        void onPositiveButtonClicked(int position);
 
         void onNegativeButtonClicked();
     }
@@ -24,10 +27,13 @@ public class ChoiceDialogFragment extends DialogFragment {
         void showDialog();
     }
 
-    SingleChoiceListener mListener;
+
+
+    SingleChoiceListener mListener = new GameActivity();
 
     @Override
     public void onAttach(Context context) {
+
         super.onAttach(context);
         try {
             mListener = (SingleChoiceListener) context;
@@ -36,10 +42,10 @@ public class ChoiceDialogFragment extends DialogFragment {
         }
     }
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         final String[] list = getActivity().getResources().getStringArray(R.array.choice_items);
@@ -54,16 +60,16 @@ public class ChoiceDialogFragment extends DialogFragment {
                         // of the selected item
                         switch (which) {
                             case 0:
-                                mListener.onPositiveButtonClicked(list, which);
+                                mListener.onPositiveButtonClicked(1);
                                 break;
                             case 1:
-                                mListener.onPositiveButtonClicked(list, which);
+                                mListener.onPositiveButtonClicked(2);
                                 break;
                             case 2:
-                                mListener.onPositiveButtonClicked(list, which);
+                                mListener.onPositiveButtonClicked(3);
                                 break;
                             case 3:
-                                mListener.onPositiveButtonClicked(list, which);
+                                mListener.onPositiveButtonClicked(4);
                                 break;
                         }
                     }
@@ -110,4 +116,6 @@ public class ChoiceDialogFragment extends DialogFragment {
 
         return builder.create();
     }
+
+
 }
