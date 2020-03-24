@@ -1,6 +1,5 @@
 package edu.msu.yangziya.project1;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -89,6 +87,8 @@ public class GameView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // Lint warning fix
+        performClick();
         return game.onTouchEvent(this, event);
     }
 

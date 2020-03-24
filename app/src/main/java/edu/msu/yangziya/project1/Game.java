@@ -1,6 +1,5 @@
 package edu.msu.yangziya.project1;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -278,7 +277,7 @@ public class Game{
 
 
         for(ChessPiece piece : pieces) {
-            piece.draw(canvas, marginX, marginY, gameSize, (float) (scaleFactor * 0.65));
+            piece.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
 
         canvas.save();
@@ -457,11 +456,13 @@ public class Game{
         if (destRow == 0 && draggingPiece.getId()>15 && draggingPiece.getId()<24){
             promotePiece = draggingPiece;
             singleChoiceDialogListener.showDialog();
+
         }
 
         if (destRow == 7 && draggingPiece.getId()>7 && draggingPiece.getId()<16) {
             promotePiece = draggingPiece;
             singleChoiceDialogListener.showDialog();
+            //
         }
 
         //If there is an opponent piece in the new position
