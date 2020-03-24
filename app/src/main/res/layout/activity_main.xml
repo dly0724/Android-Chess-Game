@@ -38,27 +38,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/player1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="@string/name1"
 
 
-            android:layout_weight="1"
             android:ems="10"
             android:hint="@string/name1"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            tools:ignore="NestedWeights" />
 
         <EditText
             android:id="@+id/player2"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:hint="@string/name2"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:autofillHints="@string/name2"/>
     </LinearLayout>
 
     <Button
