@@ -11,6 +11,24 @@
         android:text="@string/GameOver"
         android:textSize="100sp" />
 
+    <TextView
+        android:id="@+id/winnerTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/loserTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+
     <Button
         android:id="@+id/startOverButton"
         android:layout_width="match_parent"

@@ -18,8 +18,9 @@ public class GameOverActivity extends AppCompatActivity {
 
         String winner = intent.getStringExtra("WINNER");
         String loser = intent.getStringExtra("LOSER");
-        ((TextView) findViewById(R.id.winnerTV)).setText("Winner: " + winner);
-        ((TextView) findViewById(R.id.loserTV)).setText("Loser: " + loser);
+
+        ((TextView) findViewById(R.id.winnerTV)).setText(getString(R.string.Winner, winner));
+        ((TextView) findViewById(R.id.loserTV)).setText(getString(R.string.Loser, loser));
     }
 
     public void onRestart(View view){

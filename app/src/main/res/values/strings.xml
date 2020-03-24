@@ -26,7 +26,7 @@ The diagram shows an example checkmate position. The white king is threatened by
     <string name="Resign">Resign</string>
     <string name="ResignRule">Either player may resign at any time and their opponent wins the game. Players typically resign when they believe they are very likely to lose the game. A player may resign by saying it verbally or by indicating it on their score sheet in any of three ways: (1) by writing "resigns", (2) by circling the result of the game, or (3) by writing "1–0" if Black resigns or "0–1" if White resigns (Schiller 2003:21). Tipping over the king also indicates resignation, but it is not frequently used (and should be distinguished from accidentally knocking the king over). Stopping both clocks is not an indication of resigning, since clocks can be stopped to call the arbiter. An offer of a handshake is not necessarily a resignation either, since one player could think they are agreeing to a draw.</string>
     <string name="playVSInfo">Player 1 V.S. Player 2</string>
-    <string name="restart">Restart Game</string>
+<!--    <string name="restart">Restart Game</string>-->
     <string name="ResignButton">Resign</string>
     <string name="GameOver">Game Over</string>
     <string name="StartOver">Start Over</string>
@@ -35,5 +35,8 @@ The diagram shows an example checkmate position. The white king is threatened by
     <string name="name2">player 2\'s name</string>
     <string name="welcome">Welcome to the Chess Game</string>
     <string name="done">Done</string>
+    <string name="turn_header_suffix">%s\'s Turn\n[Move %s]</string>
+    <string name="Winner">Winner: %s</string>
+    <string name="Loser">Loser: %s</string>
 
 </resources>
