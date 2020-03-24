@@ -1,5 +1,6 @@
 package edu.msu.yangziya.project1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Game {
+public class Game{
     /**
      * Percentage of the display width or height that
      * is occupied by the game.
@@ -136,14 +137,16 @@ public class Game {
         }
     };
 
-    private List<List<ChessPiece>> previousBoardArray;
     private List<List<ChessPiece>> currentBoardArray;
+    private List<List<ChessPiece>> initialChessPiece;
     Context context;
     static ChoiceDialogFragment.SingleChoiceDialogListener singleChoiceDialogListener;
+    private ChessPiece promotePiece = null;
+
+
 
     private int currentPlayer;
     public int toWin = 0;
-
 
     public Game(Context context) {
         // Create paint for filling the area the game will
@@ -227,6 +230,7 @@ public class Game {
         }
 
         setCurrentBoardArray(initialBoardArray);
+        initialChessPiece = initialBoardArray;
     }
 
     public Game() {
@@ -340,7 +344,6 @@ public class Game {
                 break;
         }
 
-
         return false;
     }
 
@@ -451,11 +454,13 @@ public class Game {
         boolean deleteOpponentPiece = draggingPiece.deletePieceInTarget;
 
         // show choose dialog
-        if (destRow == 0){
+        if (destRow == 0 && draggingPiece.getId()>15 && draggingPiece.getId()<24){
+            promotePiece = draggingPiece;
             singleChoiceDialogListener.showDialog();
         }
 
-        if (destRow == 7) {
+        if (destRow == 7 && draggingPiece.getId()>7 && draggingPiece.getId()<16) {
+            promotePiece = draggingPiece;
             singleChoiceDialogListener.showDialog();
         }
 
@@ -489,12 +494,10 @@ public class Game {
                 else if(currentPiece != null && currentPiece.color=='b'){
                     currentPieceColor = 2;
                 }
-                int x = 3;
                 if (currentPiece != null && currentPlayer != currentPieceColor){
                 //if (currentPiece != null){
 
                     currentPiece.toKing(currentBoardArray);
-                    x = 3;
                     Boolean kingCaptured = currentPiece.kingCaptured;
                     if (kingCaptured){
                         if (currentPiece.color == 'w'){
@@ -529,7 +532,6 @@ public class Game {
                 }
             }
         }
-        int testingVar = 1;
 
         for(int i=0;  i<pieces.size(); i++) {
             ChessPiece piece = pieces.get(i);
@@ -573,9 +575,7 @@ public class Game {
             }
         }
 
-        int x = 2;
         while (pieces.remove(null)){}
-        x =5;
 
         assert ids != null;
         for(int i = 0; i<ids.length-1; i++) {
@@ -602,6 +602,85 @@ public class Game {
         }
     }
 
+    public void promotion(int promotingIndex){
+        ChessPiece cp;
+        int replacedPiece;
+        if (promotingIndex==1){                 //Queen
+            if (currentPlayer == 1){
+                replacedPiece = initialChessPiece.get(7).get(3).drawableID;
+            }
+            else{
+                replacedPiece = initialChessPiece.get(0).get(3).drawableID;
+            }
+            cp = new Queen(promotePiece.con,promotePiece.id,replacedPiece,promotePiece.x,promotePiece.y,promotePiece.color);
+        }else if (promotingIndex==2){           //Rook
+            if (currentPlayer == 1){
+                replacedPiece = initialChessPiece.get(7).get(0).drawableID;
+            }
+            else{
+                replacedPiece = initialChessPiece.get(0).get(0).drawableID;
+            }
+            cp = new Rook(promotePiece.con,promotePiece.id,replacedPiece,promotePiece.x,promotePiece.y,promotePiece.color);
+        }else if (promotingIndex==3){           //Knight
+            if (currentPlayer == 1){
+                replacedPiece = initialChessPiece.get(7).get(1).drawableID;
+            }
+            else{
+                replacedPiece = initialChessPiece.get(0).get(1).drawableID;
+            }
+            cp = new Knight(promotePiece.con,promotePiece.id,replacedPiece,promotePiece.x,promotePiece.y,promotePiece.color);
+        }else{       //Bishop
+            if (currentPlayer == 1){
+                replacedPiece = initialChessPiece.get(7).get(2).drawableID;
+            }
+            else{
+                replacedPiece = initialChessPiece.get(0).get(2).drawableID;
+            }
+            cp = new Bishop(promotePiece.con,promotePiece.id,replacedPiece,promotePiece.x,promotePiece.y,promotePiece.color);
+        }
+
+
+
+        for (int i=0;i<8;i++){
+            if (i==0 || i==7){
+                for(int j=0;j<8;j++){
+                    if (promotePiece!= null && currentBoardArray.get(i).get(j).getId() == promotePiece.getId()){
+
+                        cp.rowIndex = promotePiece.rowIndex;
+                        cp.columnIndex = promotePiece.columnIndex;
+                        cp.movingToColumnIndex = promotePiece.movingToRowIndex;
+                        cp.movingToColumnIndex = promotePiece.movingToColumnIndex;
+                        cp.deletePieceInTarget = promotePiece.deletePieceInTarget;
+                        cp.deletedPiece = promotePiece.deletedPiece;
+                        cp.snapXIndex = promotePiece.snapXIndex;
+                        cp.snapYIndex = promotePiece.snapYIndex;
+                        cp.x = promotePiece.x;
+                        cp.y = promotePiece.y;
+
+                        //cp.updatePosition();
+                        pieces.set(0,cp);
+
+                        int sourceRow = promotePiece.rowIndex;
+                        int sourceCol = promotePiece.columnIndex;
+                        int destRow = promotePiece.movingToRowIndex;
+                        int destCol = promotePiece.movingToColumnIndex;
+                        boolean deleteOpponentPiece = promotePiece.deletePieceInTarget;
+
+                        // Delete at old position
+                        currentBoardArray.get(sourceRow).set(sourceCol, null);
+                        // Set at new position
+                        currentBoardArray.get(destRow).set(destCol, cp);
+                        // Tell the piece where it is at now
+                        currentBoardArray.get(destRow).get(destCol).setBoardPosition(destRow, destCol);
+                        promotePiece = null;
+
+                    }
+                }
+            }
+        }
+
+    }
+
     public void setCurrentBoardArray(List<List<ChessPiece>> currentBoardArray) {
         this.currentBoardArray = currentBoardArray;
     }
@@ -611,6 +690,7 @@ public class Game {
     }
 
     public void setCurrentPlayer(int player){
+
         this.currentPlayer = player;
         this.moveCompleted = false;  // New player, reset movement status
     }

@@ -19,8 +19,9 @@ public class GameView extends View {
     /**
      * The actual game
      */
-    private Game game;
+    protected Game game;
     private Parameters params = new Parameters();
+
 
     /**
      * Paint object we will use to draw a line
@@ -31,6 +32,8 @@ public class GameView extends View {
      * The board bitmap.
      */
     private Bitmap boardBitmap = null;
+
+    public int promotionIndex = 0;
 
     public GameView(Context context) {
         super(context);
@@ -135,10 +138,15 @@ public class GameView extends View {
     }
 
     public void setCurrentPlayer(int currentPlayer) {
+        if (promotionIndex!=0){
+            game.promotion(promotionIndex);
+        }
+        promotionIndex = 0;
         game.setCurrentPlayer(currentPlayer);
     }
 
     public int Win(){
         return game.getWin();
     }
+
 }

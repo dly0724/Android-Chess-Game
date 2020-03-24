@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements ChoiceDialogFragment.SingleChoiceListener {
+public class MainActivity extends AppCompatActivity {
 //implements ChoiceDialogFragment.SingleChoiceListener
 
     private Boolean hName1 = Boolean.FALSE;
@@ -125,13 +125,5 @@ public class MainActivity extends AppCompatActivity implements ChoiceDialogFragm
         startActivity(intent);
     }
 
-    @Override
-    public void onPositiveButtonClicked(String[] list, int position) {
-        tvDisplayChoice.setText("Selected Item = " + list[position]);
-    }
 
-    @Override
-    public void onNegativeButtonClicked() {
-
-    }
 }

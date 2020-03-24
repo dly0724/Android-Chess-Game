@@ -107,14 +107,20 @@ public class ChessPiece {
      * 13 = invalid Rook move
      */
     private Integer moveViolation;
+    protected Context con;
+    protected int drawableID;
 
     public ChessPiece(Context context, int id, int drawableId, float x, float y, char color) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.color = color;
+        this.drawableID = drawableId;
+        this.con = context;
 
         piece = BitmapFactory.decodeResource(context.getResources(), drawableId);
+
+
     }
 
     /**
@@ -284,6 +290,10 @@ public class ChessPiece {
 
     public void setViolationCode(Integer code){
         this.moveViolation = code;
+    }
+
+    public void setID(int id){
+        this.id = id;
     }
 
 }
