@@ -9,18 +9,26 @@ When you have completed the project, complete the following form and include it 
 Member 1: Lynn Dai
 
 Responsiblity:Part of the landscape of game play and main view.Set the game area after clicking start game, draw the border of the game area, trying to figure out how to draw the game checkerboard
+              Made GameOver layout and switch to GameOver when game upon quit
+              Indicated winner/loser
 
 
 
 Member 2: Sam Vitu
 
 Responsiblity: Drew pieces on board. Create Game over page and the quit button on GamePlay view.
-
+               Made the array of pieces and functions to move pieces
+               Created different toast messages for invalid movements
+               Created player turns and updated UI after movement
 
 
 Member 3: Laura Yang
 
-Responsiblity: Create the project file and set up gitlab. Created the start and Gameplay Views with switch from activity to activities. Rules page Scroll down available. Changed App's icon. Debug.  
+Responsiblity: Create the project file and set up gitlab. Created the start and Gameplay Views with switch from activity to activities. Rules page Scroll down available. Changed App's icon. Debug.
+               Made custom piece movements and capturing
+               Made high resolution icon
+               Made promotion dialog box
+               Formatted rules page
 
 
 

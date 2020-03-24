@@ -137,10 +137,10 @@ public class GameActivity extends AppCompatActivity implements
 
     public void setTurnHeader(){
         if(current == 1){
-            getPlayerText().setText(playerMap.get(1) + "'s Turn\n[Move White]");
+            getPlayerText().setText(getString(R.string.turn_header_suffix, playerMap.get(1), "White"));
         }
         else{
-            getPlayerText().setText(playerMap.get(2) + "'s Turn\n[Move Black]");
+            getPlayerText().setText(getString(R.string.turn_header_suffix, playerMap.get(2), "Black"));
         }
     }
 

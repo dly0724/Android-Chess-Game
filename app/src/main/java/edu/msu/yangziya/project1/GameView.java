@@ -92,6 +92,11 @@ public class GameView extends View {
         return game.onTouchEvent(this, event);
     }
 
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
     /**
      * Get the view state from a bundle
      * @param key key name to use in the bundle
