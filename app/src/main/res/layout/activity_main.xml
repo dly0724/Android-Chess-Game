@@ -50,7 +50,8 @@
             android:ems="10"
             android:hint="@string/name1"
             android:inputType="textPersonName"
-            tools:ignore="NestedWeights" />
+            tools:ignore="NestedWeights"
+            tools:targetApi="o" />
 
         <EditText
             android:id="@+id/player2"
@@ -59,7 +60,8 @@
             android:ems="10"
             android:hint="@string/name2"
             android:inputType="textPersonName"
-            android:autofillHints="@string/name2"/>
+            android:autofillHints="@string/name2"
+            tools:targetApi="o" />
     </LinearLayout>
 
     <Button
