@@ -142,9 +142,9 @@ public class GameView extends View {
         params.col = col;
     }
 
-    public void setCurrentPlayer(int currentPlayer) {
+    public void setCurrentPlayer(int currentPlayer, View view) {
         if (promotionIndex!=0){
-            game.promotion(promotionIndex);
+            game.promotion(promotionIndex, view);
         }
         promotionIndex = 0;
         game.setCurrentPlayer(currentPlayer);

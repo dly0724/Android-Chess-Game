@@ -77,7 +77,7 @@ public class GameActivity extends AppCompatActivity implements
         playerMap.append(1, firstPlayer);
         playerMap.append(2, secondPlayer);
 
-        gameView.setCurrentPlayer(current);
+        gameView.setCurrentPlayer(current,gameView);
         setTurnHeader();
 
         if(bundle != null) {
@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity implements
         }
         current = current == 2 ? 1: 2;  // toggle the current player
         setTurnHeader();
-        getGameView().setCurrentPlayer(current);
+        getGameView().setCurrentPlayer(current,gameView);
 
         if (getGameView().Win() != 0){
             Intent intent = new Intent(this, GameOverActivity.class);

@@ -603,7 +603,7 @@ public class Game{
         }
     }
 
-    public void promotion(int promotingIndex){
+    public void promotion(int promotingIndex, View view){
         ChessPiece cp;
         int replacedPiece;
         if (promotingIndex==1){                 //Queen
@@ -674,7 +674,7 @@ public class Game{
                         // Tell the piece where it is at now
                         currentBoardArray.get(destRow).get(destCol).setBoardPosition(destRow, destCol);
                         promotePiece = null;
-
+                        view.invalidate();
                     }
                 }
             }
