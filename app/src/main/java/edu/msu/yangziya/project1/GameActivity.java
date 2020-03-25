@@ -126,9 +126,11 @@ public class GameActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, GameOverActivity.class);
             if(current == 1){
                 intent.putExtra(WINNER, playerMap.get(1));
+                intent.putExtra(LOSER,playerMap.get(2));
             }
             else if(current == 2){
-                intent.putExtra(LOSER, playerMap.get(2));
+                intent.putExtra(LOSER, playerMap.get(1));
+                intent.putExtra(WINNER,playerMap.get(2));
             }
             startActivity(intent);
         }
